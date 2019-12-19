@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,8 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -22,6 +25,9 @@ import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -39,17 +45,28 @@ public class MainActivity extends AppCompatActivity {
 
     private long mExitTime;
 
-    private BottomNavigationView mBottomNavigationView;
-    
-    private Toolbar mToolbar;
+    Unbinder mBinder;
+
+    @BindView(R.id.navigation_bottom)
+    BottomNavigationView mBottomNavigationView;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mBinder = ButterKnife.bind(this);
         initToolbar();
         initBottomNavigation();
         switchFragment(INDEX_HOMEPAGE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
     @Override
@@ -62,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initToolbar() {
-        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mToolbar.setTitle(getString(R.string.bottomname1));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
     }
 
     private void initBottomNavigation() {
-        mBottomNavigationView = findViewById(R.id.navigation_bottom);
         mBottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

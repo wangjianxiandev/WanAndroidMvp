@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.youth.banner.Banner
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="@dimen/safe_padding"
-        android:layout_marginEnd="@dimen/safe_padding"/>
+        android:layout_marginEnd="@dimen/safe_padding" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/article_recycler"
         android:layout_width="match_parent"

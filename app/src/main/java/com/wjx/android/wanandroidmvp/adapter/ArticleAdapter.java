@@ -5,6 +5,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wjx.android.wanandroidmvp.R;
+import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 
 import org.w3c.dom.Text;
@@ -76,6 +78,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                 mContext.getResources().getString(R.string.article_category),
                 articleBean.getOrigin(), articleBean.getChapterName());
             holder.mArticleType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    JumpWebUtils.startWebView(mContext,
+                            mArticleBeans.get(position).getTitle(),
+                            mArticleBeans.get(position).getLink());
+                }
+            });
+
         }
     }
 
@@ -99,4 +110,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
             ButterKnife.bind(this, itemView);
         }
     }
+
+
 }

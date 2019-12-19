@@ -1,21 +1,25 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
+import com.wjx.android.wanandroidmvp.adapter.OnItemClickListener;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.GlideImageLoader;
+import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 import com.wjx.android.wanandroidmvp.presenter.home.HomePresenter;
 import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +74,14 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                     .map(BannerBean.DataBean::getTitle)
                     .collect(Collectors.toList());
             mBanner.setBannerTitles(bannerTitles);
+            mBanner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    JumpWebUtils.startWebView(getContext(),
+                            bannerBean.getData().get(position).getTitle(),
+                            bannerBean.getData().get(position).getUrl());
+                }
+            });
             mBanner.start();
         }
     }
@@ -83,4 +95,5 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             mRecyclerView.setAdapter(articleAdapter);
         }
     }
+
 }
