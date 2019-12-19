@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#802196F3</color>
+    <color name="colorAccent">#802196F3</color>
+    <color name="textHint">#80999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorGray">#333</color>
+    <color name="colorBlack666">#666</color>
+    <color name="colorBlack333">#333</color>
+    <color name="windowBackground">#F5F5F5</color>
+    <color name="background">#d8d8d8</color>
+    <color name="backgroundeee">#eeeeee</color>
+    <color name="backgrounGrey">#CCCCCC</color>
+    <color name="texttipColor">#a0a0a0</color>
+    <color name="diverColoe">#cecece</color>
+    <color name="accent">#80E91E63</color>
+    <color name="chinaHoliDay">#80e10015</color>
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="primary_red">#F44336</color>
+    <color name="primary_green">#4CAF50</color>
+    <color name="primary_blue">#2196f3</color>
+    <color name="primary_grey">#9E9E9E</color>
+    <color name="primary_grey_dark">#616161</color>
+    <color name="primary_grey_light">#F5F5F5</color>
+
+    <color name="page_background">#FFFFFF</color>
+</resources>

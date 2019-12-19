@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">WanAndroid-WJX</string>
+    <string name="confirm">确定</string>
+    <string name="topsearch">搜索</string>
+    <string name="canel">取消</string>
+    <string name="title">温馨提示</string>
+    <string name="bottomname1">首页</string>
+    <string name="bottomname2">项目</string>
+    <string name="bottomname3">广场</string>
+    <string name="bottomname4">公众号</string>
+    <string name="bottomname5">我的</string>
+    <!-- 中文-->
+    <string name="article_author">来源：%1$s</string>
+    <string name="article_category">分类：%1$s/%2$s</string>
+    <string name="anonymous_user">匿名用户</string>
+</resources>

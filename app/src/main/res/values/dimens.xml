@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="safe_padding">8dp</dimen>
+    <dimen name="card_corner_radius">4dp</dimen>
+    <dimen name="item_margin_top">12dp</dimen>
+</resources>
