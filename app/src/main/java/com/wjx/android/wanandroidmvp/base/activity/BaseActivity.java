@@ -15,11 +15,14 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
 
     protected P mPresenter;
 
+    /**
+     * 使用ButterKnife
+     */
     protected Unbinder unbinder;
 
     /**
      * 获取布局id
-     * @return
+     * @return 当前需要加载的布局
      */
     protected abstract int getContentViewId();
 
@@ -31,7 +34,7 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
 
     /**
      * 创建Presenter
-     * @return
+     * @return 返回当前Presenter
      */
     protected abstract P createPresenter();
 

@@ -14,7 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/item_home_author"
@@ -90,7 +90,7 @@
             android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="@+id/item_home_author"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_home_author"/>
+            app:layout_constraintTop_toTopOf="@+id/item_home_author" />
 
         <TextView
             android:id="@+id/item_home_content"
@@ -112,15 +112,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/safe_padding"
-            android:layout_marginEnd="@dimen/safe_padding"
             android:layout_marginTop="@dimen/item_margin_top"
+            android:layout_marginEnd="@dimen/safe_padding"
             android:layout_marginBottom="@dimen/item_margin_top"
-            android:textColor="@color/colorBlack666"
             android:text="分类·项目"
+            android:textColor="@color/colorBlack666"
             android:textSize="13dp"
-            app:layout_constraintTop_toBottomOf="@id/item_home_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_home_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

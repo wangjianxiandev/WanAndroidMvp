@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 首页Banner 实体类
  *
  * @author: 王拣贤
  * @date: 2019/12/19

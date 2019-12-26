@@ -2,7 +2,7 @@ package com.wjx.android.wanandroidmvp.base.utils;
 
 /**
  * Created with Android Studio.
- * Description: 用到的常量值
+ * Description: 用到的常量值，比如请求Url，响应时间等
  *
  * @author: 王拣贤
  * @date: 2019/12/14

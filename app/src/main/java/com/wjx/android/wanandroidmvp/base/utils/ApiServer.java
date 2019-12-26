@@ -29,4 +29,11 @@ public interface ApiServer {
      */
     @GET("article/list/{pageNum}/json")
     Observable<ArticleBean> loadArticle(@Path("pageNum") int number);
+
+    /**
+     * 刷新获取首页文章
+     * @return
+     */
+    @GET("article/list/{0}/json")
+    Observable<ArticleBean> refreshArticle();
 }

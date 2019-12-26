@@ -8,7 +8,7 @@ import com.youth.banner.loader.ImageLoader;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 图片加载器
  *
  * @author: 王拣贤
  * @date: 2019/12/18

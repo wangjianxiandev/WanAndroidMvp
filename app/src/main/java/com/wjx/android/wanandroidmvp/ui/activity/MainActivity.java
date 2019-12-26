@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initToolbar() {
+        mToolbar.setTitle(R.string.bottomname1);
         setSupportActionBar(mToolbar);
-        mToolbar.setTitle(getString(R.string.bottomname1));
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
     }
 
