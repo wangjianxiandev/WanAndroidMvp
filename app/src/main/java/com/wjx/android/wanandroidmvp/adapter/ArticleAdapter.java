@@ -5,19 +5,14 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -34,9 +29,14 @@ import butterknife.ButterKnife;
  */
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleHolder> {
 
+    private static final int TYPE_HEADER = 0;
+
+    private static final int TYPE_NORMAL = 1;
     private Context mContext;
 
     private List<ArticleBeansNew> mArticleBeansNew;
+
+    private View mHeaderView;
 
     public ArticleAdapter(RecyclerView recyclerView) {
         mContext = recyclerView.getContext();
@@ -46,59 +46,86 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
         mArticleBeansNew = articleBeansNew;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (mHeaderView == null) {
+            return TYPE_NORMAL;
+        }
+        if (position == 0) {
+            return TYPE_HEADER;
+        }
+        return TYPE_NORMAL;
+    }
+
+    public void setHeaderView(View headerView) {
+        mHeaderView = headerView;
+    }
+
     @NonNull
     @Override
     public ArticleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (mHeaderView != null && viewType == TYPE_HEADER) {
+
+            return new ArticleHolder(mHeaderView);
+        }
         View view = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false);
         return new ArticleHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ArticleHolder holder, int position) {
+        if (getItemViewType(position) == TYPE_HEADER) {
+            return;
+        }
+        final int realPosition = getRealPosition(holder);
         if (mArticleBeansNew != null) {
-            ArticleBeansNew articleBean = mArticleBeansNew.get(position);
+            ArticleBeansNew articleBean = mArticleBeansNew.get(realPosition);
             holder.mArticleContent.setText(
-                Html.fromHtml(articleBean.title, Html.FROM_HTML_MODE_COMPACT));
+                    Html.fromHtml(articleBean.title, Html.FROM_HTML_MODE_COMPACT));
 
-            if (articleBean.author == null && articleBean.shareUser == null) {
-                holder.mArtivcleAuthor.setText(
-                    String.format(mContext.getResources().getString(R.string.article_author),
-                    mContext.getResources().getString(R.string.anonymous_user)));
-            } else if (articleBean.author == null) {
-                holder.mArtivcleAuthor.setText(
-                    String.format(mContext.getResources().getString(R.string.article_author),
-                    articleBean.shareUser));
-            } else{
-                holder.mArtivcleAuthor.setText(
-                    String.format(mContext.getResources().getString(R.string.article_author),
-                    articleBean.author));
+            if (articleBean.author != null) {
+                holder.mArticleAuthor.setText(
+                        String.format(mContext.getResources().getString(R.string.article_author),
+                                articleBean.author));
+            } else {
+                holder.mArticleAuthor.setText(
+                        String.format(mContext.getResources().getString(R.string.article_author),
+                                articleBean.shareUser));
             }
 
             holder.mArticleDate.setText(articleBean.niceDate);
             String category = String.format(
-                mContext.getResources().getString(R.string.article_category),
-                articleBean.origin, articleBean.chapterName);
+                    mContext.getResources().getString(R.string.article_category),
+                    articleBean.superChapterName, articleBean.chapterName);
             holder.mArticleType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     JumpWebUtils.startWebView(mContext,
-                            mArticleBeansNew.get(position).title,
-                            mArticleBeansNew.get(position).link);
+                            mArticleBeansNew.get(realPosition).title,
+                            mArticleBeansNew.get(realPosition).link);
                 }
             });
 
         }
     }
 
+    private int getRealPosition(ArticleHolder articleHolder) {
+        int position = articleHolder.getLayoutPosition();
+        return mHeaderView == null ? position : position - 1;
+    }
+
     @Override
     public int getItemCount() {
-        return mArticleBeansNew != null ? mArticleBeansNew.size() : 0;
+        if (mArticleBeansNew == null) {
+            return 0;
+        }
+        return mHeaderView == null ? mArticleBeansNew.size() : mArticleBeansNew.size() + 1;
     }
 
     class ArticleHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_home_author)
-        TextView mArtivcleAuthor;
+        TextView mArticleAuthor;
         @BindView(R.id.item_home_content)
         TextView mArticleContent;
         @BindView(R.id.item_article_type)
@@ -108,6 +135,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
         public ArticleHolder(@NonNull View itemView) {
             super(itemView);
+            if (itemView == mHeaderView) {
+                return;
+            }
             ButterKnife.bind(this, itemView);
         }
     }

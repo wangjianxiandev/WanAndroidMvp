@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.kingja.loadsir.core.LoadService;
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -31,12 +32,11 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
 
     protected abstract int getContentViewId();
 
+
     /**
      * 初始化
-     *
-     * @param savedInstanceState bundle
      */
-    protected abstract void init(Bundle savedInstanceState);
+    protected abstract void init();
 
     /**
      * 创建Presenter
@@ -54,10 +54,9 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         if (mPresenter != null) {
             mPresenter.attachView((V) this);
         }
-        init(savedInstanceState);
+        init();
         return view;
     }
-
 
 
 

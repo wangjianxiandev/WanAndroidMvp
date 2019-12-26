@@ -44,6 +44,7 @@ public class HomeModel implements Contract.IHomeModel {
                                     articleBeansNew.id = datas.getId();
                                     articleBeansNew.title = datas.getTitle();
                                     articleBeansNew.author = datas.getAuthor();
+                                    articleBeansNew.shareUser = datas.getShareUser();
                                     articleBeansNew.niceDate = datas.getNiceDate();
                                     articleBeansNew.publishTime = datas.getPublishTime();
                                     articleBeansNew.chapterName = datas.getChapterName();
@@ -72,6 +73,7 @@ public class HomeModel implements Contract.IHomeModel {
                                     articleBeansNew.id = datas.getId();
                                     articleBeansNew.title = datas.getTitle();
                                     articleBeansNew.author = datas.getAuthor();
+                                    articleBeansNew.shareUser = datas.getShareUser();
                                     articleBeansNew.niceDate = datas.getNiceDate();
                                     articleBeansNew.publishTime = datas.getPublishTime();
                                     articleBeansNew.chapterName = datas.getChapterName();

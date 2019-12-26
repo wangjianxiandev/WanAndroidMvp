@@ -1,7 +1,6 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
-import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -13,12 +12,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
-import com.wjx.android.wanandroidmvp.adapter.OnItemClickListener;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.GlideImageLoader;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 import com.wjx.android.wanandroidmvp.presenter.home.HomePresenter;
@@ -27,7 +24,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,8 +45,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     private ArticleAdapter mArticleAdapter;
     private int mCurpage = 0;
 
-    @BindView(R.id.banner)
-    Banner mBanner;
+    private Banner mBanner;
 
     @BindView(R.id.article_recycler)
     RecyclerView mRecyclerView;
@@ -64,11 +59,20 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void init() {
+        initAdapter();
         mPresenter.loadBanner();
         mPresenter.loadArticle(mCurpage);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void initAdapter() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mArticleAdapter = new ArticleAdapter(mRecyclerView);
+        View header = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.home_header_view, null, false);
+        mBanner = header.findViewById(R.id.banner);
+        mArticleAdapter.setHeaderView(header);
     }
 
     @Override
@@ -105,8 +109,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void loadArticle(List<ArticleBeansNew> articleBean) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mArticleAdapter = new ArticleAdapter(mRecyclerView);
         mArticleAdapter.setBeans(articleBean);
         mRecyclerView.setAdapter(mArticleAdapter);
     }
@@ -117,7 +119,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     /**
-     * 加载更多在列表末尾进行刷新
+     * 加载新文章从底部开始
+     *
      * @param refreshLayout
      */
     @Override
@@ -127,7 +130,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     /**
-     * 刷新时在首页进行刷新
+     * 刷新文章从首页开始
+     *
      * @param refreshLayout
      */
     @Override

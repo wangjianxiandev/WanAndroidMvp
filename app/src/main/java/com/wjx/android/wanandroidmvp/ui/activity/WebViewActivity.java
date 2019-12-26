@@ -7,9 +7,8 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +42,6 @@ public class WebViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(Constant.ARTICLE_TITLE);
         String url = intent.getStringExtra(Constant.ARTICLE_URL);
-        Log.e("WJX", title + " " + "url: " + url);
         initToolbar(title);
 
         mAgentWeb = AgentWeb.with(this)
@@ -55,13 +53,18 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void initToolbar(String title) {
-        setSupportActionBar(mToolbar);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            mToolbar.setTitle(title);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            mTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            mTitle.setSingleLine(true);
+            mTitle.setSelected(true);
+            mTitle.setFocusable(true);
+            mTitle.setFocusableInTouchMode(true);
+            mTitle.setText(title);
         }
     }
 

@@ -14,7 +14,10 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -22,6 +25,7 @@ import com.wjx.android.wanandroidmvp.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.NetWorkUtils;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 
 

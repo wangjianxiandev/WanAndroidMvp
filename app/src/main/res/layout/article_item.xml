@@ -23,8 +23,6 @@
             android:layout_marginStart="@dimen/safe_padding"
             android:layout_marginTop="@dimen/item_margin_top"
             android:layout_marginEnd="@dimen/safe_padding"
-            android:background="@drawable/item_imgselector"
-            android:text="WJX"
             android:textColor="@color/colorBlack666"
             android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"

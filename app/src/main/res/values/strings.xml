@@ -9,8 +9,11 @@
     <string name="bottomname3">广场</string>
     <string name="bottomname4">公众号</string>
     <string name="bottomname5">我的</string>
-    <!-- 中文-->
-    <string name="article_author">来源：%1$s</string>
+    <string name="article_author">作者：%1$s</string>
     <string name="article_category">分类：%1$s/%2$s</string>
     <string name="anonymous_user">匿名用户</string>
+
+    <!-- 异常页面-->
+    <string name="network_error">内容加载失败，请检查网络设置</string>
+    <string name="net_error_refresh">重新加载</string>
 </resources>

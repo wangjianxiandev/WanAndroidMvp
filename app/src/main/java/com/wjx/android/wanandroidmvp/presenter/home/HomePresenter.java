@@ -1,7 +1,6 @@
 package com.wjx.android.wanandroidmvp.presenter.home;
 
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
