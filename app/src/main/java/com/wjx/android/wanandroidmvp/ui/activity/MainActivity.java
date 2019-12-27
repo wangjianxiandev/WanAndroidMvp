@@ -27,6 +27,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.NetWorkUtils;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
+import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
+import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
+import com.wjx.android.wanandroidmvp.ui.fragment.SquareFragment;
+import com.wjx.android.wanandroidmvp.ui.fragment.WeChatFragment;
 
 
 import butterknife.BindView;
@@ -130,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
         }
         mLastIndex = index;
         Fragment fragment = getFragment(index);
-        if (fragment != null) {
-            fragmentTransaction.replace(R.id.container, fragment);
+        if (fragment != null & !fragment.isAdded()) {
+            fragmentTransaction.add(R.id.container, fragment);
         }
         fragmentTransaction.show(fragment).commitAllowingStateLoss();
     }
@@ -144,15 +148,16 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new HomeFragment();
                     break;
                 case INDEX_PROJECT:
-
+                    fragment = new ProjectFragment();
                     break;
                 case INDEX_SQUARE:
+                    fragment = new SquareFragment();
                     break;
                 case INDEX_WE_CHAT:
-
+                    fragment = new WeChatFragment();
                     break;
                 case INDEX_ME:
-
+                    fragment = new MeFragment();
                     break;
                 default:
                     break;

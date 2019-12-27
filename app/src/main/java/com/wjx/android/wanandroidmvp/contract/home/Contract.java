@@ -1,5 +1,6 @@
 package com.wjx.android.wanandroidmvp.contract.home;
 
+import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
 import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
@@ -17,22 +18,6 @@ import io.reactivex.Observable;
  * Time: 15:55
  */
 public class Contract {
-
-    /**
-     * 用来指示错误和完成的接口
-     */
-    public interface IBaseView {
-        /**
-         * 加载错误回调
-         * @param e
-         */
-        void onError(Throwable e);
-
-        /**
-         * 加载完成
-         */
-        void onComplete();
-    }
 
     public interface IHomeModel{
         /**
@@ -54,7 +39,7 @@ public class Contract {
         Observable<List<ArticleBeansNew>> refreshArticle();
     }
 
-    public interface IHomeView extends IBaseView{
+    public interface IHomeView extends IBaseView {
         /**
          * 获取Banner数据进行显示
          * @param bannerBean

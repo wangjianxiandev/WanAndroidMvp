@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @BindView(R.id.article_recycler)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.nest_scroll)
+    NestedScrollView mNestScrollView;
+
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mSmartRefreshLayout;
 
@@ -69,7 +73,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mArticleAdapter = new ArticleAdapter(mRecyclerView);
+        mArticleAdapter = new ArticleAdapter(mRecyclerView, mNestScrollView);
         View header = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.home_header_view, null, false);
         mBanner = header.findViewById(R.id.banner);
         mArticleAdapter.setHeaderView(header);

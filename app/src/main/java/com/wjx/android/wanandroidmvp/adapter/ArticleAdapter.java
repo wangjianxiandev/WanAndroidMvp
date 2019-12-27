@@ -2,15 +2,20 @@ package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wjx.android.wanandroidmvp.R;
+import com.wjx.android.wanandroidmvp.base.adapter.IAdapterItemAnim;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
 
@@ -27,21 +32,58 @@ import butterknife.ButterKnife;
  * @date: 2019/12/19
  * Time: 18:30
  */
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter <ArticleAdapter.ArticleHolder> implements IAdapterItemAnim {
 
+    /**
+     * Item type
+     */
     private static final int TYPE_HEADER = 0;
 
     private static final int TYPE_NORMAL = 1;
+
     private Context mContext;
 
     private List<ArticleBeansNew> mArticleBeansNew;
 
     private View mHeaderView;
 
-    public ArticleAdapter(RecyclerView recyclerView) {
+    private RecyclerView mRecyclerView;
+
+    private NestedScrollView mNestedScrollView;
+
+    /**
+     * RecyclerView是否向上滑动
+     */
+    private boolean isPullingUp = false;
+
+    /**
+     * RecyclerView是否向下滑动
+     */
+    private boolean isPullingDown = false;
+
+    /**
+     * item从上向下滑动入场动画
+     */
+    private Animation bottomInAnimation;
+
+    /**
+     * item从下向上滑动入场动画
+     */
+    private Animation topInAnimation;
+
+    public ArticleAdapter(RecyclerView recyclerView, NestedScrollView nestedScrollView) {
         mContext = recyclerView.getContext();
+        mRecyclerView = recyclerView;
+        mNestedScrollView = nestedScrollView;
+        // 滑动流畅
+        setItemAnim();
+        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
+    /**
+     * 为上滑刷新做准备
+     * @param articleBeansNew
+     */
     public void setBeans(List<ArticleBeansNew> articleBeansNew) {
         mArticleBeansNew = articleBeansNew;
     }
@@ -65,7 +107,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
     @Override
     public ArticleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER) {
-
             return new ArticleHolder(mHeaderView);
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false);
@@ -121,6 +162,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
             return 0;
         }
         return mHeaderView == null ? mArticleBeansNew.size() : mArticleBeansNew.size() + 1;
+    }
+
+    @Override
+    public int getResAnimId() {
+        return R.anim.item_animation_fall_down;
+    }
+
+    @Override
+    public void setItemAnim() {
+        bottomInAnimation = AnimationUtils.loadAnimation(mContext, getResAnimId());
     }
 
     class ArticleHolder extends RecyclerView.ViewHolder {

@@ -23,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Time: 15:59
  */
 public class HomeModel implements Contract.IHomeModel {
-    private static final String BASE_URL = Constant.BASE_URL;
 
     List<ArticleBeansNew> mArticleBeansNew = new ArrayList<>();
 
@@ -95,7 +94,7 @@ public class HomeModel implements Contract.IHomeModel {
      */
     private ApiServer getApiServer() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Constant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
