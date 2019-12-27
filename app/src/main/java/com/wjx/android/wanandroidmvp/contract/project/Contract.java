@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.contract.project;
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
 
 import java.util.List;
 
@@ -55,13 +56,13 @@ public class Contract {
          * 获取项目数据
          * @return 文章数据
          */
-        Observable<ProjectListData> loadProjectList(int pageNum, int cid);
+        Observable<List<ProjectListDataNew>> loadProjectList(int pageNum, int cid);
 
         /**
          * 刷新项目列表
          * @return
          */
-        Observable<ProjectListData> refreshProjectList();
+        Observable<List<ProjectListDataNew>> refreshProjectList();
     }
 
     public interface IProjectListView extends IBaseView {
@@ -70,13 +71,13 @@ public class Contract {
          * 获取项目数据进行显示
          * @param projectListData
          */
-        void loadProjectList(ProjectListData projectListData);
+        void loadProjectList(List<ProjectListDataNew> projectListData);
 
         /**
          * 刷新项目列表
          * @param projectListData
          */
-        void refreshProjectList(ProjectListData projectListData);
+        void refreshProjectList(List<ProjectListDataNew> projectListData);
     }
 
     public interface IProjectListPresenter{

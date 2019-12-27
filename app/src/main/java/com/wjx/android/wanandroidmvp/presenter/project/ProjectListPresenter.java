@@ -6,8 +6,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
 import com.wjx.android.wanandroidmvp.model.ProjectListModel;
+
+import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -35,33 +38,70 @@ public class ProjectListPresenter extends BasePresenter<Contract.IProjectListVie
         iProjectListModel.loadProjectList(pageNum, cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ProjectListData>() {
+                .subscribe(new Observer<List<ProjectListDataNew>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(ProjectListData projectListData) {
+                    public void onNext(List<ProjectListDataNew> projectListDataNews) {
                         if (isViewAttached()) {
-                            getView().loadProjectList(projectListData);
+                            getView().loadProjectList(projectListDataNews);
                         }
                     }
+
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onError(e);
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-
+                        if (isViewAttached()) {
+                            getView().onComplete();
+                        }
                     }
                 });
     }
 
     @Override
     public void refreshProjectList() {
+        iProjectListModel.refreshProjectList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<ProjectListDataNew>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(List<ProjectListDataNew> projectListDataNews) {
+                        if (isViewAttached()) {
+                            getView().refreshProjectList(projectListDataNews);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (isViewAttached()) {
+                            getView().onComplete();
+                        }
+                    }
+                });
 
     }
 }

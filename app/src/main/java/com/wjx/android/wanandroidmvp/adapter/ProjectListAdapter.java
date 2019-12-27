@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
 
 import java.util.List;
 
@@ -33,10 +34,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     private Context mContext;
 
-    private List<ProjectListData.DataBean.DatasBean> mProjectListDataBeans;
+    private List<ProjectListDataNew> mProjectListDataBeans;
 
-    public void setBeans(ProjectListData projectListData) {
-        mProjectListDataBeans = projectListData.getData().getDatas();
+    public void setBeans(List<ProjectListDataNew> projectListData) {
+        mProjectListDataBeans = projectListData;
     }
 
     public ProjectListAdapter(RecyclerView recyclerView) {
@@ -52,22 +53,22 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProjectListHolder holder, int position) {
         if (mProjectListDataBeans !=  null) {
-            ProjectListData.DataBean.DatasBean bean = mProjectListDataBeans.get(position);
-            holder.mProjectTitle.setText(Html.fromHtml(bean.getTitle(), Html.FROM_HTML_MODE_COMPACT));
+            ProjectListDataNew bean = mProjectListDataBeans.get(position);
+            holder.mProjectTitle.setText(Html.fromHtml(bean.title, Html.FROM_HTML_MODE_COMPACT));
 
-            holder.mProjectAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author),bean.getAuthor()));
-            holder.mProjectDate.setText(bean.getNiceDate());
+            holder.mProjectAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author),bean.author));
+            holder.mProjectDate.setText(bean.niceDate);
             String category = String.format(mContext.getResources().getString(R.string.article_category),
-                    bean.getSuperChapterName(), bean.getChapterName());
+                    bean.superChapterName, bean.chapterName);
             holder.mProjectType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
-            holder.mProjectContent.setText(bean.getDesc());
-            Glide.with(mContext).load(bean.getEnvelopePic()).into(holder.mProjectImageView);
+            holder.mProjectContent.setText(bean.desc);
+            Glide.with(mContext).load(bean.envelopePic).into(holder.mProjectImageView);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     JumpWebUtils.startWebView(mContext,
-                            mProjectListDataBeans.get(position).getTitle(),
-                            mProjectListDataBeans.get(position).getLink());
+                            mProjectListDataBeans.get(position).title,
+                            mProjectListDataBeans.get(position).link);
                 }
             });
         }
