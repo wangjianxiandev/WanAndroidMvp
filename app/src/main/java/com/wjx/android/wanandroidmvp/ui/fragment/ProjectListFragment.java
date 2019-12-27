@@ -1,16 +1,24 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 
+import android.view.LayoutInflater;
+import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
+import com.wjx.android.wanandroidmvp.adapter.ProjectListAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
-import com.wjx.android.wanandroidmvp.presenter.project.ProjectPresenter;
+import com.wjx.android.wanandroidmvp.presenter.project.ProjectListPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
+
 
 /**
  * Created with Android Studio.
@@ -20,37 +28,42 @@ import butterknife.BindView;
  * @date: 2019/12/27
  * Time: 16:17
  */
-public class ProjectListFragment extends BaseFragment<Contract.IProjectView, ProjectPresenter> implements Contract.IProjectView {
-//    @BindView(R.id.tx)
+public class ProjectListFragment extends BaseFragment<Contract.IProjectListView, ProjectListPresenter> implements Contract.IProjectListView {
+
+    @BindView(R.id.normal_view)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.project_list_recycler_view)
+    RecyclerView mRecyclerView;
+
+    private ProjectListAdapter mProjectListAdapter;
+    private int mCurrentPage = 0;
+    private int mCid;
+
+    public ProjectListFragment(int cid) {
+        mCid = cid;
+    }
+
     @Override
     protected int getContentViewId() {
-        return 0;
+        return R.layout.project_list_fragment;
     }
 
     @Override
     protected void init() {
+        initAdapter();
+        mPresenter.loadProjectList(mCurrentPage, mCid);
+    }
 
+    private void initAdapter() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mProjectListAdapter = new ProjectListAdapter(mRecyclerView);
     }
 
     @Override
-    protected ProjectPresenter createPresenter() {
-        return null;
+    protected ProjectListPresenter createPresenter() {
+        return new ProjectListPresenter();
     }
 
-    @Override
-    public void loadProjectClassify(ProjectClassifyData projectClassifyData) {
-
-    }
-
-    @Override
-    public void loadProjectList(List<ProjectListData> projectListData) {
-
-    }
-
-    @Override
-    public void refreshProjectList(List<ProjectListData> projectListData) {
-
-    }
 
     @Override
     public void onError(Throwable e) {
@@ -59,6 +72,17 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectView, Pro
 
     @Override
     public void onComplete() {
+
+    }
+
+    @Override
+    public void loadProjectList(ProjectListData projectListData) {
+        mProjectListAdapter.setBeans(projectListData);
+        mRecyclerView.setAdapter(mProjectListAdapter);
+    }
+
+    @Override
+    public void refreshProjectList(ProjectListData projectListData) {
 
     }
 }

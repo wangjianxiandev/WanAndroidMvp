@@ -1,10 +1,16 @@
 package com.wjx.android.wanandroidmvp.presenter.project;
 
-import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
-import com.wjx.android.wanandroidmvp.contract.project.Contract;
-import com.wjx.android.wanandroidmvp.model.ProjectModel;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.wjx.android.wanandroidmvp.R;
+import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
+import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.contract.project.Contract;
+import com.wjx.android.wanandroidmvp.model.ProjectListModel;
+
+import butterknife.BindView;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -16,29 +22,29 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author: 王拣贤
  * @date: 2019/12/27
- * Time: 14:57
+ * Time: 17:42
  */
-public class ProjectPresenter extends BasePresenter<Contract.IProjectView> implements Contract.IProjectPresenter {
-    Contract.IProjectModel iProjectModel;
+public class ProjectListPresenter extends BasePresenter<Contract.IProjectListView> implements Contract.IProjectListPresenter {
+    Contract.IProjectListModel iProjectListModel;
 
-    public ProjectPresenter() {
-        iProjectModel = new ProjectModel();
+    public ProjectListPresenter() {
+        iProjectListModel = new ProjectListModel();
     }
     @Override
-    public void loadProjectClassify() {
-        iProjectModel.loadProjectClassify()
+    public void loadProjectList(int pageNum, int cid) {
+        iProjectListModel.loadProjectList(pageNum, cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ProjectClassifyData>() {
+                .subscribe(new Observer<ProjectListData>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(ProjectClassifyData projectClassifyData) {
+                    public void onNext(ProjectListData projectListData) {
                         if (isViewAttached()) {
-                            getView().loadProjectClassify(projectClassifyData);
+                            getView().loadProjectList(projectListData);
                         }
                     }
 
@@ -52,5 +58,10 @@ public class ProjectPresenter extends BasePresenter<Contract.IProjectView> imple
 
                     }
                 });
+    }
+
+    @Override
+    public void refreshProjectList() {
+
     }
 }

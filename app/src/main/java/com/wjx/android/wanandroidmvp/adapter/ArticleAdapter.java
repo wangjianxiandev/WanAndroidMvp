@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * @date: 2019/12/19
  * Time: 18:30
  */
-public class ArticleAdapter extends RecyclerView.Adapter <ArticleAdapter.ArticleHolder> implements IAdapterItemAnim {
+public class ArticleAdapter extends RecyclerView.Adapter <ArticleAdapter.ArticleHolder> {
 
     /**
      * Item type
@@ -76,7 +76,6 @@ public class ArticleAdapter extends RecyclerView.Adapter <ArticleAdapter.Article
         mRecyclerView = recyclerView;
         mNestedScrollView = nestedScrollView;
         // 滑动流畅
-        setItemAnim();
         mRecyclerView.setNestedScrollingEnabled(false);
     }
 
@@ -162,16 +161,6 @@ public class ArticleAdapter extends RecyclerView.Adapter <ArticleAdapter.Article
             return 0;
         }
         return mHeaderView == null ? mArticleBeansNew.size() : mArticleBeansNew.size() + 1;
-    }
-
-    @Override
-    public int getResAnimId() {
-        return R.anim.item_animation_fall_down;
-    }
-
-    @Override
-    public void setItemAnim() {
-        bottomInAnimation = AnimationUtils.loadAnimation(mContext, getResAnimId());
     }
 
     class ArticleHolder extends RecyclerView.ViewHolder {

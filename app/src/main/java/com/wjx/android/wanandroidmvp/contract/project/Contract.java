@@ -18,24 +18,16 @@ import io.reactivex.Observable;
  * Time: 14:43
  */
 public class Contract {
+
+    /**
+     * ProjectTab
+     */
     public interface IProjectModel{
         /**
          * 获取项目Tab数据
          * @return banner数据
          */
         Observable<ProjectClassifyData> loadProjectClassify();
-
-        /**
-         * 获取项目数据
-         * @return 文章数据
-         */
-        Observable<List<ProjectListData>> loadProjectList(int pageNum, int cid);
-
-        /**
-         * 刷新项目列表
-         * @return
-         */
-        Observable<List<ProjectListData>> refreshProjectList();
     }
 
     public interface IProjectView extends IBaseView {
@@ -44,18 +36,6 @@ public class Contract {
          * @param projectClassifyData
          */
         void loadProjectClassify(ProjectClassifyData projectClassifyData);
-
-        /**
-         * 获取项目数据进行显示
-         * @param projectListData
-         */
-        void loadProjectList(List<ProjectListData> projectListData);
-
-        /**
-         * 刷新项目列表
-         * @param projectListData
-         */
-        void refreshProjectList(List<ProjectListData> projectListData);
     }
 
     public interface IProjectPresenter{
@@ -63,6 +43,43 @@ public class Contract {
          * 项目Tab
          */
         void loadProjectClassify();
+
+    }
+
+    /**
+     * ProjectList
+     */
+
+    public interface IProjectListModel{
+        /**
+         * 获取项目数据
+         * @return 文章数据
+         */
+        Observable<ProjectListData> loadProjectList(int pageNum, int cid);
+
+        /**
+         * 刷新项目列表
+         * @return
+         */
+        Observable<ProjectListData> refreshProjectList();
+    }
+
+    public interface IProjectListView extends IBaseView {
+
+        /**
+         * 获取项目数据进行显示
+         * @param projectListData
+         */
+        void loadProjectList(ProjectListData projectListData);
+
+        /**
+         * 刷新项目列表
+         * @param projectListData
+         */
+        void refreshProjectList(ProjectListData projectListData);
+    }
+
+    public interface IProjectListPresenter{
 
         /**
          * 项目列表

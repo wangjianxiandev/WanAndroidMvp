@@ -79,8 +79,8 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
                     .stream()
                     .map(ProjectClassifyData.DataBean::getId)
                     .collect(Collectors.toList());
-            for (Integer id : tabId) {
-                SquareFragment projectListFragment = new SquareFragment();
+            for (ProjectClassifyData.DataBean dataBean : projectClassifyData.getData()) {
+                ProjectListFragment projectListFragment = new ProjectListFragment(dataBean.getId());
                 mFragmentSparseArray.add(projectListFragment);
             }
             mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
@@ -120,17 +120,6 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
             mSlidingTabLayout.setViewPager(mViewPager);
         }
     }
-
-    @Override
-    public void loadProjectList(List<ProjectListData> projectListData) {
-
-    }
-
-    @Override
-    public void refreshProjectList(List<ProjectListData> projectListData) {
-
-    }
-
     @Override
     public void onError(Throwable e) {
 
