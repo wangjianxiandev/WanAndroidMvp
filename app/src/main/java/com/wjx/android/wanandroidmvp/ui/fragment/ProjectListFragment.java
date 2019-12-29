@@ -1,9 +1,5 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
-
-import android.view.LayoutInflater;
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +10,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ProjectListAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
 import com.wjx.android.wanandroidmvp.presenter.project.ProjectListPresenter;

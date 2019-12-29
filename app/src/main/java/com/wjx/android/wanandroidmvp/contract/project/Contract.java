@@ -2,7 +2,6 @@ package com.wjx.android.wanandroidmvp.contract.project;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
 
 import java.util.List;

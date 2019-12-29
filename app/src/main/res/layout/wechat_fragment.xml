@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/normal_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!--        <com.google.android.material.tabs.TabLayout-->
-        <!--            android:id="@+id/tablayout"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:background="@color/colorPrimary"-->
-        <!--            app:tabIndicatorColor="#FFFFFF"-->
-        <!--            app:tabSelectedTextColor="@color/white"-->
-        <!--            app:tabTextColor="@android:color/darker_gray"/>-->
-        <!--        <androidx.viewpager.widget.ViewPager-->
-        <!--            android:id="@+id/viewpager"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <!--            android:layout_weight="1">-->
-        <!--        </androidx.viewpager.widget.ViewPager>-->
-        <TextView
-            android:id="@+id/wechat_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
-</layout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/wechat_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_layout_height"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/safe_padding"
+            android:paddingRight="@dimen/safe_padding"
+            android:visibility="invisible"
+            app:tl_divider_color="@color/colorPrimary"
+            app:tl_divider_padding="@dimen/tab_layout_divider_padding"
+            app:tl_divider_width="1dp"
+            app:tl_indicator_color="@color/colorPrimary"
+            app:tl_indicator_corner_radius="10dp"
+            app:tl_indicator_margin_left="5dp"
+            app:tl_indicator_margin_right="5dp"
+            app:tl_indicator_style="BLOCK"
+            app:tl_textSelectColor="@color/white"
+            app:tl_textUnselectColor="@color/texttipColor" />
+
+        <View
+            android:id="@+id/wechat_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/texttipColor"
+            android:visibility="invisible" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/wechat_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

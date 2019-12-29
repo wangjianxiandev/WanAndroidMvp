@@ -4,6 +4,9 @@ import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
+import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
+import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -60,4 +63,35 @@ public interface ApiServer {
      */
     @GET("project/list/{0}/json")
     Observable<ProjectListData> refreshProjectList();
+
+    /**
+     * 获取公众号Tab
+     * @return
+     */
+    @GET("wxarticle/chapters/json")
+    Observable<WeChatClassifyData> loadWeChatClassify();
+
+    /**
+     * 获取某页公众号列表
+     * @param id
+     * @param pageNum
+     * @return
+     */
+    @GET("wxarticle/list/{id}/{pageNum}/json")
+    Observable<WeChatListData> loadWeChatList(@Path("id") int id, @Path("pageNum") int pageNum);
+
+    /**
+     * 刷新公众号列表
+     * @return
+     */
+    @GET("project/list/{0}/json")
+    Observable<WeChatListData> refreshWeChatList();
+
+
+    /**
+     * 获取导航数据
+     * @return
+     */
+    @GET("navi/json")
+    Observable<NavigationData> loadNavigationData();
 }
