@@ -42,8 +42,11 @@ public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCom
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
-        unbinder = ButterKnife.bind(this);
         mPresenter = createPresenter();
+        unbinder = ButterKnife.bind(this);
+        if (mPresenter != null) {
+            mPresenter.attachView((V) this);
+        }
         init(savedInstanceState);
     }
 

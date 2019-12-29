@@ -29,6 +29,7 @@ import com.wjx.android.wanandroidmvp.base.utils.NetWorkUtils;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
+import com.wjx.android.wanandroidmvp.ui.fragment.SearchWordFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.SquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.WeChatFragment;
 
@@ -80,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected (@NonNull MenuItem item){
         if (item.getItemId() == R.id.top_search) {
-            Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, SearchWordActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

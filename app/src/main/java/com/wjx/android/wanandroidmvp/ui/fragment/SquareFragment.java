@@ -64,6 +64,8 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
     @Override
     protected void init() {
         initAdapter();
+        // 滑动流畅
+        mRecyclerView.setNestedScrollingEnabled(false);
         mPresenter.loadNavigation();
         setChildViewVisibility(View.VISIBLE);
 

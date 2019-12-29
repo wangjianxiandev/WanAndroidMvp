@@ -4,6 +4,7 @@ import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
@@ -94,4 +95,11 @@ public interface ApiServer {
      */
     @GET("navi/json")
     Observable<NavigationData> loadNavigationData();
+
+    /**
+     * 获取搜索热词
+     * @return
+     */
+    @GET("hotkey/json")
+    Observable<SearchWordData> loadSearchWordData();
 }

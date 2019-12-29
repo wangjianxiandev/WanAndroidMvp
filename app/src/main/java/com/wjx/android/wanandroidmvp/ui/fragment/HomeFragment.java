@@ -51,9 +51,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @BindView(R.id.article_recycler)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.nest_scroll)
-    NestedScrollView mNestScrollView;
-
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mSmartRefreshLayout;
 
@@ -65,6 +62,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     protected void init() {
         initAdapter();
+        // 滑动流畅
+        mRecyclerView.setNestedScrollingEnabled(false);
         mPresenter.loadBanner();
         mPresenter.loadArticle(mCurpage);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
@@ -73,7 +72,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mArticleAdapter = new ArticleAdapter(mRecyclerView, mNestScrollView);
+        mArticleAdapter = new ArticleAdapter(mRecyclerView);
         View header = LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.home_header_view, null, false);
         mBanner = header.findViewById(R.id.banner);
         mArticleAdapter.setHeaderView(header);

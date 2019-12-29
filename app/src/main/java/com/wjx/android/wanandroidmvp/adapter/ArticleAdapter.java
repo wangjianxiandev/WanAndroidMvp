@@ -71,12 +71,9 @@ public class ArticleAdapter extends RecyclerView.Adapter <ArticleAdapter.Article
      */
     private Animation topInAnimation;
 
-    public ArticleAdapter(RecyclerView recyclerView, NestedScrollView nestedScrollView) {
+    public ArticleAdapter(RecyclerView recyclerView) {
         mContext = recyclerView.getContext();
         mRecyclerView = recyclerView;
-        mNestedScrollView = nestedScrollView;
-        // 滑动流畅
-        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     /**
