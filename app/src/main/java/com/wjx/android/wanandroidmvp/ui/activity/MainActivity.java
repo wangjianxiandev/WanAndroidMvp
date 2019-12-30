@@ -101,23 +101,27 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.menu_home:
+                                mToolbar.setVisibility(View.VISIBLE);
                                 mToolbar.setTitle(R.string.bottomname1);
                                 switchFragment(INDEX_HOMEPAGE);
                                 return true;
                             case R.id.menu_project:
+                                mToolbar.setVisibility(View.VISIBLE);
                                 mToolbar.setTitle(R.string.bottomname2);
                                 switchFragment(INDEX_PROJECT);
                                 return true;
                             case R.id.menu_square:
+                                mToolbar.setVisibility(View.VISIBLE);
                                 mToolbar.setTitle(R.string.bottomname3);
                                 switchFragment(INDEX_SQUARE);
                                 return true;
                             case R.id.menu_wechat:
+                                mToolbar.setVisibility(View.VISIBLE);
                                 mToolbar.setTitle(R.string.bottomname4);
                                 switchFragment(INDEX_WE_CHAT);
                                 return true;
                             case R.id.menu_me:
-                                mToolbar.setTitle(R.string.bottomname5);
+                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_ME);
                                 return true;
                             default:
