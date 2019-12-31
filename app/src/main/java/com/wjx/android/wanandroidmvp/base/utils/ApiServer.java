@@ -2,6 +2,7 @@ package com.wjx.android.wanandroidmvp.base.utils;
 
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
+import com.wjx.android.wanandroidmvp.bean.me.LoginData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
@@ -10,7 +11,10 @@ import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -102,4 +106,29 @@ public interface ApiServer {
      */
     @GET("hotkey/json")
     Observable<SearchWordData> loadSearchWordData();
+
+
+    /**
+     * 登陆数据
+     * @param userName
+     * @param passWord
+     * @return
+     */
+    @POST("user/login")
+    @FormUrlEncoded
+    Observable<LoginData> loadLoginData(@Field("username") String userName, @Field("password") String passWord);
+
+    /**
+     * 注册数据
+     * @param userName
+     * @param password
+     * @param repassword
+     * @return
+     */
+    @POST("user/register")
+    @FormUrlEncoded
+    Observable<LoginData> loadRegisterData(@Field("username") String userName, @Field("password") String password, @Field("repassword") String repassword);
+
+    @GET("user/logout/json")
+    Observable<LoginData> logout();
 }

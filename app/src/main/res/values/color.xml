@@ -32,4 +32,7 @@
     <color name="primary_grey_light">#F5F5F5</color>
 
     <color name="page_background">#FFFFFF</color>
+
+    <color name="button_bg">#06B3ED</color>
+    <color name="button_border">#06B3ED</color>
 </resources>

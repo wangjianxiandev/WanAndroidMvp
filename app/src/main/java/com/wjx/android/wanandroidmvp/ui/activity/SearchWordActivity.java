@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -145,6 +146,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                     mTopSearchFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                         @Override
                         public boolean onTagClick(View view, int position, FlowLayout parent) {
+                            Toast.makeText(SearchWordActivity.this, tabNames.get(position), Toast.LENGTH_SHORT).show();
                             return true;
                         }
                     });

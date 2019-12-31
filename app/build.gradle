@@ -73,4 +73,7 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
+    implementation 'com.blankj:utilcodex:1.26.0'
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

@@ -17,4 +17,15 @@
     <!-- 异常页面-->
     <string name="network_error">内容加载失败，请检查网络设置</string>
     <string name="net_error_refresh">重新加载</string>
+
+    <string name="complete_info">请完善信息</string>
+    <string name="register">注册</string>
+    <string name="password_not_match">密码输入不一致</string>
+    <string name="register_success">注册成功</string>
+    <string name="login">登录</string>
+    <string name="logout">退出登录</string>
+    <string name="input_username">请输入用户名</string>
+    <string name="input_password">请输入密码</string>
+    <string name="input_repassword">请确认密码</string>
+
 </resources>

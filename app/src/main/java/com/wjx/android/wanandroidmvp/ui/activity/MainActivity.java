@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.container, fragment);
         }
         fragmentTransaction.show(fragment).commitAllowingStateLoss();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     private Fragment getFragment(int index) {
