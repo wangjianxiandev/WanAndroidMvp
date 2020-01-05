@@ -1,19 +1,38 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ProjectListAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
 import com.wjx.android.wanandroidmvp.presenter.project.ProjectListPresenter;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,10 +54,30 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.project_list_recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.nest_scroll)
+    NestedScrollView mNestedScrollView;
 
     private ProjectListAdapter mProjectListAdapter;
     private int mCurrentPage = 0;
     private int mCid;
+
+    private Context mContext;
+
+    private List<Article> mProjectArticleList = new ArrayList<>();
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     public ProjectListFragment(int cid) {
         mCid = cid;
@@ -51,15 +90,19 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     protected void init() {
+        mContext = getContext().getApplicationContext();
         initAdapter();
         mPresenter.loadProjectList(mCurrentPage, mCid);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
+        // 滑动流畅
+        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mProjectListAdapter = new ProjectListAdapter(mRecyclerView);
+        mProjectListAdapter = new ProjectListAdapter(mContext, mProjectArticleList);
+        mRecyclerView.setAdapter(mProjectListAdapter);
     }
 
     @Override
@@ -67,15 +110,50 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
         return new ProjectListPresenter();
     }
 
+
     @Override
-    public void loadProjectList(List<ProjectListDataNew> projectListData) {
-        mProjectListAdapter.setBeans(projectListData);
-        mRecyclerView.setAdapter(mProjectListAdapter);
+    public void onLoadProjectList(List<Article> projectList) {
+        mProjectArticleList.addAll(projectList);
+        mProjectListAdapter.setProjectList(mProjectArticleList);
     }
 
     @Override
-    public void refreshProjectList(List<ProjectListDataNew> projectListData) {
-        mProjectListAdapter.setBeans(projectListData);
+    public void onRefreshProjectList(List<Article> projectList) {
+        mProjectArticleList.clear();
+        mProjectArticleList.addAll(0,projectList);
+        mProjectListAdapter.setProjectList(mProjectArticleList);
+    }
+
+    @Override
+    public void onCollect(Collect collect, int articleId) {
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_STOP_ANIMATION;
+        EventBus.getDefault().post(e);
+        if (collect != null) {
+            if (collect.getErrorCode() == 0) {
+                mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
+                mProjectListAdapter.setProjectList(mProjectArticleList);
+            } else {
+                ToastUtils.showShort("收藏失败");
+            }
+        }
+    }
+
+    @Override
+    public void onUnCollect(Collect collect, int articleId) {
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_STOP_ANIMATION;
+        EventBus.getDefault().post(e);
+        if (collect != null) {
+            if (collect.getErrorCode() == 0) {
+                mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
+                mProjectListAdapter.setProjectList(mProjectArticleList);
+            } else {
+                ToastUtils.showShort("取消收藏失败");
+            }
+        }
     }
 
     @Override
@@ -92,30 +170,63 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mCurrentPage = 0;
-        mPresenter.refreshProjectList();
+        mPresenter.refreshProjectList(mCurrentPage, mCid);
     }
 
+
     @Override
-    public void onError(Throwable e) {
-        if (mSmartRefreshLayout.getState() == RefreshState.Loading) {
-            mSmartRefreshLayout.finishLoadMore();
-            mCurrentPage--;
-        }
-        // 完成刷新
-        if (mSmartRefreshLayout.getState() == RefreshState.Refreshing) {
-            mSmartRefreshLayout.finishRefresh();
-        }
+    public void onLoading() {
 
     }
 
     @Override
-    public void onComplete() {
-        if (mSmartRefreshLayout.getState() == RefreshState.Loading) {
-            mSmartRefreshLayout.finishLoadMore();
-        }
-        // 完成刷新
-        if (mSmartRefreshLayout.getState() == RefreshState.Refreshing) {
-            mSmartRefreshLayout.finishRefresh();
+    public void onLoadFailed() {
+        LogUtils.e();
+        ToastUtils.showShort("加载失败");
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_STOP_ANIMATION;
+        EventBus.getDefault().post(e);
+        mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @Override
+    public void onLoadSuccess() {
+        mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_PROJECT) {
+            if (event.type == Event.TYPE_COLLECT) {
+                String[] data = event.data.split(";");
+                if (data.length > 1 && mCid == Integer.valueOf(data[1])) {
+                    int articleId = Integer.valueOf(data[0]);
+                    mPresenter.collect(articleId);
+                    Event e = new Event();
+                    e.target = Event.TARGET_MAIN;
+                    e.type = Event.TYPE_START_ANIMATION;
+                    EventBus.getDefault().post(e);
+                }
+            } else if (event.type == Event.TYPE_UNCOLLECT) {
+                String[] data = event.data.split(";");
+                if (data.length > 1 && mCid == Integer.valueOf(data[1])) {
+                    int articleId = Integer.valueOf(data[0]);
+                    mPresenter.unCollect(articleId);
+                    Event e = new Event();
+                    e.target = Event.TARGET_MAIN;
+                    e.type = Event.TYPE_START_ANIMATION;
+                    EventBus.getDefault().post(e);
+                }
+            } else if (event.type == Event.TYPE_LOGIN) {
+                mProjectArticleList.clear();
+                mPresenter.refreshProjectList(mCid, 0);
+            } else if (event.type == Event.TYPE_LOGOUT) {
+                mProjectArticleList.clear();
+                mPresenter.refreshProjectList(mCid, 0);
+            }
         }
     }
 }

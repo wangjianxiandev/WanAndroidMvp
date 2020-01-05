@@ -21,11 +21,17 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginPresenter extends BasePresenter<Contract.ILoginView> implements Contract.ILoginPresenter {
     Contract.ILoginModel iLoginModel;
 
-    public LoginPresenter (){
+    public LoginPresenter() {
         iLoginModel = new LoginModel();
     }
+
     @Override
     public void login(String userName, String passWord) {
+        if (isViewAttached()) {
+            getView().onLoading();
+        } else {
+            return;
+        }
         iLoginModel.login(userName, passWord)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -39,12 +45,16 @@ public class LoginPresenter extends BasePresenter<Contract.ILoginView> implement
                     public void onNext(LoginData loginData) {
                         if (isViewAttached()) {
                             getView().onLogin(loginData);
+                            getView().onLoadSuccess();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onLoadFailed();
+                        }
                     }
 
                     @Override

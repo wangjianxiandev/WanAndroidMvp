@@ -130,7 +130,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     }
     @Override
     public void loadSearchWordData(SearchWordData searchWordData) {
-        if (searchWordData.getErrorCode() == Constant.BANNER_SUCCESS) {
+        if (searchWordData.getErrorCode() == Constant.SUCCESS) {
             List<String> tabNames = searchWordData.getData()
                     .stream()
                     .map(SearchWordData.DataBean::getName)
@@ -156,13 +156,19 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
         }
     }
 
+
     @Override
-    public void onError(Throwable e) {
+    public void onLoading() {
 
     }
 
     @Override
-    public void onComplete() {
+    public void onLoadFailed() {
+
+    }
+
+    @Override
+    public void onLoadSuccess() {
 
     }
 }

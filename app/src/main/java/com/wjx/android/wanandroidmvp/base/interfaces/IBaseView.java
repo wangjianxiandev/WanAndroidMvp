@@ -9,14 +9,19 @@ package com.wjx.android.wanandroidmvp.base.interfaces;
  * Time: 10:52
  */
 public interface IBaseView {
+
+    /**
+     * 加载中
+     */
+    void onLoading();
+
     /**
      * 加载错误回调
-     * @param e
      */
-    void onError(Throwable e);
+    void onLoadFailed();
 
     /**
      * 加载完成
      */
-    void onComplete();
+    void onLoadSuccess();
 }

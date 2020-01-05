@@ -1,8 +1,10 @@
 package com.wjx.android.wanandroidmvp.contract.project;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.db.ProjectClassify;
+
 
 import java.util.List;
 
@@ -27,15 +29,23 @@ public class Contract {
          * 获取项目Tab数据
          * @return banner数据
          */
-        Observable<ProjectClassifyData> loadProjectClassify();
+        Observable<List<ProjectClassify>> loadProjectClassify();
+
+        /**
+         * 刷新项目类别
+         * @return
+         */
+        Observable<List<ProjectClassify>> refreshProjectClassify();
     }
 
     public interface IProjectView extends IBaseView {
         /**
          * 获取项目Tab据进行显示
-         * @param projectClassifyData
+         * @param projectClassifies
          */
-        void loadProjectClassify(ProjectClassifyData projectClassifyData);
+        void onLoadProjectClassify(List<ProjectClassify> projectClassifies);
+
+        void onRefreshProjectClassify(List<ProjectClassify> projectClassifies);
     }
 
     public interface IProjectPresenter{
@@ -43,6 +53,8 @@ public class Contract {
          * 项目Tab
          */
         void loadProjectClassify();
+
+        void refreshProjectClassify();
 
     }
 
@@ -55,13 +67,17 @@ public class Contract {
          * 获取项目数据
          * @return 文章数据
          */
-        Observable<List<ProjectListDataNew>> loadProjectList(int pageNum, int cid);
+        Observable<List<Article>> loadProjectList(int pageNum, int cid);
 
         /**
          * 刷新项目列表
          * @return
          */
-        Observable<List<ProjectListDataNew>> refreshProjectList();
+        Observable<List<Article>> refreshProjectList(int pageNum, int cid);
+
+        Observable<Collect> collect(int articleId);
+
+        Observable<Collect> unCollect(int articleId);
     }
 
     public interface IProjectListView extends IBaseView {
@@ -70,13 +86,17 @@ public class Contract {
          * 获取项目数据进行显示
          * @param projectListData
          */
-        void loadProjectList(List<ProjectListDataNew> projectListData);
+        void onLoadProjectList(List<Article> projectListData);
 
         /**
          * 刷新项目列表
          * @param projectListData
          */
-        void refreshProjectList(List<ProjectListDataNew> projectListData);
+        void onRefreshProjectList(List<Article> projectListData);
+
+        void onCollect(Collect collect, int articleId);
+
+        void onUnCollect(Collect collect, int articleId);
     }
 
     public interface IProjectListPresenter{
@@ -89,6 +109,10 @@ public class Contract {
         /**
          * 刷新项目列表
          */
-        void refreshProjectList();
+        void refreshProjectList(int pageNum, int cid);
+
+        void collect(int articleId);
+
+        void unCollect(int articleId);
     }
 }

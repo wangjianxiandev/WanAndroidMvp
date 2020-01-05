@@ -78,12 +78,17 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onLoading() {
 
     }
 
     @Override
-    public void onComplete() {
+    public void onLoadFailed() {
+
+    }
+
+    @Override
+    public void onLoadSuccess() {
 
     }
 }

@@ -1,63 +1,202 @@
 package com.wjx.android.wanandroidmvp.base.utils;
 
+import android.app.Activity;
 import android.graphics.Color;
+import android.view.View;
 
 import java.util.Random;
 
 /**
  * Created with Android Studio.
- * Description: 用到的常量值，比如请求Url，响应时间等
+ * Description: 静态类，用到的常量值，比如请求Url，响应时间等
  *
  * @author: 王拣贤
  * @date: 2019/12/14
  * Time: 15:35
  */
-public interface Constant {
-    String BASE_URL = "https://www.wanandroid.com/";
-
-    String KEY_URL = "";
-
-    String KEY_ID = "";
-
-    long SPLASH_TIME = 2000;
-
-    long EXIT_TIME = 2000;
-
-    long TIMEOUT_CONNECT = 10;
-
-    long TIMEOUT_READ = 10;
-
-    long TIMEOUT_WRITE = 10;
+public class Constant {
+    /**
+     * 域名
+     */
+    public static final String BASE_URL = "https://www.wanandroid.com/";
 
     /**
-     * Shared Preference key
+     * 首页Banner的url
      */
-    String ACCOUNT = "account";
-
-    String PASSWORD = "password";
-
-    String LOGIN_STATUS = "login_status";
-
-    String AUTO_CACHE_STATE = "auto_cache_state";
-
-    String NO_IMAGE_STATE = "no_image_state";
-
-    String NIGHT_MODE_STATE = "night_mode_state";
+    public static final String BANNER_URL = "/banner/json";
 
     /**
-     * banner获取成功
+     * 首页文章URL
      */
-    public static final int BANNER_SUCCESS = 0;
+    public static final String ARTICLE_URL = "/article/list/{pageNum}/json";
 
     /**
-     * 文章title的key
+     * 导航URL
      */
-    public static final String ARTICLE_TITLE = "title";
+    public static final String SQUARE_URL = "navi/json";
 
     /**
-     * 文章url的key
+     * 体系URL
      */
-    public static final String ARTICLE_URL = "url";
+    public static final String TREE_URL = "/tree/json";
+
+    /**
+     * 项目种类URL
+     */
+    public static final String PROJECT_CATEGORY_URL = "/project/tree/json";
+
+    /**
+     * 项目列表URL
+     */
+    public static final String PROJECT_LIST_URL = "project/list/{pageNum}/json";
+
+    /**
+     * 公众号Tab URL
+     */
+    public static final String WE_CHAT_TAB_URL = "wxarticle/chapters/json";
+
+    /**
+     * 公众号列表的URL
+     */
+    public static final String WE_CHAT_LIST_URL = "wxarticle/list/{id}/{pageNum}/json";
+
+    /**
+     * 热搜URL
+     */
+    public static final String HOT_SEARCH_URL = "/hotkey/json";
+
+    /**
+     * 注册URL
+     */
+    public static final String REGISTER_URL = "/user/register";
+
+    /**
+     * 登录URL
+     */
+    public static final String LOGIN_URL = "/user/login";
+
+    /**
+     * 登出URL
+     */
+    public static final String LOGOUT_URL = "user/logout/json";
+
+    /**
+     * 收藏文章的url
+     */
+    public static final String URL_COLLECT = "/lg/collect/{id}/json";
+
+    /**
+     * 取消收藏文章的url
+     */
+    public static final String URL_UNCOLLECT = "/lg/uncollect_originId/{id}/json";
+
+    /**
+     * 取消收藏文章的url(包含自己录入的内容)
+     */
+    public static final String URL_UNCOLLECT_INCLUDE_ADD = "/lg/uncollect/{id}/json";
+
+    /**
+     * 收藏文章列表的url
+     */
+    public static final String URL_COLLECT_LIST = "/lg/collect/list/{PageNum}/json";
+
+    /**
+     * 添加站外收藏
+     */
+    public static final String URL_ADD_COLLECT = "/lg/collect/add/json";
+
+    /**
+     * 搜索的url
+     */
+    public static final String URL_SEARCH = "/article/query/{PageNum}/json";
+
+    /**
+     * 获取成功
+     */
+    public static final int SUCCESS = 0;
+
+    /**
+     * 每页数量
+     */
+    public static final int PAGE_SIZE = 20;
+
+    /**
+     * key-link
+     */
+    public static final String KEY_LINK = "link";
+
+    /**
+     * key-title
+     */
+    public static final String KEY_TITLE = "title";
+
+    /**
+     * key-url
+     */
+    public static final String KEY_URL = "url";
+
+    /**
+     * key-keyword
+     */
+    public static final String KEY_KEYOWRD = "keyword";
+
+    /**
+     * 夜间模式
+     */
+    public static final String KEY_NIGHT_MODE = "night_mode";
+
+    /**
+     * key-user
+     */
+    public static final String KEY_USER = "user";
+
+    /**
+     * key-cookie-username
+     */
+    public static final String KEY_USER_COOKIE = "loginUserName";
+
+    /**
+     * 设置文件的保存名称
+     */
+    public static final String CONFIG_SETTINGS = "settings";
+
+    /**
+     * Cookie文件的保存名称
+     */
+    public static final String CONFIG_COOKIE = "cookie";
+
+    /**
+     * Cookie过期时间
+     */
+    public static final String CONFIG_COOKIE_EXPIRE = "cookie_expire";
+
+    /**
+     * 最大有效期(ms),默认距离上次30天
+     */
+    public static final long TIME_MAX_EXPIRE = 30 * 24 * 3600 * 1000L;
+
+    /**
+     * 搜索结果正则表达式
+     */
+    public static final String REGEX = "<em class='highlight'>(.+)</em>";
+
+    /**
+     * 超时时间
+     */
+    public static final int DEFAULT_TIMEOUT = 15;
+
+    /**
+     * extra-key
+     */
+    public static final String EXTRA_KEY_REFERRER = "referrer";
+
+    /**
+     * extra-value
+     */
+    public static final String EXTRA_VALUE_COLLECT = "collect";
+
+    public static final long EXIT_TIME = 2000;
+
 
     /**
      * 获取随机rgb颜色值
@@ -72,5 +211,17 @@ public interface Constant {
         int blue =random.nextInt(150);
         //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
         return Color.rgb(red,green, blue);
+    }
+
+    /**
+     * 谷歌原生方法设置状态栏字体颜色
+     */
+    public static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
+        View decor = activity.getWindow().getDecorView();
+        if (dark) {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 }

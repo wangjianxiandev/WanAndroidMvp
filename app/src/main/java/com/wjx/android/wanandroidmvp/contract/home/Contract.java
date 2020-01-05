@@ -1,9 +1,10 @@
 package com.wjx.android.wanandroidmvp.contract.home;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
-import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.db.Banner;
+
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 
 import java.util.List;
 
@@ -24,39 +25,78 @@ public class Contract {
          * 获取banner数据
          * @return banner数据
          */
-        Observable<BannerBean> loadBanner();
+        Observable<List<Banner>> loadBanner();
+
+        /**
+         * 刷新Banner
+         * @return
+         */
+        Observable<List<Banner>> refreshBanner();
 
         /**
          * 获取文章数据
          * @return 文章数据
          */
-        Observable<List<ArticleBeansNew>> loadArticle(int pageNum);
+        Observable<List<Article>> loadArticle(int pageNum);
 
         /**
          * 刷新文章列表
          * @return
          */
-        Observable<List<ArticleBeansNew>> refreshArticle();
+        Observable<List<Article>> refreshArticle(int pageNum);
+
+        /**
+         * 收藏文章
+         * @param articleId
+         * @return
+         */
+        Observable<Collect> collect(int articleId);
+
+        /**
+         * 取消收藏文章
+         *
+         * @param articleId
+         * @return
+         */
+        Observable<Collect> unCollect(int articleId);
     }
 
     public interface IHomeView extends IBaseView {
         /**
          * 获取Banner数据进行显示
-         * @param bannerBean
+         * @param bannerList
          */
-        void loadBanner(BannerBean bannerBean);
+        void loadBanner(List<Banner> bannerList);
+
+        void refreshBanner(List<Banner> bannerList);
 
         /**
          * 获取Article数据进行显示
-         * @param articleBean
+         * @param articleList
          */
-        void loadArticle(List<ArticleBeansNew> articleBean);
+        void loadArticle(List<Article> articleList);
 
         /**
          * 刷新首页文章
-         * @param articleBeans
+         * @param articleList
          */
-        void refreshArticle(List<ArticleBeansNew> articleBeans);
+        void refreshArticle(List<Article> articleList);
+
+        /**
+         * 收藏文章
+         *
+         * @param collect
+         * @param articleId
+         */
+        void onCollect(Collect collect, int articleId);
+
+        /**
+         * 取消收藏文章
+         *
+         * @param collect
+         * @param articleId
+         */
+        void onUnCollect(Collect collect, int articleId);
     }
 
     public interface IHomePresenter{
@@ -64,6 +104,8 @@ public class Contract {
          * 首页Banner
          */
         void loadBanner();
+
+        void refreshBanner();
 
         /**
          * 首页文章
@@ -73,6 +115,21 @@ public class Contract {
         /**
          * 刷新首页文章
          */
-        void refreshArticle();
+        void refreshArticle(int pageNum);
+
+        /**
+         * 收藏文章
+         *
+         * @param articleId
+         */
+        void collect(int articleId);
+
+        /**
+         * 取消收藏文章
+         *
+         * @param articleId
+         */
+        void unCollect(int articleId);
+
     }
 }

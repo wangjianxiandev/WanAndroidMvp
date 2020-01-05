@@ -26,11 +26,13 @@ import butterknife.Unbinder;
  */
 public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragment {
 
-    protected  P mPresenter;
+    protected P mPresenter;
 
     protected Unbinder unbinder;
 
     protected abstract int getContentViewId();
+
+    protected View mRootView;
 
 
     /**
@@ -48,16 +50,18 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getContentViewId(), container, false);
+
+        if (mRootView == null) {
+            mRootView = inflater.inflate(getContentViewId(), container, false);
+        }
         mPresenter = createPresenter();
-        unbinder = ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, mRootView);
         if (mPresenter != null) {
             mPresenter.attachView((V) this);
         }
         init();
-        return view;
+        return mRootView;
     }
-
 
 
     @Override
@@ -68,6 +72,9 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         }
         if (mPresenter != null) {
             mPresenter.detachView();
+        }
+        if (mRootView != null) {
+            ((ViewGroup)mRootView.getParent()).removeView(mRootView);
         }
     }
 }

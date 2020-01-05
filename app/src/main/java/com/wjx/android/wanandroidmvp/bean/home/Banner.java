@@ -1,5 +1,7 @@
 package com.wjx.android.wanandroidmvp.bean.home;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ import java.util.List;
  * @date: 2019/12/19
  * Time: 15:58
  */
-public class BannerBean {
+public class Banner extends LitePalSupport {
 
     /**
      * data : [{"desc":"一起来做个App吧","id":10,"imagePath":"http://www.wanandroid

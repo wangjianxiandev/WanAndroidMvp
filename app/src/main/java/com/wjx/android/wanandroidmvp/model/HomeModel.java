@@ -1,104 +1,166 @@
 package com.wjx.android.wanandroidmvp.model;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBeansNew;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.db.Banner;
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
-import com.wjx.android.wanandroidmvp.bean.home.BannerBean;
-import com.wjx.android.wanandroidmvp.base.utils.ApiServer;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created with Android Studio.
- * Description: HomePager的model层，做网络层封装并进行请求处理，创建接口实例
+ * Description: HomePager的model层，做网络层封装并进行请求处理，创建接口实例, 并将实例缓存在本地增加用户体验
  *
  * @author: 王拣贤
  * @date: 2019/12/19
  * Time: 15:59
  */
-public class HomeModel implements Contract.IHomeModel {
+public class HomeModel extends BaseModel implements Contract.IHomeModel {
 
-    List<ArticleBeansNew> mArticleBeansNew = new ArrayList<>();
-
-    @Override
-    public Observable<BannerBean> loadBanner() {
-        return getApiServer().loadBanner();
+    public HomeModel() {
+        setCookies(false);
     }
 
     @Override
-    public Observable<List<ArticleBeansNew>> loadArticle(int pageNum) {
-        return getApiServer().loadArticle(pageNum).filter(articleBean -> articleBean.getErrorCode() == 0)
-                .map(original -> {
-                    original.getData().getDatas().stream().sorted((original1, original2) -> (int) (original2.getPublishTime() - original1.getPublishTime()))
-                            .forEach(datas -> {
-                                long count = mArticleBeansNew.stream().filter(b -> b.id == datas.getId()).count();
-                                if (count <= 0) {
-                                    ArticleBeansNew articleBeansNew = new ArticleBeansNew();
-                                    articleBeansNew.id = datas.getId();
-                                    articleBeansNew.title = datas.getTitle();
-                                    articleBeansNew.author = datas.getAuthor();
-                                    articleBeansNew.shareUser = datas.getShareUser();
-                                    articleBeansNew.niceDate = datas.getNiceDate();
-                                    articleBeansNew.publishTime = datas.getPublishTime();
-                                    articleBeansNew.chapterName = datas.getChapterName();
-                                    articleBeansNew.superChapterName = datas.getSuperChapterName();
-                                    articleBeansNew.collect = datas.isCollect();
-                                    articleBeansNew.shareUser = datas.getShareUser();
-                                    articleBeansNew.link = datas.getLink();
-                                    articleBeansNew.origin = datas.getOrigin();
-                                    mArticleBeansNew.add(articleBeansNew);
-                                }
-                            });
-                    return mArticleBeansNew;
-                });
+    public Observable<List<Banner>> loadBanner() {
+        Observable<List<Banner>> loadFromLocal = Observable.create(emitter -> {
+            List<Banner> bannerList = LitePal.findAll(Banner.class);
+            emitter.onNext(bannerList);
+            emitter.onComplete();
+        });
+        if (NetworkUtils.isConnected()) {
+            Observable<List<Banner>> loadFromNet = loadBannerFromNet();
+            return Observable.concat(loadFromLocal, loadFromNet);
+        } else {
+            return loadFromLocal;
+        }
     }
 
-    @Override
-    public Observable<List<ArticleBeansNew>> refreshArticle() {
-        return getApiServer().refreshArticle().filter(articleBean -> articleBean.getErrorCode() == 0)
-                .map(original -> {
-                    original.getData().getDatas().stream().sorted((o1, o2) -> (int) (o1.getPublishTime() - o2.getPublishTime()))
-                            .forEach(datas -> {
-                                // 如果是新数据
-                                long count = mArticleBeansNew.stream().filter(b -> b.id == datas.getId()).count();
-                                if (count <= 0) {
-                                    ArticleBeansNew articleBeansNew = new ArticleBeansNew();
-                                    articleBeansNew.id = datas.getId();
-                                    articleBeansNew.title = datas.getTitle();
-                                    articleBeansNew.author = datas.getAuthor();
-                                    articleBeansNew.shareUser = datas.getShareUser();
-                                    articleBeansNew.niceDate = datas.getNiceDate();
-                                    articleBeansNew.publishTime = datas.getPublishTime();
-                                    articleBeansNew.chapterName = datas.getChapterName();
-                                    articleBeansNew.superChapterName = datas.getSuperChapterName();
-                                    articleBeansNew.collect = datas.isCollect();
-                                    articleBeansNew.shareUser = datas.getShareUser();
-                                    articleBeansNew.link = datas.getLink();
-                                    articleBeansNew.origin = datas.getOrigin();
-                                    mArticleBeansNew.add(0, articleBeansNew);
-                                }
-                            });
-                    return mArticleBeansNew;
+    /**
+     * 加载并更新本地的Banner
+     *
+     * @return
+     */
+    private Observable<List<Banner>> loadBannerFromNet() {
+        return mApiServer.loadBanner().filter(banner -> banner.getErrorCode() == Constant.SUCCESS)
+                .map(banner -> {
+                    List<Banner> bannerList = new ArrayList<>();
+                    banner.getData()
+                            .stream().forEach(dataBean -> {
+                        Banner bannerDB = new Banner();
+                        bannerDB.title = dataBean.getTitle();
+                        bannerDB.imagePath = dataBean.getImagePath();
+                        bannerDB.url = dataBean.getUrl();
+                        bannerList.add(bannerDB);
+                    });
+                    if (bannerList.size() > 0) {
+                        LitePal.deleteAll(Banner.class);
+                    }
+                    LitePal.saveAll(bannerList);
+                    return bannerList;
                 });
     }
 
     /**
-     * 获取请求对象
-     * @return 当前的请求对象
+     * 刷新Banner
+     *
+     * @return
      */
-    private ApiServer getApiServer() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        ApiServer apiServer = retrofit.create(ApiServer.class);
-        return apiServer;
+    @Override
+    public Observable<List<Banner>> refreshBanner() {
+        return loadBannerFromNet();
+    }
+
+    @Override
+    public Observable<List<Article>> loadArticle(int pageNum) {
+        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
+            List<Article> articleList = LitePal.where("type=?", Article.TYPE_HOME + "")
+                    .order("time desc")
+                    .offset(pageNum * Constant.PAGE_SIZE)
+                    .limit(Constant.PAGE_SIZE)
+                    .find(Article.class);
+            emitter.onNext(articleList);
+            emitter.onComplete();
+        });
+        if (NetworkUtils.isConnected()) {
+            Observable<List<Article>> loadFromNet = loadArticleFromNet(pageNum);
+            return Observable.concat(loadFromLocal, loadFromNet);
+        } else {
+            return loadFromLocal;
+        }
+    }
+
+    private Observable<List<Article>> loadArticleFromNet(int pageNum) {
+        return mApiServer.loadArticle(pageNum).filter(articleBean ->
+                articleBean.getErrorCode() == Constant.SUCCESS)
+                .map(articleBean -> {
+                    List<Article> allArticles = LitePal.where("type=?", Article.TYPE_HOME + "")
+                            .find(Article.class);
+                    List<Article> articleList = new ArrayList<>();
+                    articleBean.getData().getDatas().stream().forEach(datasBean -> {
+                        long count = allArticles.stream().filter(m -> m.articleId == datasBean.getId()).count();
+                        if (count <= 0) {
+                            Article article = new Article();
+                            article.type = Article.TYPE_HOME;
+                            article.articleId = datasBean.getId();
+                            article.title = datasBean.getTitle();
+                            article.author = datasBean.getAuthor();
+                            article.chapterName = datasBean.getChapterName();
+                            article.superChapterName = datasBean.getSuperChapterName();
+                            article.time = datasBean.getPublishTime();
+                            article.link = datasBean.getLink();
+                            article.collect = datasBean.isCollect();
+                            article.niceDate = datasBean.getNiceDate();
+                            articleList.add(article);
+                        } else {
+                            allArticles.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
+                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                    m.title = datasBean.getTitle();
+                                    m.author = datasBean.getAuthor();
+                                    m.link = datasBean.getLink();
+                                    m.chapterName = datasBean.getChapterName();
+                                    m.superChapterName = datasBean.getSuperChapterName();
+                                    m.collect = datasBean.isCollect();
+                                    m.niceDate = datasBean.getNiceDate();
+                                    m.time = datasBean.getPublishTime();
+                                    if (!m.collect) {
+                                        m.setToDefault("collect");
+                                    }
+                                    m.update(m.id);
+                                }
+                            });
+                        }
+                    });
+                    LitePal.saveAll(articleList);
+                    List<Article> articleResult = LitePal.where("type=?", Article.TYPE_HOME + "")
+                            .order("time desc")
+                            .offset(pageNum * Constant.PAGE_SIZE)
+                            .limit(Constant.PAGE_SIZE)
+                            .find(Article.class);
+                    return articleResult;
+                });
+    }
+
+    @Override
+    public Observable<List<Article>> refreshArticle(int pageNum) {
+        return loadArticleFromNet(pageNum);
+    }
+
+    @Override
+    public Observable<Collect> collect(int articleId) {
+        return mApiServer.onCollect(articleId);
+    }
+
+    @Override
+    public Observable<Collect> unCollect(int articleId) {
+        return mApiServer.unCollect(articleId);
     }
 }

@@ -1,22 +1,32 @@
 package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.wjx.android.wanandroidmvp.R;
+import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
+import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.model.LoginModel;
+import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,15 +44,26 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     private Context mContext;
 
-    private List<ProjectListDataNew> mProjectListDataBeans;
+    private List<Article> mProjectList = new ArrayList<>();
 
-    public void setBeans(List<ProjectListDataNew> projectListData) {
-        mProjectListDataBeans = projectListData;
+    /**
+     * 是否为夜间模式
+     */
+    private boolean isNightMode;
+
+    public void setProjectList(List<Article> projectList) {
+        mProjectList.clear();
+        mProjectList.addAll(projectList);
+        notifyDataSetChanged();
     }
 
-    public ProjectListAdapter(RecyclerView recyclerView) {
-        mContext = recyclerView.getContext();
+    public ProjectListAdapter(Context context, List<Article> articleList) {
+        mContext = context;
+        mProjectList.addAll(articleList);
+        isNightMode = SPUtils.getInstance(Constant.CONFIG_SETTINGS).
+                getBoolean(Constant.KEY_NIGHT_MODE, false);
     }
+
     @NonNull
     @Override
     public ProjectListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,11 +73,11 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ProjectListHolder holder, int position) {
-        if (mProjectListDataBeans !=  null) {
-            ProjectListDataNew bean = mProjectListDataBeans.get(position);
+        if (mProjectList != null) {
+            Article bean = mProjectList.get(position);
             holder.mProjectTitle.setText(Html.fromHtml(bean.title, Html.FROM_HTML_MODE_COMPACT));
 
-            holder.mProjectAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author),bean.author));
+            holder.mProjectAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author), bean.author));
             holder.mProjectDate.setText(bean.niceDate);
             String category = String.format(mContext.getResources().getString(R.string.article_category),
                     bean.superChapterName, bean.chapterName);
@@ -67,8 +88,30 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 @Override
                 public void onClick(View view) {
                     JumpWebUtils.startWebView(mContext,
-                            mProjectListDataBeans.get(position).title,
-                            mProjectListDataBeans.get(position).link);
+                            mProjectList.get(position).title,
+                            mProjectList.get(position).link);
+                }
+            });
+            if (!LoginUtils.isLogin()) {
+                holder.mCollectView.setSelected(false);
+            } else {
+                holder.mCollectView.setSelected(bean.collect);
+            }
+            holder.mCollectView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!LoginUtils.isLogin()) {
+                        Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                    } else {
+                        Event event = new Event();
+                        event.target = Event.TARGET_PROJECT;
+                        event.type = bean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
+                        event.data = bean.articleId + ";" + bean.projectType;
+                        EventBus.getDefault().post(event);
+                    }
                 }
             });
         }
@@ -77,7 +120,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     @Override
     public int getItemCount() {
-        return mProjectListDataBeans == null ? 0 : mProjectListDataBeans.size();
+        return mProjectList == null ? 0 : mProjectList.size();
     }
 
     class ProjectListHolder extends RecyclerView.ViewHolder {
@@ -93,6 +136,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         ImageView mProjectImageView;
         @BindView(R.id.item_project_content)
         TextView mProjectContent;
+        @BindView(R.id.item_list_collect)
+        ImageView mCollectView;
 
         public ProjectListHolder(@NonNull View itemView) {
             super(itemView);

@@ -87,7 +87,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
     public void loadNavigation(NavigationData navigationData) {
         mNavigationAdapter.setBeans(navigationData);
         mRecyclerView.setAdapter(mNavigationAdapter);
-        if (navigationData.getErrorCode() == Constant.BANNER_SUCCESS) {
+        if (navigationData.getErrorCode() == Constant.SUCCESS) {
             List<String> tabNames = navigationData.getData()
                     .stream()
                     .map(NavigationData.DataBean::getName)
@@ -158,19 +158,24 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
     }
 
 
-    @Override
-    public void onError(Throwable e) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
-
     private void setChildViewVisibility(int visibility) {
         mViewGroup.setVisibility(visibility);
         mVerticalTabLayout.setVisibility(visibility);
         mDivider.setVisibility(visibility);
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadFailed() {
+
+    }
+
+    @Override
+    public void onLoadSuccess() {
+
     }
 }

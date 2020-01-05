@@ -40,8 +40,8 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
         mbinder = ButterKnife.bind(this);
         Intent intent = getIntent();
-        String title = intent.getStringExtra(Constant.ARTICLE_TITLE);
-        String url = intent.getStringExtra(Constant.ARTICLE_URL);
+        String title = intent.getStringExtra(Constant.KEY_TITLE);
+        String url = intent.getStringExtra(Constant.KEY_URL);
         initToolbar(title);
 
         mAgentWeb = AgentWeb.with(this)

@@ -19,6 +19,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
 import com.wjx.android.wanandroidmvp.contract.me.Contract;
@@ -71,25 +72,47 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
 
     @Override
     public void onLogin(LoginData loginData) {
-        if (loginData.getErrorCode() == Constant.BANNER_SUCCESS) {
-            Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show();
-            Event meEvent = new Event();
-            meEvent.target = Event.TARGET_MENU;
-            meEvent.type = Event.TYPE_LOGIN;
-            meEvent.data = mUserNamet;
-            EventBus.getDefault().post(meEvent);
-            finish();
+        stopAnim();
+        if (loginData != null) {
+            if (loginData.getErrorCode() == 0) {
+
+                Event event = new Event();
+                event.target = Event.TARGET_HOME;
+                event.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(event);
+
+                Event treeEvent = new Event();
+                treeEvent.target = Event.TARGET_TREE;
+                treeEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(treeEvent);
+
+                Event projectEvent = new Event();
+                projectEvent.target = Event.TARGET_PROJECT;
+                projectEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(projectEvent);
+
+                Event wxEvent = new Event();
+                wxEvent.target = Event.TARGET_WX;
+                wxEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(wxEvent);
+
+                Event menuEvent = new Event();
+                menuEvent.target = Event.TARGET_MENU;
+                menuEvent.type = Event.TYPE_LOGIN;
+                menuEvent.data = mUsername.getText().toString();
+                EventBus.getDefault().post(menuEvent);
+
+                finish();
+
+                if (TextUtils.equals(Constant.EXTRA_VALUE_COLLECT, mReferrer)) {
+//                    Intent intent = new Intent(mContext, CollectActivity.class);
+//                    startActivity(intent);
+                }
+
+            } else {
+                ToastUtils.showShort(loginData.getErrorMsg());
+            }
         }
-    }
-
-    @Override
-    public void onError(Throwable e) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
     }
 
     @OnClick(R.id.back)
@@ -122,5 +145,20 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     private void stopAnim() {
         mLoading.setVisibility(View.GONE);
         mLoading.clearAnimation();
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadFailed() {
+        stopAnim();
+    }
+
+    @Override
+    public void onLoadSuccess() {
+
     }
 }

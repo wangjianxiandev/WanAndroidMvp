@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 键盘 展开缩小
  *
  * @author: 王拣贤
  * @date: 2019/12/29

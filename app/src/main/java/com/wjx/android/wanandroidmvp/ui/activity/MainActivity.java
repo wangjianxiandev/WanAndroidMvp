@@ -25,11 +25,10 @@ import com.wjx.android.wanandroidmvp.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.base.utils.NetWorkUtils;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
-import com.wjx.android.wanandroidmvp.ui.fragment.SearchWordFragment;
+
 import com.wjx.android.wanandroidmvp.ui.fragment.SquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.WeChatFragment;
 

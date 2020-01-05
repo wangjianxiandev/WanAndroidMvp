@@ -16,6 +16,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.db.ProjectClassify;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
@@ -61,6 +62,7 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
         mPresenter.loadProjectClassify();
         mCurPage = 1;
         setChildViewVisibility(View.VISIBLE);
+        mViewPager.setOffscreenPageLimit(2);
     }
 
     @Override
@@ -69,70 +71,79 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     }
 
     @Override
-    public void loadProjectClassify(ProjectClassifyData projectClassifyData) {
-        if (projectClassifyData.getErrorCode() == Constant.BANNER_SUCCESS) {
-            List<String> tabNames = projectClassifyData.getData()
-                    .stream()
-                    .map(ProjectClassifyData.DataBean::getName)
-                    .collect(Collectors.toList());
-            List<Integer> tabId = projectClassifyData.getData()
-                    .stream()
-                    .map(ProjectClassifyData.DataBean::getId)
-                    .collect(Collectors.toList());
-            for (ProjectClassifyData.DataBean dataBean : projectClassifyData.getData()) {
-                ProjectListFragment projectListFragment = new ProjectListFragment(dataBean.getId());
-                mFragmentSparseArray.add(projectListFragment);
+    public void onLoadProjectClassify(List<ProjectClassify> projectClassifies) {
+        List<String> tabNames = projectClassifies
+                .stream()
+                .map(projectClassify -> projectClassify.name)
+                .collect(Collectors.toList());
+        projectClassifies.stream().forEach(projectClassify -> {
+            ProjectListFragment projectListFragment = new ProjectListFragment(projectClassify.categoryId);
+            mFragmentSparseArray.add(projectListFragment);
+        });
+
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return mFragmentSparseArray.get(position);
             }
-            mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
-                @NonNull
-                @Override
-                public Fragment getItem(int position) {
-                    return mFragmentSparseArray.get(position);
-                }
 
-                @Override
-                public int getCount() {
-                    return tabNames == null ? 0 : tabNames.size();
-                }
+            @Override
+            public int getCount() {
+                return tabNames == null ? 0 : tabNames.size();
+            }
 
-                @Nullable
-                @Override
-                public CharSequence getPageTitle(int position) {
-                    return tabNames.get(position);
-                }
-            });
-            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return tabNames.get(position);
+            }
+        });
 
-                }
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                @Override
-                public void onPageSelected(int position) {
-                    mCurPage = position;
-                }
+            }
 
-                @Override
-                public void onPageScrollStateChanged(int state) {
+            @Override
+            public void onPageSelected(int position) {
+                mCurPage = position;
+            }
 
-                }
-            });
-            mSlidingTabLayout.setViewPager(mViewPager);
-        }
-    }
-    @Override
-    public void onError(Throwable e) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        mSlidingTabLayout.setViewPager(mViewPager);
     }
 
     @Override
-    public void onComplete() {
-
+    public void onRefreshProjectClassify(List<ProjectClassify> projectClassifies) {
+        onLoadProjectClassify(projectClassifies);
     }
+
+
 
     private void setChildViewVisibility(int visibility) {
         mSlidingTabLayout.setVisibility(visibility);
         mDivider.setVisibility(visibility);
         mViewPager.setVisibility(visibility);
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadFailed() {
+
+    }
+
+    @Override
+    public void onLoadSuccess() {
+
     }
 }

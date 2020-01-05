@@ -67,7 +67,7 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     @Override
     public void loadWeChatClassify(WeChatClassifyData weChatClassifyData) {
-        if (weChatClassifyData.getErrorCode() == Constant.BANNER_SUCCESS) {
+        if (weChatClassifyData.getErrorCode() == Constant.SUCCESS) {
             List<String> tabNames = weChatClassifyData.getData()
                     .stream()
                     .map(WeChatClassifyData.DataBean::getName)
@@ -119,15 +119,6 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     }
 
-    @Override
-    public void onError(Throwable e) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
 
     private void setChildViewVisibility(int visibility) {
         mSlidingTabLayout.setVisibility(visibility);
@@ -135,4 +126,18 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
         mViewPager.setVisibility(visibility);
     }
 
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadFailed() {
+
+    }
+
+    @Override
+    public void onLoadSuccess() {
+
+    }
 }

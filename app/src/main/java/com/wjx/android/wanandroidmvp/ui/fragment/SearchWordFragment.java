@@ -131,7 +131,7 @@ public class SearchWordFragment extends BaseFragment<Contract.ISearchView, Searc
 
     @Override
     public void loadSearchWordData(SearchWordData searchWordData) {
-        if (searchWordData.getErrorCode() == Constant.BANNER_SUCCESS) {
+        if (searchWordData.getErrorCode() == Constant.SUCCESS) {
             List<String> tabNames = searchWordData.getData()
                     .stream()
                     .map(SearchWordData.DataBean::getName)
@@ -157,16 +157,6 @@ public class SearchWordFragment extends BaseFragment<Contract.ISearchView, Searc
     }
 
     @Override
-    public void onError(Throwable e) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
-
-    @Override
     public void onDraw() {
 
     }
@@ -179,5 +169,20 @@ public class SearchWordFragment extends BaseFragment<Contract.ISearchView, Searc
     @Override
     public void onShowAnimationEnd() {
         KeyBoardUtils.openKeyboard(getActivity(), mSearchEdit);
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadFailed() {
+
+    }
+
+    @Override
+    public void onLoadSuccess() {
+
     }
 }

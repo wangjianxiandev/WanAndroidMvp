@@ -1,9 +1,12 @@
 package com.wjx.android.wanandroidmvp.presenter.project;
 
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
+import com.wjx.android.wanandroidmvp.bean.db.ProjectClassify;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
 import com.wjx.android.wanandroidmvp.model.ProjectModel;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,27 +27,76 @@ public class ProjectPresenter extends BasePresenter<Contract.IProjectView> imple
     public ProjectPresenter() {
         iProjectModel = new ProjectModel();
     }
+
     @Override
     public void loadProjectClassify() {
+        if (isViewAttached()) {
+            getView().onLoading();
+        } else {
+            return;
+        }
         iProjectModel.loadProjectClassify()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ProjectClassifyData>() {
+                .subscribe(new Observer<List<ProjectClassify>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(ProjectClassifyData projectClassifyData) {
+                    public void onNext(List<ProjectClassify> projectClassify) {
                         if (isViewAttached()) {
-                            getView().loadProjectClassify(projectClassifyData);
+                            getView().onLoadProjectClassify(projectClassify);
+                            getView().onLoadSuccess();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onLoadFailed();
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void refreshProjectClassify() {
+        if (isViewAttached()) {
+            getView().onLoading();
+        } else {
+            return;
+        }
+        iProjectModel.refreshProjectClassify()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<ProjectClassify>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(List<ProjectClassify> projectClassify) {
+                        if (isViewAttached()) {
+                            getView().onRefreshProjectClassify(projectClassify);
+                            getView().onLoadSuccess();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (isViewAttached()) {
+                            getView().onLoadFailed();
+                        }
                     }
 
                     @Override

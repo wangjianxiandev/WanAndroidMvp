@@ -1,19 +1,19 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import com.wjx.android.wanandroidmvp.base.utils.ApiServer;
+import com.blankj.utilcode.util.NetworkUtils;
+import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListDataNew;
+
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Created with Android Studio.
  * Description:
@@ -22,81 +22,103 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @date: 2019/12/27
  * Time: 17:44
  */
-public class ProjectListModel implements Contract.IProjectListModel {
+public class ProjectListModel extends BaseModel implements Contract.IProjectListModel {
 
-    List<ProjectListDataNew> mProjectBean = new ArrayList<>();
+    public ProjectListModel() {
+        setCookies(false);
+    }
+
 
     @Override
-    public Observable<List<ProjectListDataNew>> loadProjectList(int pageNum, int cid) {
-        return getApiServer().loadProjectList(pageNum, cid).filter(a ->a.getErrorCode() == 0)
-                .map(original -> {
-                    original.getData().getDatas().stream().sorted((o1,o2) -> (int)(o2.getPublishTime() - o1.getPublishTime()))
-                            .forEach(datas -> {
-                                long count = mProjectBean.stream().filter(b -> b.id == datas.getId()).count();
-                                if (count <= 0) {
+    public Observable<List<Article>> loadProjectList(int pageNum, int cid) {
+        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
+            List<Article> projectArticleList = LitePal.where("type=? and projectType=?", Article.TYPE_PROJECT + "", cid + "")
+                    .order("time desc")
+                    .offset(pageNum * Constant.PAGE_SIZE)
+                    .limit(Constant.PAGE_SIZE)
+                    .find(Article.class);
+            emitter.onNext(projectArticleList);
+            emitter.onComplete();
+        });
+        if (NetworkUtils.isConnected()) {
+            Observable<List<Article>> loadFromNet = loadProjectArticleListFromNet(pageNum, cid);
+            return Observable.concat(loadFromLocal, loadFromNet);
+        } else {
+            return loadFromLocal;
+        }
+    }
 
-                                    ProjectListDataNew projectListBean = new ProjectListDataNew();
-                                    projectListBean.id = datas.getId();
-                                    projectListBean.title = datas.getTitle();
-                                    projectListBean.author = datas.getAuthor();
-                                    projectListBean.niceDate = datas.getNiceDate();
-                                    projectListBean.publishTime = datas.getPublishTime();
-                                    projectListBean.chapterName = datas.getChapterName();
-                                    projectListBean.superChapterName = datas.getSuperChapterName();
-                                    projectListBean.collect = datas.isCollect();
-                                    projectListBean.link = datas.getLink();
-                                    projectListBean.desc = datas.getDesc();
-                                    projectListBean.envelopePic = datas.getEnvelopePic();
-                                    mProjectBean.add(projectListBean);
+    private Observable<List<Article>> loadProjectArticleListFromNet(int pageNum, int cid) {
+        return mApiServer.loadProjectList(pageNum, cid)
+                .filter(projectListData -> projectListData.getErrorCode() == Constant.SUCCESS)
+                .map(projectListData -> {
+                    List<Article> allProjectArticleList = LitePal.where("type=? and projectType=?"
+                            , Article.TYPE_PROJECT + "", cid + "")
+                            .find(Article.class);
+                    List<Article> projectArticleLists = new ArrayList<>();
+                    projectListData.getData().getDatas().stream().forEach(datasBean -> {
+                        long count = allProjectArticleList.stream().filter(m -> m.articleId == datasBean.getId()).count();
+                        if (count <= 0) {
+                            Article article = new Article();
+                            article.type = Article.TYPE_PROJECT;
+                            article.articleId = datasBean.getId();
+                            article.title = datasBean.getTitle();
+                            article.author = datasBean.getAuthor();
+                            article.authorId = datasBean.getChapterId();
+                            article.niceDate = datasBean.getNiceDate();
+                            article.time = datasBean.getPublishTime();
+                            article.chapterName = datasBean.getChapterName();
+                            article.superChapterName = datasBean.getSuperChapterName();
+                            article.projectType = datasBean.getChapterId();
+                            article.link = datasBean.getLink();
+                            article.desc = datasBean.getDesc();
+                            article.envelopePic = datasBean.getEnvelopePic();
+                            projectArticleLists.add(article);
+                        } else {
+                            allProjectArticleList.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
+                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                    m.title = datasBean.getTitle();
+                                    m.desc = datasBean.getDesc();
+                                    m.authorId = datasBean.getChapterId();
+                                    m.author = datasBean.getAuthor();
+                                    m.chapterName = datasBean.getChapterName();
+                                    m.superChapterName = datasBean.getSuperChapterName();
+                                    m.collect = datasBean.isCollect();
+                                    m.link = datasBean.getLink();
+                                    m.time = datasBean.getPublishTime();
+                                    m.envelopePic = datasBean.getEnvelopePic();
+                                    if (!m.collect) {
+                                        m.setToDefault("collect");
+                                    }
+                                    m.update(m.id);
                                 }
                             });
-
-                    return mProjectBean;
+                        }
+                    });
+                    LitePal.saveAll(projectArticleLists);
+                    List<Article> projectArticleResult = LitePal.where("type=? and projectType=?"
+                            , Article.TYPE_PROJECT + "", cid + "")
+                            .order("time desc")
+                            .offset(pageNum * Constant.PAGE_SIZE)
+                            .limit(Constant.PAGE_SIZE)
+                            .find(Article.class);
+                    return projectArticleResult;
                 });
     }
 
+
     @Override
-    public Observable<List<ProjectListDataNew>> refreshProjectList() {
-        return getApiServer().refreshProjectList().filter(a ->a.getErrorCode() == 0)
-                .map(original -> {
-                    original.getData().getDatas().stream().sorted((o1, o2) -> (int) (o1.getPublishTime() - o2.getPublishTime()))
-                            .forEach(datas -> {
-                                //如果数据是新数据
-                                long count = mProjectBean.stream().filter(b -> b.id == datas.getId()).count();
-                                if (count <= 0) {
-                                    ProjectListDataNew projectListBean = new ProjectListDataNew();
-                                    projectListBean.id = datas.getId();
-                                    projectListBean.title = datas.getTitle();
-                                    projectListBean.author = datas.getAuthor();
-                                    projectListBean.niceDate = datas.getNiceDate();
-                                    projectListBean.publishTime = datas.getPublishTime();
-                                    projectListBean.chapterName = datas.getChapterName();
-                                    projectListBean.superChapterName = datas.getSuperChapterName();
-                                    projectListBean.collect = datas.isCollect();
-                                    projectListBean.link = datas.getLink();
-                                    projectListBean.desc = datas.getDesc();
-                                    projectListBean.envelopePic = datas.getEnvelopePic();
-                                    mProjectBean.add(0, projectListBean);
-
-                                }
-
-                            });
-
-                    return mProjectBean;
-                });
+    public Observable<List<Article>> refreshProjectList(int pageNum, int cid) {
+        return loadProjectArticleListFromNet(pageNum, cid);
     }
 
-    /**
-     * 获取请求对象
-     * @return 当前的请求对象
-     */
-    private ApiServer getApiServer() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        ApiServer apiServer = retrofit.create(ApiServer.class);
-        return apiServer;
+    @Override
+    public Observable<Collect> collect(int articleId) {
+        return mApiServer.onCollect(articleId);
+    }
+
+    @Override
+    public Observable<Collect> unCollect(int articleId) {
+        return mApiServer.unCollect(articleId);
     }
 }
