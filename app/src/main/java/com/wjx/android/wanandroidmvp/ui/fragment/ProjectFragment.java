@@ -60,7 +60,7 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     @Override
     protected void init() {
         mPresenter.loadProjectClassify();
-        mCurPage = 1;
+        mCurPage = 0;
         setChildViewVisibility(View.VISIBLE);
         mViewPager.setOffscreenPageLimit(2);
     }

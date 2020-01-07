@@ -27,6 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
+import com.wjx.android.wanandroidmvp.ui.fragment.ParentSquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
 
 import com.wjx.android.wanandroidmvp.ui.fragment.SquareFragment;
@@ -105,18 +106,15 @@ public class MainActivity extends AppCompatActivity {
                                 switchFragment(INDEX_HOMEPAGE);
                                 return true;
                             case R.id.menu_project:
-                                mToolbar.setVisibility(View.VISIBLE);
-                                mToolbar.setTitle(R.string.bottomname2);
+                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_PROJECT);
                                 return true;
                             case R.id.menu_square:
-                                mToolbar.setVisibility(View.VISIBLE);
-                                mToolbar.setTitle(R.string.bottomname3);
+                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_SQUARE);
                                 return true;
                             case R.id.menu_wechat:
-                                mToolbar.setVisibility(View.VISIBLE);
-                                mToolbar.setTitle(R.string.bottomname4);
+                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_WE_CHAT);
                                 return true;
                             case R.id.menu_me:
@@ -157,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new ProjectFragment();
                     break;
                 case INDEX_SQUARE:
-                    fragment = new SquareFragment();
+                    fragment = new ParentSquareFragment();
                     break;
                 case INDEX_WE_CHAT:
                     fragment = new WeChatFragment();
