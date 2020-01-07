@@ -91,8 +91,8 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
-        initAdapter();
         mPresenter.loadProjectList(mCurrentPage, mCid);
+        initAdapter();
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅

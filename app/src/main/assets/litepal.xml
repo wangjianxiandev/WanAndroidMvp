@@ -9,5 +9,6 @@
         <mapping class="com.wjx.android.wanandroidmvp.bean.db.ProjectClassify"></mapping>
         <mapping class="com.wjx.android.wanandroidmvp.bean.db.Tree"></mapping>
         <mapping class="com.wjx.android.wanandroidmvp.bean.db.Collect"></mapping>
+        <mapping class="com.wjx.android.wanandroidmvp.bean.db.Author"></mapping>
     </list>
 </litepal>

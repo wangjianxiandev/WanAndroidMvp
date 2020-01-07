@@ -1,8 +1,10 @@
 package com.wjx.android.wanandroidmvp.contract.wechat;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
-import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
-import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.db.Author;
+
 
 import java.util.List;
 
@@ -25,7 +27,13 @@ public class Contract {
          * 获取公众号Tab数据
          * @return banner数据
          */
-        Observable<WeChatClassifyData> loadWeChatClassify();
+        Observable<List<Author>> loadWeChatClassify();
+
+        /**
+         * 刷新公众号Tab数据
+         * @return
+         */
+        Observable<List<Author>> refreshWeChatClassify();
     }
 
     public interface IWeChatView extends IBaseView {
@@ -33,7 +41,13 @@ public class Contract {
          * 获取公众号Tab据进行显示
          * @param weChatClassifyData
          */
-        void loadWeChatClassify(WeChatClassifyData weChatClassifyData);
+        void onLoadWeChatClassify(List<Author> weChatClassifyData);
+
+        /**
+         * 刷新微信公众号Tab数据的显示
+         * @param weChatClassifyData
+         */
+        void onRefreshWeChatClassify(List<Author> weChatClassifyData);
     }
 
     public interface IWeChatPresenter{
@@ -41,6 +55,8 @@ public class Contract {
          * 公众号Tab
          */
         void loadWeChatClassify();
+
+        void refreshWeChatClassify();
 
     }
 
@@ -53,28 +69,47 @@ public class Contract {
          * 获取项目数据
          * @return 文章数据
          */
-        Observable<WeChatListData> loadWeChatList(int cid, int pageNum);
+        Observable<List<Article>> loadWeChatList(int cid, int pageNum);
 
         /**
          * 刷新项目列表
          * @return
          */
-        Observable<WeChatListData> refreshWeChatList();
+        Observable<List<Article>> refreshWeChatList(int cid, int pageNum);
+
+        /**
+         * 收藏
+         * @param articleId
+         * @return
+         */
+        Observable<Collect> collect(int articleId);
+
+        /**
+         * 取消收藏
+         * @param articleId
+         * @return
+         */
+        Observable<Collect> unCollect(int articleId);
     }
 
     public interface IWeChatListView extends IBaseView {
 
         /**
          * 获取项目数据进行显示
-         * @param weChatListData
+         * @param weChatList
          */
-        void loadWeChatList(WeChatListData weChatListData);
+        void onLoadWeChatList(List<Article> weChatList);
 
         /**
          * 刷新项目列表
-         * @param weChatListData
+         * @param weChatList
          */
-        void refreshWeChatList(WeChatListData weChatListData);
+        void onRefreshWeChatList(List<Article> weChatList);
+
+        void onCollect(Collect collect, int articleId);
+
+        void onUnCollect(Collect collect, int articleId);
+
     }
 
     public interface IWeChatListPresenter{
@@ -87,6 +122,10 @@ public class Contract {
         /**
          * 刷新项目列表
          */
-        void refreshWeChatList();
+        void refreshWeChatList(int cid, int pageNum);
+
+        void collect(int articleId);
+
+        void unCollect(int articleId);
     }
 }

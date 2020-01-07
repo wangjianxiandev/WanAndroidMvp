@@ -73,8 +73,5 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
         if (mPresenter != null) {
             mPresenter.detachView();
         }
-        if (mRootView != null) {
-            ((ViewGroup)mRootView.getParent()).removeView(mRootView);
-        }
     }
 }

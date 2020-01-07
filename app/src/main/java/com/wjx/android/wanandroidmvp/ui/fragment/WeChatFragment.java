@@ -15,6 +15,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.db.Author;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.contract.wechat.Contract;
 import com.wjx.android.wanandroidmvp.presenter.wechat.WeChatPresenter;
@@ -64,60 +65,57 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
         return new WeChatPresenter();
     }
 
+    @Override
+    public void onLoadWeChatClassify(List<Author> weChatClassifyData) {
+        List<String> tabNames = weChatClassifyData.stream()
+                .map(weChatClassify -> weChatClassify.author)
+                .collect(Collectors.toList());
+        weChatClassifyData.stream().forEach(weChatClassify ->{
+            WeChatListFragment weChatListFragment = new WeChatListFragment(weChatClassify.authorId);
+            mFragmentSparseArray.add(weChatListFragment);
+        });
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return mFragmentSparseArray.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return tabNames == null ? 0 : tabNames.size();
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return tabNames.get(position);
+            }
+        });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mCurPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mSlidingTabLayout.setViewPager(mViewPager);
+    }
 
     @Override
-    public void loadWeChatClassify(WeChatClassifyData weChatClassifyData) {
-        if (weChatClassifyData.getErrorCode() == Constant.SUCCESS) {
-            List<String> tabNames = weChatClassifyData.getData()
-                    .stream()
-                    .map(WeChatClassifyData.DataBean::getName)
-                    .collect(Collectors.toList());
-            List<Integer> tabId = weChatClassifyData.getData()
-                    .stream()
-                    .map(WeChatClassifyData.DataBean::getId)
-                    .collect(Collectors.toList());
-            for (WeChatClassifyData.DataBean dataBean : weChatClassifyData.getData()) {
-                WeChatListFragment weChatListFragment = new WeChatListFragment(dataBean.getId());
-                mFragmentSparseArray.add(weChatListFragment);
-            }
-            mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
-                @NonNull
-                @Override
-                public Fragment getItem(int position) {
-                    return mFragmentSparseArray.get(position);
-                }
-
-                @Override
-                public int getCount() {
-                    return tabNames == null ? 0 : tabNames.size();
-                }
-
-                @Nullable
-                @Override
-                public CharSequence getPageTitle(int position) {
-                    return tabNames.get(position);
-                }
-            });
-            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                    mCurPage = position;
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
-            mSlidingTabLayout.setViewPager(mViewPager);
-        }
-
+    public void onRefreshWeChatClassify(List<Author> weChatClasssifyData) {
+        onLoadWeChatClassify(weChatClasssifyData);
     }
+
 
 
     private void setChildViewVisibility(int visibility) {
