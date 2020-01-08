@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
-import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
+import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -28,48 +28,47 @@ import butterknife.ButterKnife;
  * Description:
  *
  * @author: 王拣贤
- * @date: 2019/12/29
- * Time: 15:13
+ * @date: 2020/01/08
+ * Time: 11:26
  */
-public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.NavigationHolder> {
+public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.TreeHolder> {
 
     private Context mContext;
 
-    private List<NavigationData.DataBean> mNavigationBeans;
+    private List<TreeData.DataBean> mTreeBeans;
 
-    public void setBeans(NavigationData navigationData) {
-        mNavigationBeans = navigationData.getData();
+    public void setBeans(TreeData treeData) {
+        mTreeBeans = treeData.getData();
     }
 
-    public NavigationAdapter(Context context) {
+    public TreeAdapter(Context context) {
         mContext = context;
     }
 
     @NonNull
     @Override
-    public NavigationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TreeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_navigation, parent, false);
-        return new NavigationHolder(view);
+        return new TreeHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NavigationHolder holder, int position) {
-        if (mNavigationBeans != null) {
-            List<NavigationData.DataBean.ArticlesBean> articlesBean = mNavigationBeans.get(position).getArticles();
-
-            holder.mItemTitle.setText(Html.fromHtml(mNavigationBeans.get(position).getName(), Html.FROM_HTML_MODE_COMPACT));
-            holder.mTagFlowLayout.setAdapter(new TagAdapter(articlesBean) {
+    public void onBindViewHolder(@NonNull TreeHolder holder, int position) {
+        if (mTreeBeans != null) {
+            List<TreeData.DataBean.ChildrenBean> childrenBeans = mTreeBeans.get(position).getChildren();
+            holder.mItemTitle.setText(Html.fromHtml(mTreeBeans.get(position).getName(), Html.FROM_HTML_MODE_COMPACT));
+            holder.mTagFlowLayout.setAdapter(new TagAdapter(childrenBeans) {
                 @Override
                 public View getView(FlowLayout parent, int position, Object o) {
                     TextView tagView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.flow_layout, parent, false);
-                    tagView.setText(articlesBean.get(position).getTitle());
+                    tagView.setText(childrenBeans.get(position).getName());
                     tagView.setTextColor(Constant.randomColor());
                     holder.mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                         @Override
                         public boolean onTagClick(View view, int position, FlowLayout parent) {
                             JumpWebUtils.startWebView(mContext,
-                                    articlesBean.get(position).getTitle(),
-                                    articlesBean.get(position).getLink());
+                                    childrenBeans.get(position).getName(),
+                                    null);
                             return true;
                         }
                     });
@@ -81,16 +80,16 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
 
     @Override
     public int getItemCount() {
-        return mNavigationBeans == null ? 0 : mNavigationBeans.size();
+        return mTreeBeans == null ? 0 : mTreeBeans.size();
     }
 
-    class NavigationHolder extends RecyclerView.ViewHolder {
+    class TreeHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_system_title)
         TextView mItemTitle;
         @BindView(R.id.item_system_flowlayout)
         TagFlowLayout mTagFlowLayout;
 
-        public NavigationHolder(@NonNull View itemView) {
+        public TreeHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

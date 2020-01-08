@@ -1,9 +1,9 @@
 package com.wjx.android.wanandroidmvp.presenter.square;
 
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
-import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
+import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
-import com.wjx.android.wanandroidmvp.model.SquareModel;
+import com.wjx.android.wanandroidmvp.model.TreeModel;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,36 +15,37 @@ import io.reactivex.schedulers.Schedulers;
  * Description:
  *
  * @author: 王拣贤
- * @date: 2019/12/29
- * Time: 14:57
+ * @date: 2020/01/08
+ * Time: 11:13
  */
-public class SquarePresenter extends BasePresenter<Contract.ISquareView> implements Contract.ISquarePresenter {
-    Contract.ISquareModel iSquareModel;
+public class TreePresenter extends BasePresenter<Contract.ITreeView> implements Contract.ITreePresenter {
 
-    public SquarePresenter() {
-        iSquareModel = new SquareModel();
+    Contract.ITreeModel iTreeModel;
+
+    public TreePresenter() {
+        iTreeModel = new TreeModel();
     }
 
     @Override
-    public void loadNavigation() {
+    public void loadTree() {
         if (isViewAttached()) {
             getView().onLoading();
         } else {
             return;
         }
-        iSquareModel.loadNavigation()
+        iTreeModel.loadTreeData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<NavigationData>() {
+                .subscribe(new Observer<TreeData>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(NavigationData navigationData) {
+                    public void onNext(TreeData treeData) {
                         if (isViewAttached()) {
-                            getView().loadNavigation(navigationData);
+                            getView().loadTreeData(treeData);
                             getView().onLoadSuccess();
                         }
                     }

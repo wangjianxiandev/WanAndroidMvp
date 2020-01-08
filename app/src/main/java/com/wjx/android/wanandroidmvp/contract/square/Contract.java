@@ -2,6 +2,7 @@ package com.wjx.android.wanandroidmvp.contract.square;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
+import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 
 import io.reactivex.Observable;
 
@@ -36,5 +37,28 @@ public class Contract {
          * 加载导航数据
          */
         void loadNavigation();
+    }
+
+    public interface ITreeModel {
+        /**
+         * 体系数据
+         * @return
+         */
+        Observable<TreeData> loadTreeData();
+    }
+
+    public interface ITreeView extends IBaseView {
+        /**
+         * 加载体系数据
+         * @param treeData
+         */
+        void loadTreeData(TreeData treeData);
+    }
+
+    public interface ITreePresenter {
+        /**
+         * 加载体系数据
+         */
+        void loadTree();
     }
 }

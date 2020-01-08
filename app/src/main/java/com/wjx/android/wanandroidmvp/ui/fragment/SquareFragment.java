@@ -1,5 +1,6 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ import q.rorbin.verticaltablayout.widget.TabView;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 导航页面
  *
  * @author: 王拣贤
  * @date: 2019/12/26
@@ -56,6 +57,8 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
 
     private LinearLayoutManager mLinearLayoutManager;
 
+    private Context mContext;
+
     @Override
     protected int getContentViewId() {
         return R.layout.square_navigation;
@@ -63,6 +66,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
 
     @Override
     protected void init() {
+        mContext = getContext().getApplicationContext();
         initAdapter();
         // 滑动流畅
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -75,7 +79,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
         mLinearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mNavigationAdapter = new NavigationAdapter(mRecyclerView);
+        mNavigationAdapter = new NavigationAdapter(mContext);
     }
 
     @Override
@@ -119,7 +123,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
 
                 @Override
                 public int getBackground(int position) {
-                    return -1;
+                    return 0;
                 }
             });
             leftRightLinkTogether();

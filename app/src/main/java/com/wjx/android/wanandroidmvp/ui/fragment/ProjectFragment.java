@@ -1,12 +1,15 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.graphics.Color;
 import android.icu.util.ValueIterator;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -28,6 +31,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
+
+import static com.blankj.utilcode.util.ColorUtils.getColor;
 
 /**
  * Created with Android Studio.
@@ -59,10 +64,22 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
     @Override
     protected void init() {
+        initStatusBar();
         mPresenter.loadProjectClassify();
         mCurPage = 0;
         setChildViewVisibility(View.VISIBLE);
         mViewPager.setOffscreenPageLimit(2);
+    }
+
+    private void initStatusBar() {
+        getActivity().getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (ColorUtils.calculateLuminance(getColor(R.color.white)) >= 0.5) {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 
     @Override

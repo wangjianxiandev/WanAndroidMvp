@@ -1,12 +1,15 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -25,6 +28,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
+
+import static com.blankj.utilcode.util.ColorUtils.getColor;
 
 /**
  * Created with Android Studio.
@@ -56,8 +61,20 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     @Override
     protected void init() {
+        initStatusBar();
         mPresenter.loadWeChatClassify();
         setChildViewVisibility(View.VISIBLE);
+    }
+
+    private void initStatusBar() {
+        getActivity().getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (ColorUtils.calculateLuminance(getColor(R.color.white)) >= 0.5) {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 
     @Override

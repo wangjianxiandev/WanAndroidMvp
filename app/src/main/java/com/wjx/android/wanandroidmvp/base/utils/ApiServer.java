@@ -9,6 +9,7 @@ import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
+import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 
@@ -79,6 +80,13 @@ public interface ApiServer {
      */
     @GET(Constant.SQUARE_URL)
     Observable<NavigationData> loadNavigationData();
+
+    /**
+     * 获取体系数据
+     * @return
+     */
+    @GET(Constant.TREE_URL)
+    Observable<TreeData> loadTreeData();
 
     /**
      * 获取搜索热词

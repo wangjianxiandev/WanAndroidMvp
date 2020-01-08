@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -59,15 +60,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.navigation_bottom)
     BottomNavigationView mBottomNavigationView;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBinder = ButterKnife.bind(this);
-        initToolbar();
         initBottomNavigation();
         switchFragment(INDEX_HOMEPAGE);
     }
@@ -88,11 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initToolbar() {
-        mToolbar.setTitle(R.string.bottomname1);
-        setSupportActionBar(mToolbar);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-    }
 
     private void initBottomNavigation() {
         mBottomNavigationView.setOnNavigationItemSelectedListener(
@@ -101,24 +93,18 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.menu_home:
-                                mToolbar.setVisibility(View.VISIBLE);
-                                mToolbar.setTitle(R.string.bottomname1);
                                 switchFragment(INDEX_HOMEPAGE);
                                 return true;
                             case R.id.menu_project:
-                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_PROJECT);
                                 return true;
                             case R.id.menu_square:
-                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_SQUARE);
                                 return true;
                             case R.id.menu_wechat:
-                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_WE_CHAT);
                                 return true;
                             case R.id.menu_me:
-                                mToolbar.setVisibility(View.GONE);
                                 switchFragment(INDEX_ME);
                                 return true;
                             default:

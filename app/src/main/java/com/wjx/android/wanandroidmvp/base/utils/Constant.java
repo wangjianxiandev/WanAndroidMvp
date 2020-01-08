@@ -1,7 +1,10 @@
 package com.wjx.android.wanandroidmvp.base.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.View;
 
 import java.util.Random;
@@ -204,13 +207,13 @@ public class Constant {
     public static int randomColor() {
         Random random = new Random();
         //0-190, 如果颜色值过大,就越接近白色,就看不清了,所以需要限定范围
-        int red =random.nextInt(150);
+        int red = random.nextInt(150);
         //0-190
-        int green =random.nextInt(150);
+        int green = random.nextInt(150);
         //0-190
-        int blue =random.nextInt(150);
+        int blue = random.nextInt(150);
         //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
-        return Color.rgb(red,green, blue);
+        return Color.rgb(red, green, blue);
     }
 
     /**
@@ -223,5 +226,45 @@ public class Constant {
         } else {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
+    }
+
+    /**
+     * 获取状态栏的高度
+     *
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+
+
+    /**
+     * dp与px转换
+     * @param context
+     * @param dp
+     * @return
+     */
+    public static int dpToPx(Context context, int dp) {
+        float density;
+        density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
+    }
+
+    /**
+     * 获取ActionBar高度
+     * @param context
+     * @return
+     */
+    public static int getActionBarHeight(Context context) {
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+        }
+        return actionBarHeight;
     }
 }

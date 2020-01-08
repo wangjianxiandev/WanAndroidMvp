@@ -1,19 +1,26 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
@@ -43,6 +50,8 @@ import java.util.stream.Collectors;
 
 import butterknife.BindView;
 
+import static com.blankj.utilcode.util.ColorUtils.getColor;
+
 
 /**
  * Created with Android Studio.
@@ -66,8 +75,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private List<Article> mArticleList = new ArrayList<>();
 
-    private int articleId = 0;
-
     @BindView(R.id.article_recycler)
     RecyclerView mRecyclerView;
 
@@ -76,6 +83,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @BindView(R.id.nest_scroll)
     NestedScrollView mNestedScrollView;
+    @BindView(R.id.home_toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected int getContentViewId() {
@@ -100,22 +109,51 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         mContext = getContext().getApplicationContext();
         initAdapter();
         initBanner();
+        initToolbar();
+        initStatusBar();
         mPresenter.loadBanner();
         mPresenter.loadArticle(mCurpage);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
+        // 滑动流畅
+        mRecyclerView.setNestedScrollingEnabled(false);
+    }
+
+    private void initToolbar() {
+        int showOrHideToolbarHeight = Constant.dpToPx(mContext, 200)
+                - Constant.getStatusBarHeight(mContext)
+                - Constant.getActionBarHeight(mContext);
         mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY < oldScrollY) {
-                    getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                } else if (scrollY > oldScrollY) {
-                    getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.white));
+                if (scrollY > oldScrollY && scrollY - showOrHideToolbarHeight >= 0) {
+                    // 向上滑
+                    Log.e("WJXSC", "上滑" + scrollY + " ;" + oldScrollY);
+                    ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                    mToolbar.setBackgroundColor(getColor(R.color.colorPrimary));
+                    mToolbar.setPadding(0, Constant.getStatusBarHeight(mContext), 0, 0);
+                    mToolbar.setTitle(R.string.bottomname1);
+                    mToolbar.setVisibility(View.VISIBLE);
+                } else if (scrollX < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
+                    // 向下滑
+                    Log.e("WJXSC", "下滑" + scrollY + " ;" + oldScrollY);
+                    ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                    mToolbar.setBackgroundColor(Color.TRANSPARENT);
+                    mToolbar.setVisibility(View.GONE);
                 }
             }
         });
-        // 滑动流畅
-        mRecyclerView.setNestedScrollingEnabled(false);
+    }
+
+    private void initStatusBar() {
+        getActivity().getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (ColorUtils.calculateLuminance(Color.TRANSPARENT) >= 0.5) {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 
     private void initBanner() {
@@ -152,7 +190,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                     .collect(Collectors.toList());
             mBanner.setBannerTitles(titles);
             mBanner.start();
-            mBanner.setOnBannerListener(new OnBannerListener(){
+            mBanner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
                     JumpWebUtils.startWebView(mContext,
