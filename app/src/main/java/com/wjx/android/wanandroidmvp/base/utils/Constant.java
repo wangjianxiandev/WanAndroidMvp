@@ -36,12 +36,22 @@ public class Constant {
     /**
      * 导航URL
      */
-    public static final String SQUARE_URL = "navi/json";
+    public static final String SQUARE_URL = "/navi/json";
 
     /**
      * 体系URL
      */
     public static final String TREE_URL = "/tree/json";
+
+    /**
+     * 体系文章
+     */
+    public static final String TREE_ARTICLE_URL = "/article/list/{pageNum}/json";
+
+    /**
+     * 广场文章
+     */
+    public static final String HOME_SQUARE_URL = "/user_article/list/{pageNum}/json";
 
     /**
      * 项目种类URL
@@ -132,6 +142,11 @@ public class Constant {
      * key-title
      */
     public static final String KEY_TITLE = "title";
+
+    /**
+     * tree-cid
+     */
+    public static final String KEY_TREE_CID = "cid";
 
     /**
      * key-url

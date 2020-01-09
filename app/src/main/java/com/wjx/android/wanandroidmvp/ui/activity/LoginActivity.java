@@ -86,6 +86,11 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
                 treeEvent.type = Event.TYPE_LOGIN;
                 EventBus.getDefault().post(treeEvent);
 
+                Event squareEvent = new Event();
+                treeEvent.target = Event.TARGET_SQUARE;
+                treeEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(treeEvent);
+
                 Event projectEvent = new Event();
                 projectEvent.target = Event.TARGET_PROJECT;
                 projectEvent.type = Event.TYPE_LOGIN;

@@ -27,6 +27,11 @@ public class Article extends LitePalSupport {
      */
     public static final int TYPE_WX = 4;
 
+    /**
+     * 广场
+     */
+    public static final int TYPE_SQUARE = 5;
+
     public int id;
 
     public int type;

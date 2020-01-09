@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
+import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
+import com.wjx.android.wanandroidmvp.ui.activity.TreeListActivity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -66,9 +69,11 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.TreeHolder> {
                     holder.mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                         @Override
                         public boolean onTagClick(View view, int position, FlowLayout parent) {
-                            JumpWebUtils.startWebView(mContext,
-                                    childrenBeans.get(position).getName(),
-                                    null);
+                            Intent intent = new Intent(mContext, TreeListActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra(Constant.KEY_TREE_CID, childrenBeans.get(position).getId());
+                            intent.putExtra(Constant.KEY_TITLE, childrenBeans.get(position).getName());
+                            mContext.startActivity(intent);
                             return true;
                         }
                     });

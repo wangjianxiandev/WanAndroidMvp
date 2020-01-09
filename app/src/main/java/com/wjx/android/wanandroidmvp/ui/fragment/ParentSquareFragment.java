@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -63,9 +64,11 @@ public class ParentSquareFragment extends BaseFragment {
     }
 
     private void initStatusBar() {
-        getActivity().getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         if (ColorUtils.calculateLuminance(getColor(R.color.white)) >= 0.5) {
             getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -115,7 +118,7 @@ public class ParentSquareFragment extends BaseFragment {
         mTabNames.add(0, "广场");
         mTabNames.add(1, "体系");
         mTabNames.add(2, "导航");
-        mFragmentSparseArray.add(0, new NavigationFragment());
+        mFragmentSparseArray.add(0, new HomeSquareFragment());
         mFragmentSparseArray.add(1, new TreeFragment());
         mFragmentSparseArray.add(2, new SquareFragment());
     }

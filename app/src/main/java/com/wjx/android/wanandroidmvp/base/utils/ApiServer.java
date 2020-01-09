@@ -1,5 +1,6 @@
 package com.wjx.android.wanandroidmvp.base.utils;
 
+import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
@@ -9,7 +10,9 @@ import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
+import com.wjx.android.wanandroidmvp.bean.square.SquareData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
+import com.wjx.android.wanandroidmvp.bean.square.TreeListArticle;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 
@@ -87,6 +90,23 @@ public interface ApiServer {
      */
     @GET(Constant.TREE_URL)
     Observable<TreeData> loadTreeData();
+
+    /**
+     * 获取体系文章列表
+     * @param pageNum
+     * @param cid
+     * @return
+     */
+    @GET(Constant.TREE_ARTICLE_URL)
+    Observable<TreeListArticle> loadTreeArticle(@Path("pageNum") int pageNum, @Query("cid") int cid);
+
+    /**
+     * 获取广场数据
+     * @param pageNum
+     * @return
+     */
+    @GET(Constant.HOME_SQUARE_URL)
+    Observable<SquareData> loadHomeSquareData(@Path("pageNum") int pageNum);
 
     /**
      * 获取搜索热词

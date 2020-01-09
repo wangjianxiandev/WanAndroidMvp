@@ -78,6 +78,11 @@ public class Event {
     public static final int TARGET_WX = 6;
 
     /**
+     * 目标界面-广场
+     */
+    public static final int TARGET_SQUARE = 7;
+
+    /**
      * 目标界面-收藏列表
      */
     public static final int TARGET_COLLECT = 7;

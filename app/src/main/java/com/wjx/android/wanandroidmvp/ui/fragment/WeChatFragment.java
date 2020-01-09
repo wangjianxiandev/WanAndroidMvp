@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +68,11 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
     }
 
     private void initStatusBar() {
-        getActivity().getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         if (ColorUtils.calculateLuminance(getColor(R.color.white)) >= 0.5) {
             getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -87,7 +90,7 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
         List<String> tabNames = weChatClassifyData.stream()
                 .map(weChatClassify -> weChatClassify.author)
                 .collect(Collectors.toList());
-        weChatClassifyData.stream().forEach(weChatClassify ->{
+        weChatClassifyData.stream().forEach(weChatClassify -> {
             WeChatListFragment weChatListFragment = new WeChatListFragment(weChatClassify.authorId);
             mFragmentSparseArray.add(weChatListFragment);
         });
@@ -132,7 +135,6 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
     public void onRefreshWeChatClassify(List<Author> weChatClasssifyData) {
         onLoadWeChatClassify(weChatClasssifyData);
     }
-
 
 
     private void setChildViewVisibility(int visibility) {

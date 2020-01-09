@@ -2,6 +2,7 @@ package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.graphics.Color;
 import android.icu.util.ValueIterator;
+import android.os.Build;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -72,9 +73,11 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     }
 
     private void initStatusBar() {
-        getActivity().getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         if (ColorUtils.calculateLuminance(getColor(R.color.white)) >= 0.5) {
             getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -140,7 +143,6 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     public void onRefreshProjectClassify(List<ProjectClassify> projectClassifies) {
         onLoadProjectClassify(projectClassifies);
     }
-
 
 
     private void setChildViewVisibility(int visibility) {
