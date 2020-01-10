@@ -134,9 +134,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
             Article articleBean = mArticleList.get(realPosition);
             holder.mArticleContent.setText(
                     Html.fromHtml(articleBean.title, Html.FROM_HTML_MODE_COMPACT));
-            holder.mArticleAuthor.setText(
-                    String.format(mContext.getResources().getString(R.string.article_author),
-                            articleBean.author));
+            if (!articleBean.author.equals("")) {
+                holder.mArticleAuthor.setText(
+                        String.format(mContext.getResources().getString(R.string.article_author),
+                                articleBean.author));
+            } else {
+                holder.mArticleAuthor.setText(
+                        String.format(mContext.getResources().getString(R.string.article_author),
+                                articleBean.shareUser));
+            }
             holder.mArticleDate.setText(articleBean.niceDate);
             String category = String.format(
                     mContext.getResources().getString(R.string.article_category),

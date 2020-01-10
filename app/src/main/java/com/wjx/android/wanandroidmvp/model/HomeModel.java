@@ -119,6 +119,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                             article.link = datasBean.getLink();
                             article.collect = datasBean.isCollect();
                             article.niceDate = datasBean.getNiceDate();
+                            article.shareUser = datasBean.getShareUser();
                             articleList.add(article);
                         } else {
                             allArticles.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
@@ -131,6 +132,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                                     m.collect = datasBean.isCollect();
                                     m.niceDate = datasBean.getNiceDate();
                                     m.time = datasBean.getPublishTime();
+                                    m.shareUser = datasBean.getShareUser();
                                     if (!m.collect) {
                                         m.setToDefault("collect");
                                     }

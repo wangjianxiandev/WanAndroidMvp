@@ -66,4 +66,6 @@ public class Article extends LitePalSupport {
 
     public boolean collect;
 
+    public String shareUser;
+
 }

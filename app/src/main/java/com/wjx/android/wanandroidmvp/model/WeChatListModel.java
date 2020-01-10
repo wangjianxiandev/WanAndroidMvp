@@ -63,7 +63,7 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                             Article article = new Article();
                             article.type = Article.TYPE_WX;
                             article.title = datasBean.getTitle();
-                            article.id = datasBean.getId();
+                            article.articleId = datasBean.getId();
                             article.desc = datasBean.getDesc();
                             article.authorId = datasBean.getChapterId();
                             article.author = datasBean.getAuthor();

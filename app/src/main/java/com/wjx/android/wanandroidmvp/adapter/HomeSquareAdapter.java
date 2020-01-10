@@ -75,7 +75,7 @@ public class HomeSquareAdapter extends RecyclerView.Adapter<HomeSquareAdapter.Ho
             Article bean = mHomeSquareList.get(position);
             holder.mHomeSquareTitle.setText(Html.fromHtml(bean.title, Html.FROM_HTML_MODE_COMPACT));
 
-            holder.mHomeSquareAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author), bean.author));
+            holder.mHomeSquareAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author), bean.shareUser));
             holder.mHomeSquareDate.setText(bean.niceDate);
             String category = String.format(mContext.getResources().getString(R.string.article_category),
                     bean.superChapterName, bean.chapterName);

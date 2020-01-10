@@ -69,6 +69,7 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                             article.link = datasBean.getLink();
                             article.collect = datasBean.isCollect();
                             article.niceDate = datasBean.getNiceDate();
+                            article.shareUser = datasBean.getShareUser();
                             squareArticleList.add(article);
                         } else {
                             allHomeSquareData.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
@@ -81,6 +82,7 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                                     m.superChapterName = datasBean.getSuperChapterName();
                                     m.collect = datasBean.isCollect();
                                     m.niceDate = datasBean.getNiceDate();
+                                    m.shareUser = datasBean.getShareUser();
                                     m.time = datasBean.getPublishTime();
                                     if (!m.collect) {
                                         m.setToDefault("collect");
