@@ -32,6 +32,11 @@ public class Article extends LitePalSupport {
      */
     public static final int TYPE_SQUARE = 5;
 
+    /**
+     * 首页置顶文章
+     */
+    public static final int TYPE_TOP = 6;
+
     public int id;
 
     public int type;
@@ -68,4 +73,9 @@ public class Article extends LitePalSupport {
 
     public String shareUser;
 
+    public boolean isTop;
+
+    public boolean isFresh;
+
+    public boolean isQuestion;
 }

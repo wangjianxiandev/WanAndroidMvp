@@ -82,6 +82,10 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
             String category = String.format(mContext.getResources().getString(R.string.article_category),
                     bean.superChapterName, bean.chapterName);
             holder.mWechatType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
+
+            if (bean.isFresh) {
+                holder.mNewView.setVisibility(View.VISIBLE);
+            }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -90,6 +94,7 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
                             mWeChatList.get(position).link);
                 }
             });
+
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {
@@ -131,6 +136,8 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
         TextView mWechatDate;
         @BindView(R.id.item_list_collect)
         ImageView mCollectView;
+        @BindView(R.id.item_home_new)
+        TextView mNewView;
 
         public WeChatListHolder(@NonNull View itemView) {
             super(itemView);

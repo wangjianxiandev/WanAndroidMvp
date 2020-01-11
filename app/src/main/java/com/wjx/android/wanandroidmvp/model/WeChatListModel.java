@@ -72,6 +72,7 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                             article.link = datasBean.getLink();
                             article.niceDate = datasBean.getNiceDate();
                             article.time = datasBean.getPublishTime();
+                            article.isFresh = datasBean.isFresh();
                             weChatArticleList.add(article);
                         } else {
                             allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).forEach(w -> {
@@ -87,6 +88,7 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                                     w.niceDate = datasBean.getNiceDate();
                                     w.collect = datasBean.isCollect();
                                     w.time = datasBean.getPublishTime();
+                                    w.isFresh = datasBean.isFresh();
                                     if (!w.collect) {
                                         w.setToDefault("collect");
                                     }

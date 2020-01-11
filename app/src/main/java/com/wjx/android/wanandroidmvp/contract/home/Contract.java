@@ -46,6 +46,18 @@ public class Contract {
         Observable<List<Article>> refreshArticle(int pageNum);
 
         /**
+         * 获取置顶文章
+         * @return
+         */
+        Observable<List<Article>> loadTopArticle();
+
+        /**
+         * 刷新置顶文章
+         * @return
+         */
+        Observable<List<Article>> refreshTopArticle();
+
+        /**
          * 收藏文章
          * @param articleId
          * @return
@@ -70,11 +82,17 @@ public class Contract {
 
         void refreshBanner(List<Banner> bannerList);
 
+
+        void loadTopArticle(List<Article> topArticleList);
+
+        void refreshTopArticle(List<Article> topArticleList);
+
         /**
          * 获取Article数据进行显示
          * @param articleList
          */
         void loadArticle(List<Article> articleList);
+
 
         /**
          * 刷新首页文章
@@ -116,6 +134,10 @@ public class Contract {
          * 刷新首页文章
          */
         void refreshArticle(int pageNum);
+
+        void loadTopArticle();
+
+        void refreshTopArticle();
 
         /**
          * 收藏文章

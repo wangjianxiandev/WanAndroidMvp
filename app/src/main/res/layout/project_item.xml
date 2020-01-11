@@ -39,43 +39,11 @@
             android:background="@drawable/title_lable_shap"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
-            android:text="置顶"
+            android:text="项目"
             android:textColor="@android:color/holo_red_light"
             android:textSize="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/item_project_author"
             app:layout_constraintStart_toEndOf="@+id/item_project_author"
-            app:layout_constraintTop_toTopOf="@+id/item_project_author" />
-
-        <TextView
-            android:id="@+id/item_project_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/title_lable_shap"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:text="新"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/item_project_author"
-            app:layout_constraintStart_toEndOf="@+id/item_project_top"
-            app:layout_constraintTop_toTopOf="@+id/item_project_author" />
-
-        <TextView
-            android:id="@+id/item_project_type1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/title_lable_shap1"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:text="问答"
-            android:textColor="@android:color/holo_green_dark"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/item_project_author"
-            app:layout_constraintStart_toEndOf="@+id/item_project_new"
             app:layout_constraintTop_toTopOf="@+id/item_project_author" />
 
         <TextView

@@ -34,9 +34,14 @@ public class Constant {
     public static final String ARTICLE_URL = "/article/list/{pageNum}/json";
 
     /**
+     * 置顶文章数据
+     */
+    public static final String TOP_ARTICLE_URL = "/article/top/json";
+
+    /**
      * 导航URL
      */
-    public static final String SQUARE_URL = "/navi/json";
+    public static final String NAVI_URL = "/navi/json";
 
     /**
      * 体系URL

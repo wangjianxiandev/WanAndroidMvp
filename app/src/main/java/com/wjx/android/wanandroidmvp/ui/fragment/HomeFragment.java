@@ -76,6 +76,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private List<Article> mArticleList = new ArrayList<>();
 
+    private List<Article> mTopArticleList = new ArrayList<>();
+
     @BindView(R.id.article_recycler)
     RecyclerView mRecyclerView;
 
@@ -113,6 +115,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         initToolbar();
         initStatusBar();
         mPresenter.loadBanner();
+        mPresenter.loadTopArticle();
         mPresenter.loadArticle(mCurpage);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
@@ -211,7 +214,20 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     @Override
+    public void loadTopArticle(List<Article> topArticleList) {
+        mTopArticleList.clear();
+        mTopArticleList.addAll(topArticleList);
+    }
+
+    @Override
+    public void refreshTopArticle(List<Article> topArticleList) {
+        mTopArticleList.clear();
+        mTopArticleList.addAll(topArticleList);
+    }
+
+    @Override
     public void loadArticle(List<Article> articleList) {
+        articleList.addAll(0, mTopArticleList);
         mArticleList.addAll(articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }
@@ -219,6 +235,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void refreshArticle(List<Article> articleList) {
         mArticleList.clear();
+        articleList.addAll(0, mTopArticleList);
         mArticleList.addAll(0, articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }
@@ -323,6 +340,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mPresenter.refreshBanner();
+        mPresenter.refreshTopArticle();
         mCurpage = 0;
         mPresenter.refreshArticle(mCurpage);
     }

@@ -5,6 +5,7 @@ import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.collect.CollectBean;
+import com.wjx.android.wanandroidmvp.bean.home.TopArticleBean;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
@@ -15,6 +16,8 @@ import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeListArticle;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
+
+import org.litepal.util.Const;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -44,6 +47,13 @@ public interface ApiServer {
      */
     @GET(Constant.ARTICLE_URL)
     Observable<ArticleBean> loadArticle(@Path("pageNum") int number);
+
+    /**
+     * 获取置顶文章
+     * @return
+     */
+    @GET(Constant.TOP_ARTICLE_URL)
+    Observable<TopArticleBean> loadTopArticle();
 
     /**
      * 获取项目种类
@@ -76,12 +86,19 @@ public interface ApiServer {
     @GET(Constant.WE_CHAT_LIST_URL)
     Observable<WeChatListData> loadWeChatList(@Path("id") int id, @Path("pageNum") int pageNum);
 
+    /**
+     * 获取广场数据
+     * @param pageNum
+     * @return
+     */
+    @GET(Constant.HOME_SQUARE_URL)
+    Observable<SquareData> loadHomeSquareData(@Path("pageNum") int pageNum);
 
     /**
      * 获取导航数据
      * @return
      */
-    @GET(Constant.SQUARE_URL)
+    @GET(Constant.NAVI_URL)
     Observable<NavigationData> loadNavigationData();
 
     /**
@@ -99,14 +116,6 @@ public interface ApiServer {
      */
     @GET(Constant.TREE_ARTICLE_URL)
     Observable<TreeListArticle> loadTreeArticle(@Path("pageNum") int pageNum, @Query("cid") int cid);
-
-    /**
-     * 获取广场数据
-     * @param pageNum
-     * @return
-     */
-    @GET(Constant.HOME_SQUARE_URL)
-    Observable<SquareData> loadHomeSquareData(@Path("pageNum") int pageNum);
 
     /**
      * 获取搜索热词

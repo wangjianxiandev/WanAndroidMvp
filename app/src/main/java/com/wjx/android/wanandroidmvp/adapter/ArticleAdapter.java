@@ -149,6 +149,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                     articleBean.superChapterName, articleBean.chapterName);
             holder.mArticleType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
 
+            if (articleBean.isTop) {
+                holder.mTopView.setVisibility(View.VISIBLE);
+            }
+            if (articleBean.isFresh) {
+                holder.mNewView.setVisibility(View.VISIBLE);
+            }
+            if (articleBean.isQuestion) {
+                holder.mQuestionView.setVisibility(View.VISIBLE);
+            }
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {
@@ -167,7 +176,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                 @Override
                 public void onClick(View view) {
                     if (!LoginUtils.isLogin()) {
-                        Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(mContext, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
@@ -209,6 +217,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
         TextView mArticleDate;
         @BindView(R.id.item_list_collect)
         ImageView mCollectView;
+        @BindView(R.id.item_home_top_article)
+        TextView mTopView;
+        @BindView(R.id.item_home_new)
+        TextView mNewView;
+        @BindView(R.id.item_home_question)
+        TextView mQuestionView;
 
         public ArticleHolder(@NonNull View itemView) {
             super(itemView);

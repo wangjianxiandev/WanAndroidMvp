@@ -1,11 +1,14 @@
 package com.wjx.android.wanandroidmvp.model;
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.NetworkUtils;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.db.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
+import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 
 import org.litepal.LitePal;
@@ -98,6 +101,89 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
         }
     }
 
+    @Override
+    public Observable<List<Article>> loadTopArticle() {
+        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
+            List<Article> topArticleList = LitePal.where("type=?", Article.TYPE_TOP+"")
+                    .order("time desc")
+                    .find(Article.class);
+            emitter.onNext(topArticleList);
+            emitter.onComplete();
+        });
+        if (NetworkUtils.isConnected()) {
+            Observable<List<Article>> loadFronNet = loadTopArticleFromNet();
+            return Observable.concat(loadFromLocal, loadFronNet);
+        } else {
+            return loadFromLocal;
+        }
+    }
+
+    private Observable<List<Article>> loadTopArticleFromNet() {
+        return mApiServer.loadTopArticle().filter(topArticleBean -> topArticleBean.getErrorCode() == Constant.SUCCESS)
+                .map(topArticleBean -> {
+                    List<Article> allTopArticleList = LitePal.where("type=?", Article.TYPE_TOP + "")
+                            .find(Article.class);
+                    List<Article> topArticleList = new ArrayList<>();
+                    topArticleBean.getData().stream().forEach(datasBean -> {
+                        long count = allTopArticleList.stream().filter(m -> m.articleId == datasBean.getId()).count();
+                        if (count <= 0) {
+                            Article article = new Article();
+                            article.type = Article.TYPE_TOP;
+                            article.articleId = datasBean.getId();
+                            article.title = datasBean.getTitle();
+                            article.author = datasBean.getAuthor();
+                            article.chapterName = datasBean.getChapterName();
+                            article.superChapterName = datasBean.getSuperChapterName();
+                            article.time = datasBean.getPublishTime();
+                            article.link = datasBean.getLink();
+                            article.collect = datasBean.isCollect();
+                            article.niceDate = datasBean.getNiceDate();
+                            article.shareUser = datasBean.getShareUser();
+                            article.isFresh = datasBean.isFresh();
+                            article.isTop = true;
+                            if (article.superChapterName.equals("问答")) {
+                                article.isQuestion = true;
+                            }
+                            topArticleList.add(article);
+                        } else {
+                            allTopArticleList.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
+                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                    m.title = datasBean.getTitle();
+                                    m.author = datasBean.getAuthor();
+                                    m.link = datasBean.getLink();
+                                    m.chapterName = datasBean.getChapterName();
+                                    m.superChapterName = datasBean.getSuperChapterName();
+                                    m.collect = datasBean.isCollect();
+                                    m.niceDate = datasBean.getNiceDate();
+                                    m.time = datasBean.getPublishTime();
+                                    m.shareUser = datasBean.getShareUser();
+                                    m.isFresh = datasBean.isFresh();
+                                    m.isTop = true;
+                                    if (m.superChapterName.equals("问答")) {
+                                        m.isQuestion = true;
+                                    }
+                                    if (!m.collect) {
+                                        m.setToDefault("collect");
+                                    }
+                                    m.update(m.id);
+                                }
+                            });
+                        }
+                    });
+                    LitePal.saveAll(topArticleList);
+                    List<Article> topArticleResult = LitePal.where("type=?", Article.TYPE_TOP + "")
+                            .order("time desc")
+                            .find(Article.class);
+                    return topArticleResult;
+                });
+    }
+
+    @Override
+    public Observable<List<Article>> refreshTopArticle() {
+        return loadTopArticleFromNet();
+    }
+
+
     private Observable<List<Article>> loadArticleFromNet(int pageNum) {
         return mApiServer.loadArticle(pageNum).filter(articleBean ->
                 articleBean.getErrorCode() == Constant.SUCCESS)
@@ -120,6 +206,8 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                             article.collect = datasBean.isCollect();
                             article.niceDate = datasBean.getNiceDate();
                             article.shareUser = datasBean.getShareUser();
+                            article.isFresh = datasBean.isFresh();
+                            article.isTop = false;
                             articleList.add(article);
                         } else {
                             allArticles.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
@@ -133,6 +221,8 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                                     m.niceDate = datasBean.getNiceDate();
                                     m.time = datasBean.getPublishTime();
                                     m.shareUser = datasBean.getShareUser();
+                                    m.isFresh = datasBean.isFresh();
+                                    m.isTop = false;
                                     if (!m.collect) {
                                         m.setToDefault("collect");
                                     }
