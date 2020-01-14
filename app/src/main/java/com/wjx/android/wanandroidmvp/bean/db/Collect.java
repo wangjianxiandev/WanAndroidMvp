@@ -13,6 +13,8 @@ public class Collect extends LitePalSupport {
 
     public int originId;
 
+    public String envelopePic;
+
     public String author;
 
     public String title;
@@ -23,4 +25,9 @@ public class Collect extends LitePalSupport {
 
     public String link;
 
+    public String chapterName;
+
+    public boolean isSupportPic;
+
+    public String niceDate;
 }

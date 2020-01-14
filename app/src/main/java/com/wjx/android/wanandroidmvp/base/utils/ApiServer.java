@@ -1,12 +1,14 @@
 package com.wjx.android.wanandroidmvp.base.utils;
 
-import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
+import com.wjx.android.wanandroidmvp.bean.collect.CollectData;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
-import com.wjx.android.wanandroidmvp.bean.collect.CollectBean;
 import com.wjx.android.wanandroidmvp.bean.home.TopArticleBean;
+import com.wjx.android.wanandroidmvp.bean.me.IntegralData;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
+import com.wjx.android.wanandroidmvp.bean.rank.RankData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
@@ -16,8 +18,6 @@ import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeListArticle;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
-
-import org.litepal.util.Const;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -131,7 +131,7 @@ public interface ApiServer {
      * @param passWord
      * @return
      */
-    @POST(Constant.LOGIN_URL)
+    @POST(Constant.URL_LOGIN)
     Observable<LoginData> login(@Query("username") String userName, @Query("password") String passWord);
 
     /**
@@ -141,14 +141,14 @@ public interface ApiServer {
      * @param repassword
      * @return
      */
-    @POST(Constant.REGISTER_URL)
+    @POST(Constant.URL_REGISTER)
     Observable<LoginData> register(@Query("username") String userName, @Query("password") String password, @Query("repassword") String repassword);
 
-    @GET(Constant.LOGOUT_URL)
+    @GET(Constant.URL_LOGINOUT)
     Observable<LoginData> logout();
 
     /**
-     * 收藏文章
+     * 点击收藏文章
      * @param id
      * @return
      */
@@ -156,7 +156,7 @@ public interface ApiServer {
     Observable<Collect> onCollect(@Path("id") int id);
 
     /**
-     * 取消收藏文章
+     * 点击取消收藏文章
      * @param id
      * @return
      */
@@ -164,7 +164,7 @@ public interface ApiServer {
     Observable<Collect> unCollect(@Path("id") int id);
 
     /**
-     * 取消收藏文章包括自己录入的内容
+     * 我的收藏页面取消收藏文章包括自己录入的内容
      * @param id
      * @param originId
      * @return
@@ -179,7 +179,7 @@ public interface ApiServer {
      * @return
      */
     @GET(Constant.URL_COLLECT_LIST)
-    Observable<CollectBean> loadCollect(@Path("pageNum") int pageNum);
+    Observable<CollectData> loadCollect(@Path("pageNum") int pageNum);
 
     /**
      * 添加站外收藏
@@ -189,8 +189,20 @@ public interface ApiServer {
      * @param link
      * @return
      */
-//    @POST(Constant.URL_ADD_COLLECT)
-//    Observable<AddCollect> addCollect(@Query("title") String title, @Query("author") String author, @Query("link") String link);
+    @POST(Constant.URL_ADD_COLLECT)
+    Observable<AddCollect> addCollect(@Query("title") String title, @Query("author") String author, @Query("link") String link);
 
+    /**
+     * 获取个人积分排行
+     * @return
+     */
+    @GET(Constant.URL_INTEGRAL)
+    Observable<IntegralData> loadIntegralData();
 
+    /**
+     * 获取积分排行列表
+     * @return
+     */
+    @GET(Constant.URL_RANK)
+    Observable<RankData> loadRankData(@Path("pageNum") int pageNum);
 }

@@ -1,9 +1,7 @@
 package com.wjx.android.wanandroidmvp.bean.collect;
 
 /**
- * @author wangyz
- * @time 2019/1/24 17:12
- * @description Collect
+ * 收藏按钮
  */
 public class Collect {
 

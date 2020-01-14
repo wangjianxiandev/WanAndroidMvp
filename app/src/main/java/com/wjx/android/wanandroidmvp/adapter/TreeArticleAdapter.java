@@ -57,7 +57,7 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
     }
 
     /**
-     * 为上滑刷新做准备
+     * 刷新数据
      *
      * @param articleList
      */
@@ -82,9 +82,15 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
             Article articleBean = mTreeArticleList.get(position);
             holder.mArticleContent.setText(
                     Html.fromHtml(articleBean.title, Html.FROM_HTML_MODE_COMPACT));
-            holder.mArticleAuthor.setText(
-                    String.format(mContext.getResources().getString(R.string.article_author),
-                            articleBean.author));
+            if (!articleBean.author.equals("")) {
+                holder.mArticleAuthor.setText(
+                        String.format(mContext.getResources().getString(R.string.article_author),
+                                articleBean.author));
+            } else {
+                holder.mArticleAuthor.setText(
+                        String.format(mContext.getResources().getString(R.string.article_author),
+                                articleBean.shareUser));
+            }
             holder.mArticleDate.setText(articleBean.niceDate);
             String category = String.format(
                     mContext.getResources().getString(R.string.article_category),

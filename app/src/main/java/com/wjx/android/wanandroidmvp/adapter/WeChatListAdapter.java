@@ -25,12 +25,15 @@ import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static androidx.core.content.res.ResourcesCompat.getColor;
 
 /**
  * Created with Android Studio.
@@ -50,6 +53,7 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
      * 是否为夜间模式
      */
     private boolean isNightMode;
+
 
     public WeChatListAdapter(Context context, List<Article> articleList) {
         mContext = context;
@@ -78,6 +82,8 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
             holder.mWechatTitle.setText(Html.fromHtml(bean.title, Html.FROM_HTML_MODE_COMPACT));
 
             holder.mWeChatAuthor.setText(String.format(mContext.getResources().getString(R.string.article_author), bean.author));
+            holder.mTypeView.setVisibility(View.VISIBLE);
+            holder.mTypeView.setText(bean.superChapterName);
             holder.mWechatDate.setText(bean.niceDate);
             String category = String.format(mContext.getResources().getString(R.string.article_category),
                     bean.superChapterName, bean.chapterName);
@@ -138,6 +144,8 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
         ImageView mCollectView;
         @BindView(R.id.item_home_new)
         TextView mNewView;
+        @BindView(R.id.item_home_top_article)
+        TextView mTypeView;
 
         public WeChatListHolder(@NonNull View itemView) {
             super(itemView);

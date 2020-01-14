@@ -1,9 +1,6 @@
 package com.wjx.android.wanandroidmvp.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,10 +16,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
-import com.wjx.android.wanandroidmvp.contract.me.Contract;
+import com.wjx.android.wanandroidmvp.contract.login.Contract;
 import com.wjx.android.wanandroidmvp.presenter.me.LoginPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -102,7 +98,7 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
                 EventBus.getDefault().post(wxEvent);
 
                 Event menuEvent = new Event();
-                menuEvent.target = Event.TARGET_MENU;
+                menuEvent.target = Event.TARGET_ME;
                 menuEvent.type = Event.TYPE_LOGIN;
                 menuEvent.data = mUsername.getText().toString();
                 EventBus.getDefault().post(menuEvent);

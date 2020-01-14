@@ -53,9 +53,9 @@ public class Event {
     public static final int TARGET_MAIN = 1;
 
     /**
-     * 目标界面-目录
+     * 目标界面-我的
      */
-    public static final int TARGET_MENU = 2;
+    public static final int TARGET_ME = 2;
 
     /**
      * 目标界面-首页
@@ -91,6 +91,11 @@ public class Event {
      * 目标界面-搜索结果
      */
     public static final int TARGET_SEARCH_RESULT = 8;
+
+    /**
+     * 目标界面-积分排行
+     */
+    public static final int TARGET_INTEGRAL_RANK = 9;
 
     public int target;
 

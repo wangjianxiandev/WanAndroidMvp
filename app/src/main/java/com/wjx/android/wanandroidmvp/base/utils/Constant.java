@@ -86,17 +86,17 @@ public class Constant {
     /**
      * 注册URL
      */
-    public static final String REGISTER_URL = "/user/register";
+    public static final String URL_REGISTER = "/user/register";
 
     /**
      * 登录URL
      */
-    public static final String LOGIN_URL = "/user/login";
+    public static final String URL_LOGIN = "/user/login";
 
     /**
      * 登出URL
      */
-    public static final String LOGOUT_URL = "user/logout/json";
+    public static final String URL_LOGINOUT = "user/logout/json";
 
     /**
      * 收藏文章的url
@@ -116,7 +116,7 @@ public class Constant {
     /**
      * 收藏文章列表的url
      */
-    public static final String URL_COLLECT_LIST = "/lg/collect/list/{PageNum}/json";
+    public static final String URL_COLLECT_LIST = "/lg/collect/list/{pageNum}/json";
 
     /**
      * 添加站外收藏
@@ -127,6 +127,21 @@ public class Constant {
      * 搜索的url
      */
     public static final String URL_SEARCH = "/article/query/{PageNum}/json";
+
+    /**
+     * 获取个人积分排行
+     */
+    public static final String URL_INTEGRAL = "/lg/coin/userinfo/json";
+
+    /**
+     * 积分排行
+     */
+    public static final String URL_RANK = "/coin/rank/{pageNum}/json";
+
+    /**
+     * 积分规则
+     */
+    public static final String URL_INTEGRAL_HELP = "https://www.wanandroid.com/blog/show/2653";
 
     /**
      * 获取成功
@@ -159,12 +174,22 @@ public class Constant {
     public static final String KEY_URL = "url";
 
     /**
-     * key-keyword
+     * key-rank
      */
-    public static final String KEY_KEYOWRD = "keyword";
+    public static final String KEY_RANK = "rank";
 
     /**
-     * 夜间模式
+     * key-countcoin
+     */
+    public static final String KEY_COUNTCOIN = "countcoin";
+
+    /**
+     * key-keyword
+     */
+    public static final String KEY_KEYWORD = "keyword";
+
+    /**
+     * key-night-mode
      */
     public static final String KEY_NIGHT_MODE = "night_mode";
 
@@ -272,6 +297,21 @@ public class Constant {
         float density;
         density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    /**
+     * px转换为dp
+     * @param context
+     * @param pxValue
+     * @return
+     */
+    public static int pxToDp(Context context, float pxValue) {
+        if (context == null) {
+            return -1;
+        }
+
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
     }
 
     /**

@@ -51,8 +51,6 @@ public class Article extends LitePalSupport {
 
     public String author;
 
-    public String category;
-
     public String chapterName;
 
     public String superChapterName;

@@ -74,6 +74,7 @@ public class TreeListModel extends BaseModel implements Contract.ITreeListModel 
                             article.link = datasBean.getLink();
                             article.niceDate = datasBean.getNiceDate();
                             article.collect = datasBean.isCollect();
+                            article.shareUser = datasBean.getShareUser();
                             article.treeType = cid;
                             treeArticleList.add(article);
                         } else {
@@ -89,6 +90,7 @@ public class TreeListModel extends BaseModel implements Contract.ITreeListModel 
                                     m.niceDate = datasBean.getNiceDate();
                                     m.link = datasBean.getLink();
                                     m.collect = datasBean.isCollect();
+                                    m.shareUser = datasBean.getShareUser();
                                     if (!m.collect) {
                                         m.setToDefault("collect");
                                     }

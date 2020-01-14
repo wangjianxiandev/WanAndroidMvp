@@ -70,6 +70,7 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                             article.collect = datasBean.isCollect();
                             article.niceDate = datasBean.getNiceDate();
                             article.shareUser = datasBean.getShareUser();
+                            article.isFresh = datasBean.isFresh();
                             squareArticleList.add(article);
                         } else {
                             allHomeSquareData.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
@@ -84,6 +85,7 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                                     m.niceDate = datasBean.getNiceDate();
                                     m.shareUser = datasBean.getShareUser();
                                     m.time = datasBean.getPublishTime();
+                                    m.isFresh = datasBean.isFresh();
                                     if (!m.collect) {
                                         m.setToDefault("collect");
                                     }

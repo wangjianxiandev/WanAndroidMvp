@@ -1,14 +1,18 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import com.wjx.android.wanandroidmvp.base.utils.ApiServer;
+import com.blankj.utilcode.util.NetworkUtils;
+import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.bean.collect.CollectBean;
+import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.collect.Contract;
 
+import org.litepal.LitePal;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created with Android Studio.
@@ -18,23 +22,57 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @date: 2020/01/01
  * Time: 22:40
  */
-public class CollectModel implements Contract.ICollectModel {
-    @Override
-    public Observable<CollectBean> loadCollect(int pageNum) {
-        return getApiServer().loadCollect(pageNum);
+public class CollectModel extends BaseModel implements Contract.ICollectModel {
+
+    public CollectModel() {
+        setCookies(false);
     }
 
-    /**
-     * 获取请求对象
-     * @return 当前的请求对象
-     */
-    private ApiServer getApiServer() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        ApiServer apiServer = retrofit.create(ApiServer.class);
-        return apiServer;
+    @Override
+    public Observable<List<com.wjx.android.wanandroidmvp.bean.db.Collect>> loadCollectData(int pageNum) {
+        Observable<List<com.wjx.android.wanandroidmvp.bean.db.Collect>> loadFromNet = loadCollectArticleFromNet(pageNum);
+        return loadFromNet;
+
+    }
+
+    private Observable<List<com.wjx.android.wanandroidmvp.bean.db.Collect>> loadCollectArticleFromNet(int pageNum) {
+        return mApiServer.loadCollect(pageNum).filter(collectData -> collectData.getErrorCode() == Constant.SUCCESS)
+                .map(collectData -> {
+                    List<com.wjx.android.wanandroidmvp.bean.db.Collect> list = new ArrayList<>();
+                    collectData.getData().getDatas().stream().forEach(d -> {
+                        com.wjx.android.wanandroidmvp.bean.db.Collect collect = new com.wjx.android.wanandroidmvp.bean.db.Collect();
+                        collect.articleId = d.getId();
+                        collect.originId = d.getOriginId();
+                        collect.author = d.getAuthor();
+                        collect.title = d.getTitle();
+                        collect.chapterName = d.getChapterName();
+                        collect.time = d.getPublishTime();
+                        collect.link = d.getLink();
+                        collect.niceDate = d.getNiceDate();
+                        collect.envelopePic = d.getEnvelopePic();
+                        if (!collect.envelopePic.equals("")){
+                            collect.isSupportPic = true;
+                        } else {
+                            collect.isSupportPic = false;
+                        }
+                        list.add(collect);
+                    });
+                    return list;
+                });
+    }
+
+    @Override
+    public Observable<List<com.wjx.android.wanandroidmvp.bean.db.Collect>> refreshCollectData(int pageNum) {
+        return loadCollectArticleFromNet(pageNum);
+    }
+
+    @Override
+    public Observable<AddCollect> addCollect(String title, String author, String link) {
+        return mApiServer.addCollect(title, author, link);
+    }
+
+    @Override
+    public Observable<Collect> unCollect(int articleId, int originId) {
+        return mApiServer.unCollect(articleId, originId);
     }
 }

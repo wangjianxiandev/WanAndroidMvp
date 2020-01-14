@@ -1,7 +1,7 @@
 package com.wjx.android.wanandroidmvp.contract.me;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
-import com.wjx.android.wanandroidmvp.bean.me.LoginData;
+import com.wjx.android.wanandroidmvp.bean.me.IntegralData;
 
 import io.reactivex.Observable;
 
@@ -15,16 +15,32 @@ import io.reactivex.Observable;
  */
 public class Contract {
 
-    public interface ILoginModel {
-        Observable<LoginData> login(String userName, String passWord);
+    public interface IMeModel {
+
+        /**
+         * 加载积分数据
+         * @return
+         */
+        Observable<IntegralData> loadIntegralData();
+
+        /**
+         * 刷新积分数据
+         * @return
+         */
+        Observable<IntegralData> refreshIntegralData();
 
     }
 
-    public interface ILoginView extends IBaseView {
-        void onLogin (LoginData loginData);
+    public interface IMeView extends IBaseView {
+
+        void onLoadIntegralData(IntegralData integral);
+
+        void onRefreshIntegralData(IntegralData integral);
     }
 
-    public interface ILoginPresenter {
-        void login (String userName, String passWord);
+    public interface IMePresenter {
+        void loadIntegralData();
+
+        void refreshIntegralData();
     }
 }

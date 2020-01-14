@@ -21,7 +21,6 @@ import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
-import com.wjx.android.wanandroidmvp.model.LoginModel;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,6 +82,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                     bean.superChapterName, bean.chapterName);
             holder.mProjectType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
             holder.mProjectContent.setText(bean.desc);
+            holder.mProjectImageView.setVisibility(View.VISIBLE);
+            holder.mItemTop.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(bean.envelopePic).into(holder.mProjectImageView);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,6 +139,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         TextView mProjectContent;
         @BindView(R.id.item_list_collect)
         ImageView mCollectView;
+        @BindView(R.id.item_project_top)
+        TextView mItemTop;
 
         public ProjectListHolder(@NonNull View itemView) {
             super(itemView);

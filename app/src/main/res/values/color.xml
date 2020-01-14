@@ -36,4 +36,6 @@
 
     <color name="button_bg">#06B3ED</color>
     <color name="button_border">#06B3ED</color>
+
+    <color name="holo_green_dark">#ff669900</color>
 </resources>

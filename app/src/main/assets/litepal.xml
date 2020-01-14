@@ -10,5 +10,6 @@
         <mapping class="com.wjx.android.wanandroidmvp.bean.db.Tree"></mapping>
         <mapping class="com.wjx.android.wanandroidmvp.bean.db.Collect"></mapping>
         <mapping class="com.wjx.android.wanandroidmvp.bean.db.Author"></mapping>
+        <mapping class="com.wjx.android.wanandroidmvp.bean.db.Rank"></mapping>
     </list>
 </litepal>

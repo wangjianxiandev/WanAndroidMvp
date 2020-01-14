@@ -1,11 +1,15 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -36,6 +40,8 @@ import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 import com.wjx.android.wanandroidmvp.presenter.home.HomePresenter;
 
+import com.wjx.android.wanandroidmvp.ui.activity.MainActivity;
+import com.wjx.android.wanandroidmvp.ui.activity.SearchWordActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -102,9 +108,30 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == R.id.top_search) {
+            Intent intent = new Intent(mContext, SearchWordActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -227,7 +254,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void loadArticle(List<Article> articleList) {
-        articleList.addAll(0, mTopArticleList);
+        if (mCurpage == 0) {
+            articleList.addAll(0, mTopArticleList);
+        }
         mArticleList.addAll(articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }

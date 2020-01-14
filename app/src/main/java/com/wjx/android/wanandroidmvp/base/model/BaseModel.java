@@ -4,11 +4,9 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.blankj.utilcode.util.ApiUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.base.utils.ApiServer;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.model.LoginModel;
 
 import java.io.IOException;
 import java.util.List;

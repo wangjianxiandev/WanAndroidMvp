@@ -66,13 +66,14 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/me_jifen"
+                    android:id="@+id/me_integral_rank"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/safe_padding">
+                    android:paddingLeft="@dimen/safe_padding"
+                    android:clickable="true">
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"

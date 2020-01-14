@@ -2,7 +2,7 @@ package com.wjx.android.wanandroidmvp.presenter.me;
 
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
-import com.wjx.android.wanandroidmvp.contract.me.Contract;
+import com.wjx.android.wanandroidmvp.contract.login.Contract;
 import com.wjx.android.wanandroidmvp.model.LoginModel;
 
 import io.reactivex.Observer;
@@ -15,12 +15,11 @@ import io.reactivex.schedulers.Schedulers;
  * Description:
  *
  * @author: 王拣贤
- * @date: 2019/12/31
- * Time: 14:19
+ * @date: 2020/01/11
+ * Time: 22:15
  */
 public class LoginPresenter extends BasePresenter<Contract.ILoginView> implements Contract.ILoginPresenter {
     Contract.ILoginModel iLoginModel;
-
     public LoginPresenter() {
         iLoginModel = new LoginModel();
     }

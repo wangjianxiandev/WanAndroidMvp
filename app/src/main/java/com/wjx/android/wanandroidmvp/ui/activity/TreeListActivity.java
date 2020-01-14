@@ -106,7 +106,6 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
     }
 
     private void initToolbar() {
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -120,6 +119,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
             mTitle.setText(title);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

@@ -11,6 +11,7 @@
     <string name="bottomname5">我的</string>
     <string name="article_author">作者：%1$s</string>
     <string name="article_category">分类：%1$s/%2$s</string>
+    <string name="collect_category">分类：%1$s</string>
     <string name="anonymous_user">匿名用户</string>
     <string name="search_hint">输入关键字搜索</string>
 
@@ -27,5 +28,9 @@
     <string name="input_username">请输入用户名</string>
     <string name="input_password">请输入密码</string>
     <string name="input_repassword">请确认密码</string>
+    <string name="integral_rank">积分排行</string>
+    <string name="help">帮助</string>
+    <string name="integral_rule">积分规则</string>
+    <string name="collect_page">我的收藏</string>
 
 </resources>
