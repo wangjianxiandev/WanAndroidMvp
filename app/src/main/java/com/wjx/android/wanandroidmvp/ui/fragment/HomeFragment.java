@@ -349,6 +349,10 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mArticleList.clear();
                 mPresenter.refreshArticle(0);
+            } else if (event.type == Event.TYPE_REFRESH) {
+                mArticleList.clear();
+                mPresenter.refreshTopArticle();
+                mPresenter.refreshArticle(mCurpage);
             }
         }
     }

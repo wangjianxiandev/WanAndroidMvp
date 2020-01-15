@@ -218,10 +218,12 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
                 }
             } else if (event.type == Event.TYPE_LOGIN) {
                 mProjectArticleList.clear();
-                mPresenter.refreshProjectList(mCid, 0);
+                mPresenter.refreshProjectList(0, mCid);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mProjectArticleList.clear();
-                mPresenter.refreshProjectList(mCid, 0);
+                mPresenter.refreshProjectList(0, mCid);
+            } else if (event.type == Event.TYPE_REFRESH) {
+                mPresenter.refreshProjectList(mCurrentPage, mCid);
             }
         }
     }

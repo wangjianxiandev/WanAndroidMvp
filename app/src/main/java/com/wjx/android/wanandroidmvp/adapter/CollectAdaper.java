@@ -112,14 +112,6 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
                         event.type = Event.TYPE_UNCOLLECT;
                         event.data = collect.articleId + ";" + collect.originId;
                         EventBus.getDefault().post(event);
-                        // 取消收藏传递给home
-                        Event homeEvent = new Event();
-                        homeEvent.target = Event.TARGET_HOME;
-                        homeEvent.type = Event.TYPE_UNCOLLECT;
-                        homeEvent.data = collect.originId+"";
-                        EventBus.getDefault().post(homeEvent);
-
-                        // 取消收藏传递给project
                     }
                 }
             });

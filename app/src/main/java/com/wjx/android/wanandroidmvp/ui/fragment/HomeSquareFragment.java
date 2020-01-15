@@ -199,6 +199,9 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(0);
+            } else if (event.type == Event.TYPE_REFRESH) {
+                mHomeSquareList.clear();
+                mPresenter.refreshHomeSquareData(mCurpage);
             }
         }
     }

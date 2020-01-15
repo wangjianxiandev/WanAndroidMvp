@@ -255,6 +255,9 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mTreeArticleList.clear();
                 mPresenter.refreshTreeList(0, mCid);
+            } else if (event.type == Event.TYPE_REFRESH) {
+                mTreeArticleList.clear();
+                mPresenter.refreshTreeList(mCurPage, mCid);
             }
         }
     }

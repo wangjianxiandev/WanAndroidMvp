@@ -213,6 +213,9 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mWechatArticleList.clear();
                 mPresenter.refreshWeChatList(mCid, 0);
+            } else if (event.type == Event.TYPE_REFRESH) {
+                mWechatArticleList.clear();
+                mPresenter.refreshWeChatList(mCid, mCurrentPage);
             }
         }
     }

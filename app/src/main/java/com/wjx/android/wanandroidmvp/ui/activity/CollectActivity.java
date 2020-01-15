@@ -181,6 +181,35 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
                 ToastUtils.showShort("取消收藏失败");
             }
         }
+        // 取消收藏传递给home
+        Event homeEvent = new Event();
+        homeEvent.target = Event.TARGET_HOME;
+        homeEvent.type = Event.TYPE_REFRESH;
+        EventBus.getDefault().post(homeEvent);
+
+        // 取消收藏传递给project
+        Event projectEvent = new Event();
+        projectEvent.target = Event.TARGET_PROJECT;
+        projectEvent.type = Event.TYPE_REFRESH;
+        EventBus.getDefault().post(projectEvent);
+
+        // 取消收藏传递给square
+        Event squareEvent = new Event();
+        squareEvent.target = Event.TARGET_SQUARE;
+        squareEvent.type = Event.TYPE_REFRESH;
+        EventBus.getDefault().post(squareEvent);
+
+        // 取消收藏传递给tree
+        Event treeEvent = new Event();
+        treeEvent.target = Event.TARGET_TREE;
+        treeEvent.type = Event.TYPE_REFRESH;
+        EventBus.getDefault().post(treeEvent);
+
+        // 取消收藏传递给wechat
+        Event wechatEvent = new Event();
+        wechatEvent.target = Event.TARGET_WX;
+        wechatEvent.type = Event.TYPE_REFRESH;
+        EventBus.getDefault().post(wechatEvent);
     }
 
     @Override
