@@ -75,4 +75,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     implementation 'org.litepal.android:java:3.0.0'
+
+    implementation 'androidx.preference:preference:1.0.0'
+
 }

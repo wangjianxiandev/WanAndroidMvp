@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -126,7 +127,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     @Override
-    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.top_search) {
             Intent intent = new Intent(mContext, SearchWordActivity.class);
             startActivity(intent);
@@ -250,7 +251,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void refreshTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
-        mTopArticleList.addAll(0,topArticleList);
+        mTopArticleList.addAll(0, topArticleList);
     }
 
     @Override
@@ -306,7 +307,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void onLoading() {
-
+        Toast.makeText(mContext, "onLoading", Toast.LENGTH_SHORT).show();
     }
 
     @Override

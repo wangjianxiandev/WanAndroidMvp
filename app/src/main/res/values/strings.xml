@@ -32,5 +32,25 @@
     <string name="help">帮助</string>
     <string name="integral_rule">积分规则</string>
     <string name="collect_page">我的收藏</string>
+    <!--设置页面-->
+    <string name="setting">设置</string>
+    <string name="setting_about">关于</string>
+    <string name="setting_project">开源项目</string>
+    <string name="setting_version">版本</string>
+    <string name="setting_exit">退出</string>
+    <string name="setting_slidable_summary">类似 iOS 左侧滑动返回</string>
+    <string name="setting_slidable_title">滑动返回</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="setting_mode">列表动画</string>
+    <string name="setting_modetip">无</string>
+    <string name="copyright">版权声明</string>
+    <string name="copyright_tip">本App使用的Api均为 玩安卓网站 提供，仅供于大家学习交流，请禁止将本项目代码转为马甲包添加广告发布到应用市场！！！对那些发布了的人，我要说一句：WCNMD</string>
+    <string name="copyright_summary">仅作个人及非商业用途</string>
+    <string name="auther">作者</string>
+    <string name="auther_name">WjxBless</string>
+    <string name="project_address">项目源码</string>
+    <string name="github_url">https://github.com/hegaojian/WanAndroid</string>
+    <string name="open_project">开源项目</string>
+    <string name="open_project_tips">项目中用到的开源库</string>
 
 </resources>

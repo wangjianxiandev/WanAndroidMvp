@@ -29,6 +29,7 @@ import com.wjx.android.wanandroidmvp.presenter.me.MePresenter;
 import com.wjx.android.wanandroidmvp.ui.activity.CollectActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.RankActivity;
+import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,9 +60,10 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
     ViewGroup mIntegralRank;
     @BindView(R.id.me_about)
     ViewGroup mMeAbout;
-
     @BindView(R.id.me_collect)
     ViewGroup mMeCollect;
+    @BindView(R.id.me_setting)
+    ViewGroup mMeSetting;
 
     private int mCoinCount;
 
@@ -138,6 +140,18 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
         JumpWebUtils.startWebView(mContext,
                 "WanAndroid——WJX",
                 "https://github.com/wangjianxiandev/WanAndroidMvp");
+    }
+
+    @OnClick(R.id.me_setting)
+    public void MeSetting() {
+        if (LoginUtils.isLogin()) {
+            Intent intent = new Intent(getActivity(), SettingActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
 
