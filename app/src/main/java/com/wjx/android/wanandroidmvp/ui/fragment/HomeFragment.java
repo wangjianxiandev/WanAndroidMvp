@@ -160,15 +160,15 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY > oldScrollY && scrollY - showOrHideToolbarHeight >= 0) {
                     // 向上滑
-                    Log.e("WJXSC", "上滑" + scrollY + " ;" + oldScrollY);
+//                    Log.e("WJXSC", "上滑" + scrollY + " ;" + oldScrollY);
                     ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
                     mToolbar.setBackgroundColor(getColor(R.color.colorPrimary));
                     mToolbar.setPadding(0, Constant.getStatusBarHeight(mContext), 0, 0);
                     mToolbar.setTitle(R.string.bottomname1);
                     mToolbar.setVisibility(View.VISIBLE);
-                } else if (scrollX < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
+                } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
                     // 向下滑
-                    Log.e("WJXSC", "下滑" + scrollY + " ;" + oldScrollY);
+//                    Log.e("WJXSC", "下滑" + scrollY + " ;" + oldScrollY);
                     ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
                     mToolbar.setBackgroundColor(Color.TRANSPARENT);
                     mToolbar.setVisibility(View.GONE);
@@ -245,14 +245,12 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void loadTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
         mTopArticleList.addAll(topArticleList);
-        mArticleAdapter.setTopList(mTopArticleList);
     }
 
     @Override
     public void refreshTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
         mTopArticleList.addAll(0,topArticleList);
-        mArticleAdapter.setTopList(mTopArticleList);
     }
 
     @Override
@@ -260,6 +258,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         // 解决首页加载两次问题
         if (mCurpage == 0) {
             mArticleList.clear();
+            articleList.addAll(0, mTopArticleList);
         }
         mArticleList.addAll(articleList);
         mArticleAdapter.setArticleList(mArticleList);
@@ -268,6 +267,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void refreshArticle(List<Article> articleList) {
         mArticleList.clear();
+        articleList.addAll(0, mTopArticleList);
         mArticleList.addAll(0, articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }

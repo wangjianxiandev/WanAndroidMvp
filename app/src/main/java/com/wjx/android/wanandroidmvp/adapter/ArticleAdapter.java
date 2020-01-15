@@ -53,8 +53,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
     private List<Article> mArticleList = new ArrayList<>();
 
-    private List<Article> mTopList = new ArrayList<>();
-
     private View mHeaderView;
 
     /**
@@ -96,14 +94,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
      */
     public void setArticleList(List<Article> articleList) {
         mArticleList.clear();
-        mArticleList.addAll(0, mTopList);
         mArticleList.addAll(articleList);
         notifyDataSetChanged();
-    }
-
-    public void setTopList(List<Article> topList) {
-        mTopList.clear();
-        mTopList.addAll(topList);
     }
 
 
@@ -163,9 +155,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
             if (articleBean.isFresh) {
                 holder.mNewView.setVisibility(View.VISIBLE);
             }
-            if (articleBean.isQuestion) {
-                holder.mQuestionView.setVisibility(View.VISIBLE);
-            }
+
+            holder.mQuestionView.setVisibility(View.VISIBLE);
+            holder.mQuestionView.setText(articleBean.superChapterName);
+
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {

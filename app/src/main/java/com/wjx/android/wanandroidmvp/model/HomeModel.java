@@ -149,6 +149,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                             allTopArticleList.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
                                 if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
                                     m.title = datasBean.getTitle();
+                                    m.articleId = datasBean.getId();
                                     m.author = datasBean.getAuthor();
                                     m.link = datasBean.getLink();
                                     m.chapterName = datasBean.getChapterName();
@@ -158,6 +159,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                                     m.time = datasBean.getPublishTime();
                                     m.shareUser = datasBean.getShareUser();
                                     m.isFresh = datasBean.isFresh();
+                                    m.collect = datasBean.isCollect();
                                     m.isTop = true;
                                     if (m.superChapterName.equals("问答")) {
                                         m.isQuestion = true;
