@@ -90,8 +90,6 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
         initAdapter();
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
-        // 滑动流畅
-        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     private void initAdapter() {

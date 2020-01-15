@@ -11,17 +11,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nest_scroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/article_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </androidx.core.widget.NestedScrollView>
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

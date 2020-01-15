@@ -63,7 +63,7 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
     @NonNull
     @Override
     public CollectHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.project_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.article_item, parent, false);
         return new CollectHolder(view);
     }
 
@@ -88,14 +88,7 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
                     mContext.getResources().getString(R.string.collect_category),
                     collect.chapterName);
             collectHolder.mArticleType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
-            if (collect.isSupportPic) {
-                collectHolder.mItemImageView.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(collect.envelopePic).into(collectHolder.mItemImageView);
-            } else {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) collectHolder.mArticleType.getLayoutParams();
-                layoutParams.setMargins(0, 90, 0, 20);
-                collectHolder.mArticleType.setLayoutParams(layoutParams);
-            }
+
             collectHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,6 +97,7 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
                             collect.link);
                 }
             });
+
             collectHolder.mCollectView.setSelected(true);
             collectHolder.mCollectView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,18 +128,16 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
     class CollectHolder extends RecyclerView.ViewHolder {
 
 
-        @BindView(R.id.item_project_author)
+        @BindView(R.id.item_home_author)
         TextView mArticleAuthor;
-        @BindView(R.id.item_project_title)
+        @BindView(R.id.item_home_content)
         TextView mArticleContent;
-        @BindView(R.id.item_project_type)
+        @BindView(R.id.item_article_type)
         TextView mArticleType;
-        @BindView(R.id.item_project_date)
+        @BindView(R.id.item_home_date)
         TextView mArticleDate;
         @BindView(R.id.item_list_collect)
         ImageView mCollectView;
-        @BindView(R.id.item_project_imageview)
-        ImageView mItemImageView;
 
         CollectHolder(@NonNull View itemView) {
             super(itemView);

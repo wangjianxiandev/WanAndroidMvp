@@ -50,10 +50,10 @@ public class CollectModel extends BaseModel implements Contract.ICollectModel {
                         collect.link = d.getLink();
                         collect.niceDate = d.getNiceDate();
                         collect.envelopePic = d.getEnvelopePic();
-                        if (!collect.envelopePic.equals("")){
-                            collect.isSupportPic = true;
-                        } else {
+                        if (collect.envelopePic.equals("")){
                             collect.isSupportPic = false;
+                        } else {
+                            collect.isSupportPic = true;
                         }
                         list.add(collect);
                     });

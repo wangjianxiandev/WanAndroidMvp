@@ -82,7 +82,6 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         mContext = getContext().getApplicationContext();
         initAdapter();
         mPresenter.loadHomeSquareData(mCurpage);
-        mRecyclerView.setNestedScrollingEnabled(false);
         mSmartRefreshLayout.setOnRefreshListener(this);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
     }

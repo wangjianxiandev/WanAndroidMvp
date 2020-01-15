@@ -148,6 +148,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅
         mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setHasFixedSize(true);
     }
 
     private void initToolbar() {
@@ -244,18 +245,21 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void loadTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
         mTopArticleList.addAll(topArticleList);
+        mArticleAdapter.setTopList(mTopArticleList);
     }
 
     @Override
     public void refreshTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
-        mTopArticleList.addAll(topArticleList);
+        mTopArticleList.addAll(0,topArticleList);
+        mArticleAdapter.setTopList(mTopArticleList);
     }
 
     @Override
     public void loadArticle(List<Article> articleList) {
+        // 解决首页加载两次问题
         if (mCurpage == 0) {
-            articleList.addAll(0, mTopArticleList);
+            mArticleList.clear();
         }
         mArticleList.addAll(articleList);
         mArticleAdapter.setArticleList(mArticleList);
@@ -264,7 +268,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void refreshArticle(List<Article> articleList) {
         mArticleList.clear();
-        articleList.addAll(0, mTopArticleList);
         mArticleList.addAll(0, articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }

@@ -63,10 +63,6 @@ public class RankModel extends BaseModel implements Contract.IRankModel {
                         rank.rank = datasBean.getRank();
                         rankList.add(rank);
                     });
-                    if (rankList.size() > 0) {
-                        LitePal.deleteAll(Rank.class);
-                    }
-                    LitePal.saveAll(rankList);
                     return rankList;
                 });
     }

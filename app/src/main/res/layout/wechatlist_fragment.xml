@@ -15,18 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nest_scroll"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wechat_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/wechat_list_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white" />
-        </androidx.core.widget.NestedScrollView>
+            android:background="@color/white" />
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

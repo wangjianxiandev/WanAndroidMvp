@@ -111,8 +111,8 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
             emitter.onComplete();
         });
         if (NetworkUtils.isConnected()) {
-            Observable<List<Article>> loadFronNet = loadTopArticleFromNet();
-            return Observable.concat(loadFromLocal, loadFronNet);
+            Observable<List<Article>> loadFromNet = loadTopArticleFromNet();
+            return Observable.concat(loadFromLocal, loadFromNet);
         } else {
             return loadFromLocal;
         }

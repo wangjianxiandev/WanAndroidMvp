@@ -54,8 +54,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.project_list_recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.nest_scroll)
-    NestedScrollView mNestedScrollView;
 
     private ProjectListAdapter mProjectListAdapter;
     private int mCurrentPage = 0;
@@ -95,8 +93,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
         initAdapter();
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
-        // 滑动流畅
-        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     private void initAdapter() {
