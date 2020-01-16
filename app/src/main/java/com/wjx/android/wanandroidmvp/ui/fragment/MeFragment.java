@@ -48,7 +48,7 @@ import butterknife.OnClick;
  * Time: 20:13
  */
 public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> implements Contract.IMeView,
-        SwipeRefreshLayout.OnRefreshListener{
+        SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.me_name)
     TextView meName;
@@ -144,14 +144,9 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
 
     @OnClick(R.id.me_setting)
     public void MeSetting() {
-        if (LoginUtils.isLogin()) {
-            Intent intent = new Intent(getActivity(), SettingActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getActivity(), SettingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 

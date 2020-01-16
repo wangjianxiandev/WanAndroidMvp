@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -78,4 +80,14 @@ dependencies {
 
     implementation 'androidx.preference:preference:1.0.0'
 
+    implementation 'com.afollestad.material-dialogs:core:3.1.1'
+
+    implementation 'com.afollestad.material-dialogs:color:3.1.1'
+
+    implementation "androidx.core:core-ktx:+"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

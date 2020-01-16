@@ -2,10 +2,17 @@ package com.wjx.android.wanandroidmvp.base.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceManager;
+
+import com.wjx.android.wanandroidmvp.R;
 
 import java.util.Random;
 
@@ -326,5 +333,27 @@ public class Constant {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
         }
         return actionBarHeight;
+    }
+
+    /**
+     * 获取主题颜色
+     */
+    public static int getColor(Context context) {
+        SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
+        int defaultColor = ContextCompat.getColor(context,R.color.colorPrimary);
+        int color = setting.getInt("color", defaultColor);
+        if (color != 0 && Color.alpha(color) != 255) {
+            return defaultColor;
+        } else {
+            return color;
+        }
+    }
+
+    /**
+     * 设置主题颜色
+     */
+    public static void setColor(Context context, int color) {
+        SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
+        setting.edit().putInt("color", color).apply();
     }
 }
