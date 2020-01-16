@@ -53,6 +53,11 @@ public class Event {
     public static final int TYPE_REFRESH = 9;
 
     /**
+     * 更换主题颜色
+     */
+    public static final int TYPE_REFRESH_COLOR = 10;
+
+    /**
      * 目标界面-MainActivity
      */
     public static final int TARGET_MAIN = 1;
@@ -101,6 +106,22 @@ public class Event {
      * 目标界面-积分排行
      */
     public static final int TARGET_INTEGRAL_RANK = 9;
+
+    /**
+     * 目标界面-设置界面
+     */
+    public static final int TARGET_SETTING = 10;
+
+    /**
+     * 目标界面-主广场页
+     */
+    public static final int TARGET_PARENT_SQUARE = 11;
+
+    /**
+     * 目标界面-闪屏页
+     */
+    public static final int TARGET_SPLASH = 12;
+
 
     public int target;
 

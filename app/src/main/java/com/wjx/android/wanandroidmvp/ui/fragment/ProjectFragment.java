@@ -1,11 +1,15 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.icu.util.ValueIterator;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -20,11 +24,16 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.ProjectClassify;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
 import com.wjx.android.wanandroidmvp.presenter.project.ProjectPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -58,18 +67,40 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
     private int mCurPage;
 
+    private Context mContext;
+
     @Override
     protected int getContentViewId() {
         return R.layout.project_fragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void init() {
+        mContext = getActivity().getApplicationContext();
         initStatusBar();
+        initTabColor();
         mPresenter.loadProjectClassify();
         mCurPage = 0;
         setChildViewVisibility(View.VISIBLE);
         mViewPager.setOffscreenPageLimit(2);
+    }
+
+    private void initTabColor() {
+        mSlidingTabLayout.setDividerColor(Constant.getColor(mContext));
+        mSlidingTabLayout.setIndicatorColor(Constant.getColor(mContext));
     }
 
     private void initStatusBar() {
@@ -164,5 +195,14 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     @Override
     public void onLoadSuccess() {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_PROJECT) {
+            if (event.type == Event.TYPE_REFRESH_COLOR) {
+                initTabColor();
+            }
+        }
     }
 }

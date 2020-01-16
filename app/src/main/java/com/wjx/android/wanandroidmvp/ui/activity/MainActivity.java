@@ -26,6 +26,7 @@ import com.wjx.android.wanandroidmvp.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ParentSquareFragment;
@@ -34,6 +35,10 @@ import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.SquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.WeChatFragment;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private long mExitTime;
 
+    private Context mContext;
+
     Unbinder mBinder;
 
     @BindView(R.id.navigation_bottom)
@@ -64,9 +71,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
+        mContext = getApplicationContext();
         mBinder = ButterKnife.bind(this);
         initBottomNavigation();
         switchFragment(INDEX_HOMEPAGE);
+        mBottomNavigationView.setItemIconTintList(Constant.getColorStateList(mContext));
+        mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initBottomNavigation() {
@@ -175,6 +192,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_MAIN) {
+            if (event.type == Event.TYPE_REFRESH_COLOR) {
+                mBottomNavigationView.setItemIconTintList(Constant.getColorStateList(mContext));
+                mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
+            }
         }
     }
 }

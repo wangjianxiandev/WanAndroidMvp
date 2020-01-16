@@ -87,7 +87,7 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
     }
 
     private void initToolbar() {
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        mToolbar.setBackgroundColor(Constant.getColor(mContext));
         mToolbar.setTitle(R.string.collect_page);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
@@ -100,9 +100,9 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            getWindow().setStatusBarColor(Constant.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Color.TRANSPARENT) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {

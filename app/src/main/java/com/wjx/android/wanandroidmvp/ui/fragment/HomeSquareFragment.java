@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.solver.widgets.ConstraintAnchor;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
@@ -27,6 +29,7 @@ import com.wjx.android.wanandroidmvp.presenter.square.HomeSquarePresenter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +62,9 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
     @BindView(R.id.refresh_layout)
     SmartRefreshLayout mSmartRefreshLayout;
 
+    @BindView(R.id.float_add)
+    FloatingActionButton mFloatAdd;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,6 +90,11 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         mPresenter.loadHomeSquareData(mCurpage);
         mSmartRefreshLayout.setOnRefreshListener(this);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
+        initFloatBtnColor();
+    }
+
+    private void initFloatBtnColor() {
+        mFloatAdd.setBackgroundColor(Constant.getColor(mContext));
     }
 
     private void initAdapter() {
@@ -202,6 +213,10 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
             } else if (event.type == Event.TYPE_REFRESH) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(mCurpage);
+            } else if (event.type == Event.TYPE_REFRESH_COLOR) {
+                mFloatAdd.setBackgroundColor(Constant.getColor(mContext));
+            } else if (event.type == Event.TYPE_REFRESH_COLOR) {
+                initFloatBtnColor();
             }
         }
     }

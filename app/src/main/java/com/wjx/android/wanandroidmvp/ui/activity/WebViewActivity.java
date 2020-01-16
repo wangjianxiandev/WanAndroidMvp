@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,10 +35,13 @@ public class WebViewActivity extends AppCompatActivity {
 
     private AgentWeb mAgentWeb;
 
+    private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+        mContext = getApplicationContext();
         mbinder = ButterKnife.bind(this);
         Intent intent = getIntent();
         String title = intent.getStringExtra(Constant.KEY_TITLE);
@@ -53,7 +57,8 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void initToolbar(String title) {
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        getWindow().setStatusBarColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Constant.getColor(mContext));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);

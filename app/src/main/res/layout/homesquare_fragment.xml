@@ -29,7 +29,6 @@
         android:layout_gravity="bottom|end"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="60dp"
-        android:background="@color/colorPrimary"
         android:src="@drawable/add"
         app:fabSize="mini"/>
 

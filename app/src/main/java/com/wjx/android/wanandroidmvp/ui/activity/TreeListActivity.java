@@ -39,6 +39,7 @@ import com.wjx.android.wanandroidmvp.presenter.square.TreeListPresenter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,6 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
     TextView mTitle;
 
     private String title;
-
 
     private List<Article> mTreeArticleList = new ArrayList<>();
     @Override
@@ -106,6 +106,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
     }
 
     private void initToolbar() {
+        mToolbar.setBackgroundColor(Constant.getColor(mContext));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -136,9 +137,9 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(getColor(R.color.colorPrimary));
+            getWindow().setStatusBarColor(Constant.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(getColor(R.color.colorPrimary)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {

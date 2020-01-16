@@ -35,6 +35,7 @@ import com.wjx.android.wanandroidmvp.presenter.rank.RankPresenter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +118,9 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
         initAdapter();
         initStatusBar();
         initToolbar();
+        mMeRank.setTextColor(Constant.getColor(mContext));
+        mMeName.setTextColor(Constant.getColor(mContext));
+        mMeCountCoin.setTextColor(Constant.getColor(mContext));
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅
@@ -140,9 +144,9 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            getWindow().setStatusBarColor(Constant.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Color.TRANSPARENT) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -152,7 +156,7 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
     }
 
     private void initToolbar() {
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        mToolbar.setBackgroundColor(Constant.getColor(mContext));
         mToolbar.setTitle(R.string.integral_rank);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);

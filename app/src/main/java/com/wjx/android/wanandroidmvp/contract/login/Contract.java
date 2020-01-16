@@ -2,6 +2,7 @@ package com.wjx.android.wanandroidmvp.contract.login;
 
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
+import com.wjx.android.wanandroidmvp.bean.me.LogoutData;
 
 import io.reactivex.Observable;
 

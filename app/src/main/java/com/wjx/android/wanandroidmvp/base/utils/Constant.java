@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.base.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.TypedValue;
@@ -12,9 +13,15 @@ import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 import java.util.Random;
+
+import kotlin.jvm.internal.Intrinsics;
 
 /**
  * Created with Android Studio.
@@ -355,5 +362,12 @@ public class Constant {
     public static void setColor(Context context, int color) {
         SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
         setting.edit().putInt("color", color).apply();
+    }
+
+    public static final ColorStateList getColorStateList(Context context) {
+        Intrinsics.checkParameterIsNotNull(context, "context");
+        int[] colors = new int[]{getColor(context), ContextCompat.getColor(context,R.color.colorGray)};
+        int[][] states = new int[][]{{android.R.attr.state_checked, android.R.attr.state_checked}, new int[0]};
+        return new ColorStateList(states, colors);
     }
 }

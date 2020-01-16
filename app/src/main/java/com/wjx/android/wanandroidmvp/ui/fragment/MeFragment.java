@@ -83,6 +83,7 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
         if (!TextUtils.isEmpty(LoginUtils.getLoginUser())) {
             meName.setText(LoginUtils.getLoginUser());
         }
+        mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -175,6 +176,11 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
             if (event.type == Event.TYPE_LOGIN) {
                 meName.setText(event.data);
                 mPresenter.loadIntegralData();
+            } else if (event.type == Event.TYPE_LOGOUT) {
+                meName.setText("请先登录~");
+                mPresenter.refreshIntegralData();
+            } else if (event.type == Event.TYPE_REFRESH_COLOR) {
+                mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
             }
         }
     }
@@ -203,6 +209,8 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
             rankEvent.target = Event.TARGET_INTEGRAL_RANK;
             rankEvent.data = mRank + ";" + mCoinCount;
             EventBus.getDefault().post(rankEvent);
+        } else {
+            meInfo.setText("积分:" + "--" + "  " + "排名:" + "--");
         }
     }
 

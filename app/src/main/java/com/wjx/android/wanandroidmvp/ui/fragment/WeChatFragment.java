@@ -1,5 +1,6 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,10 +20,15 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Author;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.contract.wechat.Contract;
 import com.wjx.android.wanandroidmvp.presenter.wechat.WeChatPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,16 +61,38 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     private int mCurPage = 0;
 
+    private Context mContext;
+
     @Override
     protected int getContentViewId() {
         return R.layout.wechat_fragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void init() {
+        mContext = getActivity().getApplicationContext();
         initStatusBar();
         mPresenter.loadWeChatClassify();
         setChildViewVisibility(View.VISIBLE);
+        initTabColor();
+    }
+
+    private void initTabColor() {
+        mSlidingTabLayout.setDividerColor(Constant.getColor(mContext));
+        mSlidingTabLayout.setIndicatorColor(Constant.getColor(mContext));
     }
 
     private void initStatusBar() {
@@ -156,5 +184,14 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
     @Override
     public void onLoadSuccess() {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_WX) {
+            if (event.type == Event.TYPE_REFRESH_COLOR) {
+                initTabColor();
+            }
+        }
     }
 }

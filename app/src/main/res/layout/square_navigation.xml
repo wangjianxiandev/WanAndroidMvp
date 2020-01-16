@@ -17,7 +17,6 @@
             android:layout_width="100dp"
             android:layout_marginTop="@dimen/safe_padding"
             android:layout_height="match_parent"
-            app:indicator_color="@color/colorPrimary"
             app:indicator_corners="100dp"
             app:indicator_gravity="fill"
             app:tab_height="50dp"

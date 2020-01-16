@@ -1,7 +1,10 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,6 +20,12 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
+import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +54,8 @@ public class ParentSquareFragment extends BaseFragment {
 
     private int mCurTab;
 
+    private Context mContext;
+
     private List<String> mTabNames = new ArrayList<>();
 
     private ArrayList<Fragment> mFragmentSparseArray = new ArrayList<>();
@@ -54,13 +65,33 @@ public class ParentSquareFragment extends BaseFragment {
         return R.layout.parentsquare_fragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void init() {
+        mContext = getActivity().getApplicationContext();
         initStatusBar();
         setChildViewVisibility(View.VISIBLE);
         mCurTab = 0;
         initFragment();
         initViewPager();
+        initTabColor();
+    }
+
+    private void initTabColor() {
+        mSlidingTabLayout.setIndicatorColor(Constant.getColor(mContext));
+        mSlidingTabLayout.setDividerColor(Constant.getColor(mContext));
     }
 
     private void initStatusBar() {
@@ -132,5 +163,14 @@ public class ParentSquareFragment extends BaseFragment {
         mSlidingTabLayout.setVisibility(visibility);
         mDivider.setVisibility(visibility);
         mViewPager.setVisibility(visibility);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_PARENT_SQUARE) {
+            if (event.type == Event.TYPE_REFRESH_COLOR) {
+                initTabColor();
+            }
+        }
     }
 }

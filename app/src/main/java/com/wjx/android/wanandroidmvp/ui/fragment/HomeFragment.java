@@ -163,7 +163,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                     // 向上滑
 //                    Log.e("WJXSC", "上滑" + scrollY + " ;" + oldScrollY);
                     ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                    mToolbar.setBackgroundColor(getColor(R.color.colorPrimary));
+                    mToolbar.setBackgroundColor(Constant.getColor(mContext));
                     mToolbar.setPadding(0, Constant.getStatusBarHeight(mContext), 0, 0);
                     mToolbar.setTitle(R.string.bottomname1);
                     mToolbar.setVisibility(View.VISIBLE);
@@ -354,6 +354,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                 mArticleList.clear();
                 mPresenter.refreshTopArticle();
                 mPresenter.refreshArticle(mCurpage);
+            } else if (event.type == Event.TYPE_REFRESH_COLOR) {
+                mToolbar.setBackgroundColor(Constant.getColor(mContext));
             }
         }
     }

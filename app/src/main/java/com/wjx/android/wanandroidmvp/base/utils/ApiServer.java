@@ -8,6 +8,7 @@ import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.home.TopArticleBean;
 import com.wjx.android.wanandroidmvp.bean.me.IntegralData;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
+import com.wjx.android.wanandroidmvp.bean.me.LogoutData;
 import com.wjx.android.wanandroidmvp.bean.rank.RankData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
@@ -144,8 +145,12 @@ public interface ApiServer {
     @POST(Constant.URL_REGISTER)
     Observable<LoginData> register(@Query("username") String userName, @Query("password") String password, @Query("repassword") String repassword);
 
+    /**
+     * 登出
+     * @return
+     */
     @GET(Constant.URL_LOGINOUT)
-    Observable<LoginData> logout();
+    Observable<LogoutData> logout();
 
     /**
      * 点击收藏文章

@@ -1,10 +1,14 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +17,14 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.TreeAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.presenter.square.TreePresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +67,19 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
         return R.layout.square_navigation;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
@@ -65,6 +87,7 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
         mRecyclerView.setNestedScrollingEnabled(false);
         mPresenter.loadTree();
         setChildViewVisibility(View.VISIBLE);
+        mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
     }
 
     private void initAdapter() {
@@ -172,5 +195,14 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
         mViewGroup.setVisibility(visibility);
         mVerticalTabLayout.setVisibility(visibility);
         mDivider.setVisibility(visibility);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_TREE) {
+            if (event.type == Event.TYPE_REFRESH_COLOR) {
+                mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
+            }
+        }
     }
 }

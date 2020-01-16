@@ -18,9 +18,14 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.NavigationAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.presenter.square.SquarePresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +69,19 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
         return R.layout.square_navigation;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
@@ -72,7 +90,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
         mRecyclerView.setNestedScrollingEnabled(false);
         mPresenter.loadNavigation();
         setChildViewVisibility(View.VISIBLE);
-
+        mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
     }
 
     private void initAdapter() {
@@ -181,5 +199,15 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
     @Override
     public void onLoadSuccess() {
 
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Event event) {
+        if (event.target == Event.TARGET_SQUARE) {
+            if (event.type == Event.TYPE_REFRESH_COLOR) {
+                mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
+            }
+        }
     }
 }
