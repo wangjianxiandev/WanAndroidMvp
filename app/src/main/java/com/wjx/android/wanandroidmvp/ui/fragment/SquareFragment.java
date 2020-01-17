@@ -204,7 +204,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Event event) {
-        if (event.target == Event.TARGET_SQUARE) {
+        if (event.target == Event.TARGET_NAVI) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
             }

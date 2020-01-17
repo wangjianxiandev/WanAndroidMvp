@@ -122,6 +122,11 @@ public class Event {
      */
     public static final int TARGET_SPLASH = 12;
 
+    /**
+     * 导航界面
+     */
+    public static final int TARGET_NAVI = 13;
+
 
     public int target;
 

@@ -370,4 +370,12 @@ public class Constant {
         int[][] states = new int[][]{{android.R.attr.state_checked, android.R.attr.state_checked}, new int[0]};
         return new ColorStateList(states, colors);
     }
+
+    @NotNull
+    public static final ColorStateList getOneColorStateList(@NotNull Context context) {
+        Intrinsics.checkParameterIsNotNull(context, "context");
+        int[] colors = new int[]{getColor(context)};
+        int[][] states = new int[][]{new int[0]};
+        return new ColorStateList(states, colors);
+    }
 }

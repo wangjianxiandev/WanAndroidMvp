@@ -157,6 +157,11 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     squareEvent.type = Event.TYPE_REFRESH_COLOR
                     EventBus.getDefault().post(squareEvent)
 
+                    val navEvent = Event()
+                    navEvent.target = Event.TARGET_NAVI
+                    navEvent.type = Event.TYPE_REFRESH_COLOR
+                    EventBus.getDefault().post(navEvent)
+
                     val parentSquareEvent = Event()
                     parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
                     parentSquareEvent.type = Event.TYPE_REFRESH_COLOR

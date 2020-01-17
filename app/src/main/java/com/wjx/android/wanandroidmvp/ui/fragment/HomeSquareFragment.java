@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.presenter.square.HomeSquarePresenter;
+import com.wjx.android.wanandroidmvp.ui.activity.ShareArticleActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -91,10 +93,15 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         mSmartRefreshLayout.setOnRefreshListener(this);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         initFloatBtnColor();
+        mFloatAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ShareArticleActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
     }
 
     private void initFloatBtnColor() {
-        mFloatAdd.setBackgroundColor(Constant.getColor(mContext));
+        mFloatAdd.setBackgroundTintList(Constant.getOneColorStateList(mContext));
     }
 
     private void initAdapter() {
@@ -213,8 +220,6 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
             } else if (event.type == Event.TYPE_REFRESH) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(mCurpage);
-            } else if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mFloatAdd.setBackgroundColor(Constant.getColor(mContext));
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 initFloatBtnColor();
             }

@@ -51,7 +51,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * 初始化进场动画
      */
     private void initView() {
         mSplashContainer.setBackgroundColor(Constant.getColor(mContext));
