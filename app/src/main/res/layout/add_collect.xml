@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@drawable/customdialogshape"
+    android:orientation="vertical"
+    android:padding="@dimen/safe_padding">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <TextView
+        android:id="@+id/dialog_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/rank_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </com.google.android.material.appbar.AppBarLayout>
-
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="添加站外收藏"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,21 +26,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:text="标题"
             android:textColor="@color/texttipColor"
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/share_title"
+            android:id="@+id/add_collect_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/edit_shap"
             android:hint="文章标题"
             android:inputType="text"
-            android:lines="1"
-            android:maxLength="10"
+            android:maxLines="1"
             android:padding="12dp"
             android:textColor="@color/black"
             android:textSize="15dp" />
@@ -54,7 +53,7 @@
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/share_url"
+            android:id="@+id/add_collect_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -76,7 +75,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/share_username"
+            android:id="@+id/add_collect_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -86,19 +85,42 @@
             android:textColor="@color/black"
             android:textSize="15dp" />
 
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/share_submit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/button_shap"
-            android:gravity="center"
-            android:text="分享"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="确定"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/texttipColor" />
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="取消"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp" />
     </LinearLayout>
 
 </LinearLayout>

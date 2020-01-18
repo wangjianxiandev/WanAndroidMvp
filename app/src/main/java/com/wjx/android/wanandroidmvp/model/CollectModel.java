@@ -8,6 +8,7 @@ import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.collect.Contract;
 
 import org.litepal.LitePal;
+import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class CollectModel extends BaseModel implements Contract.ICollectModel {
                         collect.link = d.getLink();
                         collect.niceDate = d.getNiceDate();
                         collect.envelopePic = d.getEnvelopePic();
-                        if (collect.envelopePic.equals("")){
+                        if (collect.envelopePic.equals("")) {
                             collect.isSupportPic = false;
                         } else {
                             collect.isSupportPic = true;
@@ -67,8 +68,20 @@ public class CollectModel extends BaseModel implements Contract.ICollectModel {
     }
 
     @Override
-    public Observable<AddCollect> addCollect(String title, String author, String link) {
-        return mApiServer.addCollect(title, author, link);
+    public Observable<com.wjx.android.wanandroidmvp.bean.db.Collect> addCollect(String title, String author, String link) {
+        return mApiServer.addCollect(title, author, link)
+                .filter(addCollect -> addCollect.getErrorCode() == Constant.SUCCESS)
+                .map(addCollect -> {
+                            com.wjx.android.wanandroidmvp.bean.db.Collect collect = new com.wjx.android.wanandroidmvp.bean.db.Collect();
+                            collect.articleId = addCollect.getData().getId();
+                            collect.author = addCollect.getData().getAuthor();
+                            collect.link = addCollect.getData().getLink();
+                            collect.time = addCollect.getData().getPublishTime();
+                            collect.title = addCollect.getData().getTitle();
+                            collect.chapterName = "站外";
+                            return collect;
+                        }
+                );
     }
 
     @Override

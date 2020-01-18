@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wjx.android.wanandroidmvp.CustomAnim.CircularRevealAnim;
+import com.wjx.android.wanandroidmvp.Custom.CircularRevealAnim;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;

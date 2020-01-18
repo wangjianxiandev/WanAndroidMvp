@@ -1,4 +1,4 @@
-package com.wjx.android.wanandroidmvp.CustomAnim
+package com.wjx.android.wanandroidmvp.Custom
 
 import android.content.Context
 import android.util.AttributeSet

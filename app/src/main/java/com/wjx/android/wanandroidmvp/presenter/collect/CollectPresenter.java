@@ -114,14 +114,14 @@ public class CollectPresenter extends BasePresenter<Contract.ICollectView> imple
         iCollectModel.addCollect(title, author, link)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<AddCollect>() {
+                .subscribe(new Observer<Collect>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(AddCollect addCollect) {
+                    public void onNext(Collect addCollect) {
                         if (isViewAttached()) {
                             getView().onAddCollect(addCollect);
                             getView().onLoadSuccess();

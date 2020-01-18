@@ -42,7 +42,7 @@ public class Contract {
          * @param link
          * @return
          */
-        Observable<AddCollect> addCollect(String title, String author, String link);
+        Observable<Collect> addCollect(String title, String author, String link);
 
 
 
@@ -55,7 +55,7 @@ public class Contract {
 
         void onRefreshCollectData(List<Collect> collectList);
 
-        void onAddCollect(AddCollect addCollect);
+        void onAddCollect(Collect addCollect);
 
 
 

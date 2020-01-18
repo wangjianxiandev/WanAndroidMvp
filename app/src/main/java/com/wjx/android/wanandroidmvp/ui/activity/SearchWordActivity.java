@@ -1,6 +1,5 @@
 package com.wjx.android.wanandroidmvp.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wjx.android.wanandroidmvp.CustomAnim.CircularRevealAnim;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;

@@ -7,20 +7,34 @@ import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.wjx.android.wanandroidmvp.Custom.CustomDialog;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.CollectAdaper;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
+import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 
 import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
@@ -79,12 +93,43 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.collect_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.add_collect:
+                CustomDialog customDialog = new CustomDialog(this);
+                DisplayMetrics outMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+                int widthPixels = outMetrics.widthPixels;
+                int heightPixels = outMetrics.heightPixels;
+                customDialog.getWindow().setLayout(widthPixels * 3 / 4, heightPixels * 3 / 4);
+                customDialog.setAuthor(LoginUtils.getLoginUser());
+                customDialog.setOnPositiveListener(v -> {
+                    if (TextUtils.isEmpty(customDialog.getTitle()) || TextUtils.isEmpty(customDialog.getLink())) {
+                        ToastUtils.showShort(mContext.getString(R.string.author_link_empty));
+                        return;
+                    }
+                    mPresenter.addCollect(customDialog.getTitle(), customDialog.getAuthor(), customDialog.getLink());
+                    customDialog.dismiss();
+                });
+                customDialog.setOnNegativeListener(v -> {
+                    customDialog.dismiss();
+                });
+                customDialog.show();
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void initToolbar() {
         mToolbar.setBackgroundColor(Constant.getColor(mContext));
@@ -161,8 +206,9 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
     }
 
     @Override
-    public void onAddCollect(AddCollect addCollect) {
-
+    public void onAddCollect(Collect addCollect) {
+        mCollectList.add(0, addCollect);
+        mCollectAdapter.setCollectList(mCollectList);
     }
 
     @Override

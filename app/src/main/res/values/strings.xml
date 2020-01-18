@@ -56,5 +56,6 @@
     <string name="open_project_tips">项目中开源库</string>
     <string name="choose_theme_color">主题颜色</string>
     <string name="choose_theme_color_summary">设置App的主题颜色</string>
+    <string name="author_link_empty">不能为空</string>
 
 </resources>

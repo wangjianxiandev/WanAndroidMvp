@@ -8,7 +8,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.blankj.utilcode.util.ToastUtils
-import com.wjx.android.wanandroidmvp.CustomAnim.IconPreference
+import com.wjx.android.wanandroidmvp.Custom.IconPreference
 import com.wjx.android.wanandroidmvp.R
 import com.wjx.android.wanandroidmvp.base.utils.*
 import com.wjx.android.wanandroidmvp.bean.base.Event
