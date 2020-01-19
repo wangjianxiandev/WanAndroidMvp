@@ -28,6 +28,7 @@ import com.wjx.android.wanandroidmvp.contract.me.Contract;
 import com.wjx.android.wanandroidmvp.presenter.me.MePresenter;
 import com.wjx.android.wanandroidmvp.ui.activity.CollectActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
+import com.wjx.android.wanandroidmvp.ui.activity.MeShareActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.RankActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity;
 
@@ -64,6 +65,8 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
     ViewGroup mMeCollect;
     @BindView(R.id.me_setting)
     ViewGroup mMeSetting;
+    @BindView(R.id.me_article)
+    ViewGroup mMeArticle;
 
     private int mCoinCount;
 
@@ -121,6 +124,18 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
     public void MeCollect() {
         if (LoginUtils.isLogin()) {
             Intent intent = new Intent(getActivity(), CollectActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @OnClick(R.id.me_article)
+    public void MeArticle() {
+        if (LoginUtils.isLogin()) {
+            Intent intent = new Intent(getActivity(), MeShareActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {

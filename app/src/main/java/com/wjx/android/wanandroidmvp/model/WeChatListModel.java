@@ -76,7 +76,7 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                             weChatArticleList.add(article);
                         } else {
                             allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).forEach(w -> {
-                                if (w.time != datasBean.getPublishTime() || w.collect != datasBean.isCollect()) {
+                                if (w.niceDate != datasBean.getNiceDate() || w.collect != datasBean.isCollect()) {
                                     w.title = datasBean.getTitle();
                                     w.desc = datasBean.getDesc();
                                     w.title = datasBean.getTitle();

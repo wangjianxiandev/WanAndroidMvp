@@ -103,6 +103,11 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
                 menuEvent.data = mUsername.getText().toString();
                 EventBus.getDefault().post(menuEvent);
 
+                Event meShareEvent = new Event();
+                meShareEvent.target = Event.TARGET_ME_SHARE;
+                meShareEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(meShareEvent);
+
                 finish();
 
                 if (TextUtils.equals(Constant.EXTRA_VALUE_COLLECT, mReferrer)) {

@@ -47,7 +47,6 @@ public class WebViewActivity extends AppCompatActivity {
         String title = intent.getStringExtra(Constant.KEY_TITLE);
         String url = intent.getStringExtra(Constant.KEY_URL);
         initToolbar(title);
-
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()

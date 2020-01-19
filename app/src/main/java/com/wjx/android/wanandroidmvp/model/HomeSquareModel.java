@@ -74,7 +74,9 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                             squareArticleList.add(article);
                         } else {
                             allHomeSquareData.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
-                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                if (m.title != datasBean.getTitle() ||
+                                        m.niceDate != datasBean.getNiceDate() ||
+                                        m.collect != datasBean.isCollect() || m.isFresh != datasBean.isFresh()) {
                                     m.articleId = datasBean.getId();
                                     m.title = datasBean.getTitle();
                                     m.author = datasBean.getAuthor();

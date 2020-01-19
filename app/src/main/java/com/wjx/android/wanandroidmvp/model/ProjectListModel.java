@@ -76,7 +76,7 @@ public class ProjectListModel extends BaseModel implements Contract.IProjectList
                             projectArticleLists.add(article);
                         } else {
                             allProjectArticleList.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
-                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect()) {
                                     m.title = datasBean.getTitle();
                                     m.desc = datasBean.getDesc();
                                     m.authorId = datasBean.getChapterId();

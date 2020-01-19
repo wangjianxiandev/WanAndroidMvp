@@ -104,7 +104,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
     @Override
     public Observable<List<Article>> loadTopArticle() {
         Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
-            List<Article> topArticleList = LitePal.where("type=?", Article.TYPE_TOP+"")
+            List<Article> topArticleList = LitePal.where("type=?", Article.TYPE_TOP + "")
                     .order("time desc")
                     .find(Article.class);
             emitter.onNext(topArticleList);
@@ -147,7 +147,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                             topArticleList.add(article);
                         } else {
                             allTopArticleList.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
-                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect() || m.isFresh != datasBean.isFresh()) {
                                     m.title = datasBean.getTitle();
                                     m.articleId = datasBean.getId();
                                     m.author = datasBean.getAuthor();
@@ -213,7 +213,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                             articleList.add(article);
                         } else {
                             allArticles.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
-                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect() || m.isFresh != datasBean.isFresh()) {
                                     m.title = datasBean.getTitle();
                                     m.author = datasBean.getAuthor();
                                     m.link = datasBean.getLink();

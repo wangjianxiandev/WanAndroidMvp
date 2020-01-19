@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.constraintlayout.solver.widgets.ConstraintAnchor;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -21,11 +23,13 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.HomeSquareAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.presenter.square.HomeSquarePresenter;
+import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.ShareArticleActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -93,10 +97,20 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         mSmartRefreshLayout.setOnRefreshListener(this);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         initFloatBtnColor();
+        initFloatListener();
+    }
+
+    private void initFloatListener() {
         mFloatAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, ShareArticleActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            if (LoginUtils.isLogin()) {
+                Intent intent = new Intent(mContext, ShareArticleActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         });
     }
 
@@ -117,6 +131,9 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void loadHomeSquareData(List<Article> homeSquareData) {
+        if (mCurpage == 0) {
+            mHomeSquareList.clear();
+        }
         mHomeSquareList.addAll(homeSquareData);
         mHomeSquareAdapter.setHomeSquareList(mHomeSquareList);
     }

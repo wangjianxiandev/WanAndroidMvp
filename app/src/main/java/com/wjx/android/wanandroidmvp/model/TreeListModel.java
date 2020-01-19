@@ -79,7 +79,7 @@ public class TreeListModel extends BaseModel implements Contract.ITreeListModel 
                             treeArticleList.add(article);
                         } else {
                             allTreeList.stream().filter(m ->m.articleId == datasBean.getId()).forEach(m ->{
-                                if (m.time != datasBean.getPublishTime() || m.collect != datasBean.isCollect()) {
+                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect()) {
                                     m.title = datasBean.getTitle();
                                     m.desc = datasBean.getDesc();
                                     m.authorId = datasBean.getChapterId();

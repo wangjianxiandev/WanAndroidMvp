@@ -2,6 +2,7 @@ package com.wjx.android.wanandroidmvp.base.utils;
 
 import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
 import com.wjx.android.wanandroidmvp.bean.collect.CollectData;
+import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
@@ -13,12 +14,16 @@ import com.wjx.android.wanandroidmvp.bean.rank.RankData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
+import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
+import com.wjx.android.wanandroidmvp.bean.share.ShareData;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.wjx.android.wanandroidmvp.bean.square.SquareData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeListArticle;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
+
+import org.litepal.util.Const;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -94,6 +99,15 @@ public interface ApiServer {
      */
     @GET(Constant.HOME_SQUARE_URL)
     Observable<SquareData> loadHomeSquareData(@Path("pageNum") int pageNum);
+
+    /**
+     * 添加分享文章
+     * @param title
+     * @param link
+     * @return
+     */
+    @POST(Constant.SQUARE_SHARE_ARTICLE)
+    Observable<ArticleBean> addArticle(@Query("title") String title,  @Query("link") String link);
 
     /**
      * 获取导航数据
@@ -210,4 +224,20 @@ public interface ApiServer {
      */
     @GET(Constant.URL_RANK)
     Observable<RankData> loadRankData(@Path("pageNum") int pageNum);
+
+    /**
+     * 获取分享的文章的列表
+     * @param pageNum
+     * @return
+     */
+    @GET(Constant.URL_SHARE_ARTICLE)
+    Observable<ShareData> loadShareArticle(@Path("pageNum") int pageNum);
+
+    /**
+     * 删除分享的文章
+     * @param id
+     * @return
+     */
+    @POST(Constant.URL_DELETE_SHARE_ARTICLE)
+    Observable<DeleteShare> deleteShareArticle(@Path("id") int id);
 }

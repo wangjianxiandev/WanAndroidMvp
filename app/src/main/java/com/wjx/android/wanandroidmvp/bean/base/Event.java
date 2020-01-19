@@ -1,5 +1,7 @@
 package com.wjx.android.wanandroidmvp.bean.base;
 
+import com.wjx.android.wanandroidmvp.bean.db.Article;
+
 /**
  * @author wangyz
  * @time 2019/1/23 15:45
@@ -123,9 +125,19 @@ public class Event {
     public static final int TARGET_SPLASH = 12;
 
     /**
-     * 导航界面
+     * 目标界面-导航界面
      */
     public static final int TARGET_NAVI = 13;
+
+    /**
+     * 目标界面-分享页面
+     */
+    public static final int TARGET_SQUARE_SHARE = 14;
+
+    /**
+     * 目标界面-分享列表页面
+     */
+    public static final int TARGET_ME_SHARE = 15;
 
 
     public int target;
@@ -133,5 +145,4 @@ public class Event {
     public int type;
 
     public String data;
-
 }

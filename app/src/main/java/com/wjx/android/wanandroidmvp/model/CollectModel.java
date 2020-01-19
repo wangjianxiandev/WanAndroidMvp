@@ -1,14 +1,11 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
+
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.collect.Contract;
 
-import org.litepal.LitePal;
-import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +47,6 @@ public class CollectModel extends BaseModel implements Contract.ICollectModel {
                         collect.time = d.getPublishTime();
                         collect.link = d.getLink();
                         collect.niceDate = d.getNiceDate();
-                        collect.envelopePic = d.getEnvelopePic();
-                        if (collect.envelopePic.equals("")) {
-                            collect.isSupportPic = false;
-                        } else {
-                            collect.isSupportPic = true;
-                        }
                         list.add(collect);
                     });
                     return list;

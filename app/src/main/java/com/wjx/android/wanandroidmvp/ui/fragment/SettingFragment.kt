@@ -15,6 +15,7 @@ import com.wjx.android.wanandroidmvp.bean.base.Event
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity
 import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity
 import org.greenrobot.eventbus.EventBus
+import kotlin.math.E
 
 /**
  * Created with Android Studio.
@@ -83,6 +84,11 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     wxEvent.target = Event.TARGET_WX
                     wxEvent.type = Event.TYPE_LOGIN
                     EventBus.getDefault().post(wxEvent)
+
+                    val shareEvent = Event()
+                    shareEvent.target = Event.TARGET_SQUARE_SHARE
+                    shareEvent.type = Event.TYPE_LOGOUT
+                    EventBus.getDefault().post(shareEvent)
 
                     val meEvent = Event()
                     meEvent.target = Event.TARGET_ME
@@ -166,6 +172,11 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
                     parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
                     EventBus.getDefault().post(parentSquareEvent)
+
+                    val shareEvent = Event()
+                    shareEvent.target = Event.TARGET_SQUARE_SHARE
+                    shareEvent.type = Event.TYPE_REFRESH_COLOR
+                    EventBus.getDefault().post(shareEvent)
                 }
                 positiveButton(R.string.done)
                 negativeButton(R.string.cancel)

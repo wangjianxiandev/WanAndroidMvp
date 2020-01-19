@@ -73,6 +73,11 @@ public class Constant {
     public static final String HOME_SQUARE_URL = "/user_article/list/{pageNum}/json";
 
     /**
+     * 分享文章
+     */
+    public static final String SQUARE_SHARE_ARTICLE = "/lg/user_article/add/json";
+
+    /**
      * 项目种类URL
      */
     public static final String PROJECT_CATEGORY_URL = "/project/tree/json";
@@ -151,6 +156,16 @@ public class Constant {
      * 积分排行
      */
     public static final String URL_RANK = "/coin/rank/{pageNum}/json";
+
+    /**
+     * 获取分享的文章的列表
+     */
+    public static final String URL_SHARE_ARTICLE = "/user/lg/private_articles/{pageNum}/json";
+
+    /**
+     * 删除分享的文章
+     */
+    public static final String URL_DELETE_SHARE_ARTICLE = "/lg/user_article/delete/{id}/json";
 
     /**
      * 积分规则
