@@ -107,11 +107,15 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
 
     @Override
     public void onLoadFailed() {
-
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_STOP_ANIMATION;
+        EventBus.getDefault().post(e);
+        ToastUtils.showShort("添加失败");
     }
 
     @Override
     public void onLoadSuccess() {
-
+        ToastUtils.showShort("添加失败");
     }
 }
