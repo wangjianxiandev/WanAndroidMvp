@@ -5,6 +5,7 @@ import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 
 import org.litepal.LitePal;
@@ -74,8 +75,7 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                             squareArticleList.add(article);
                         } else {
                             allHomeSquareData.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
-                                if (m.title != datasBean.getTitle() ||
-                                        m.niceDate != datasBean.getNiceDate() ||
+                                if (m.niceDate != datasBean.getNiceDate() ||
                                         m.collect != datasBean.isCollect() || m.isFresh != datasBean.isFresh()) {
                                     m.articleId = datasBean.getId();
                                     m.title = datasBean.getTitle();
@@ -120,4 +120,5 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
     public Observable<Collect> unCollect(int articleId) {
         return mApiServer.unCollect(articleId);
     }
+
 }

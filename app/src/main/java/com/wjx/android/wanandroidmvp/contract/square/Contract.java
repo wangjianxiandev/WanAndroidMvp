@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.contract.square;
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 

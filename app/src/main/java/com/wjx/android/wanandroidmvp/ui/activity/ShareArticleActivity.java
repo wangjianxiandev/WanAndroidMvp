@@ -83,18 +83,6 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
         return new SquareSharePresenter();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
     private void initToolbar() {
         mToolbar.setTitle(R.string.share_article);
         setSupportActionBar(mToolbar);

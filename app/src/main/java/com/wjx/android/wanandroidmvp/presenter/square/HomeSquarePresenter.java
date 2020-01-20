@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.presenter.square;
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.model.HomeSquareModel;
 
@@ -21,11 +22,13 @@ import io.reactivex.schedulers.Schedulers;
  * @date: 2020/01/09
  * Time: 16:27
  */
-public class HomeSquarePresenter  extends BasePresenter<Contract.IHomeSquareView> implements Contract.IHomeSquarePresenter {
+public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView> implements Contract.IHomeSquarePresenter {
     Contract.IHomeSquareModel iHomeSquareModel;
+
     public HomeSquarePresenter() {
         iHomeSquareModel = new HomeSquareModel();
     }
+
     @Override
     public void loadHomeSquareData(int pageNum) {
         if (isViewAttached()) {

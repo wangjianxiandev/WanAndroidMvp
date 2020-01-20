@@ -2,31 +2,23 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wjx.android.wanandroidmvp.R;
-import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
 import com.wjx.android.wanandroidmvp.adapter.TreeArticleAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
@@ -39,7 +31,6 @@ import com.wjx.android.wanandroidmvp.presenter.square.TreeListPresenter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -256,7 +247,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mTreeArticleList.clear();
                 mPresenter.refreshTreeList(0, mCid);
-            } else if (event.type == Event.TYPE_REFRESH) {
+            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mTreeArticleList.clear();
                 mPresenter.refreshTreeList(mCurPage, mCid);
             }

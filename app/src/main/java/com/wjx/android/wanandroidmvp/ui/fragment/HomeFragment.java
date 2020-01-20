@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,14 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
@@ -41,7 +38,6 @@ import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 import com.wjx.android.wanandroidmvp.presenter.home.HomePresenter;
 
-import com.wjx.android.wanandroidmvp.ui.activity.MainActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.SearchWordActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -57,8 +53,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
-
-import static com.blankj.utilcode.util.ColorUtils.getColor;
 
 
 /**
@@ -350,7 +344,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mArticleList.clear();
                 mPresenter.refreshArticle(0);
-            } else if (event.type == Event.TYPE_REFRESH) {
+            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mArticleList.clear();
                 mPresenter.refreshTopArticle();
                 mPresenter.refreshArticle(mCurpage);

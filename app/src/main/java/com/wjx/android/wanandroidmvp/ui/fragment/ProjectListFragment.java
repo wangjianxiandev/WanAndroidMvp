@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +15,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ProjectListAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
@@ -222,7 +219,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mProjectArticleList.clear();
                 mPresenter.refreshProjectList(0, mCid);
-            } else if (event.type == Event.TYPE_REFRESH) {
+            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mPresenter.refreshProjectList(mCurrentPage, mCid);
             }
         }

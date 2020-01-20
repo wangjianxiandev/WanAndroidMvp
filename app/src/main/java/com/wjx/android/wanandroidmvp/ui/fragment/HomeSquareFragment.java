@@ -3,18 +3,15 @@ package com.wjx.android.wanandroidmvp.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.solver.widgets.ConstraintAnchor;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,6 +24,7 @@ import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
+import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.presenter.square.HomeSquarePresenter;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -35,10 +33,11 @@ import com.wjx.android.wanandroidmvp.ui.activity.ShareArticleActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.litepal.util.Const;
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 
@@ -234,11 +233,18 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(0);
-            } else if (event.type == Event.TYPE_REFRESH) {
+            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(mCurpage);
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 initFloatBtnColor();
+            } else if (event.type == Event.TYPE_DELETE_SHARE) {
+                int articleId = Integer.valueOf(event.data);
+                LitePal.deleteAll(Article.class, "type=? and articleId=?", Article.TYPE_SQUARE + "", articleId + "");
+                List<Article> tempList = mHomeSquareList.stream().filter(a -> a.articleId != articleId).collect(Collectors.toList());
+                mHomeSquareList.clear();
+                mHomeSquareList.addAll(tempList);
+                mHomeSquareAdapter.setHomeSquareList(mHomeSquareList);
             }
         }
     }

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +21,6 @@ import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
-import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 import com.wjx.android.wanandroidmvp.contract.wechat.Contract;
 import com.wjx.android.wanandroidmvp.presenter.wechat.WeChatListPresenter;
 
@@ -213,7 +211,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mWechatArticleList.clear();
                 mPresenter.refreshWeChatList(mCid, 0);
-            } else if (event.type == Event.TYPE_REFRESH) {
+            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mWechatArticleList.clear();
                 mPresenter.refreshWeChatList(mCid, mCurrentPage);
             }

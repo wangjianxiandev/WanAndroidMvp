@@ -2,28 +2,19 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,11 +24,9 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.CollectAdaper;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 
-import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
 import com.wjx.android.wanandroidmvp.bean.db.Collect;
 import com.wjx.android.wanandroidmvp.contract.collect.Contract;
 import com.wjx.android.wanandroidmvp.presenter.collect.CollectPresenter;
@@ -230,31 +219,31 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
         // 取消收藏传递给home
         Event homeEvent = new Event();
         homeEvent.target = Event.TARGET_HOME;
-        homeEvent.type = Event.TYPE_REFRESH;
+        homeEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(homeEvent);
 
         // 取消收藏传递给project
         Event projectEvent = new Event();
         projectEvent.target = Event.TARGET_PROJECT;
-        projectEvent.type = Event.TYPE_REFRESH;
+        projectEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(projectEvent);
 
         // 取消收藏传递给square
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
-        squareEvent.type = Event.TYPE_REFRESH;
+        squareEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(squareEvent);
 
         // 取消收藏传递给tree
         Event treeEvent = new Event();
         treeEvent.target = Event.TARGET_TREE;
-        treeEvent.type = Event.TYPE_REFRESH;
+        treeEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(treeEvent);
 
         // 取消收藏传递给wechat
         Event wechatEvent = new Event();
         wechatEvent.target = Event.TARGET_WX;
-        wechatEvent.type = Event.TYPE_REFRESH;
+        wechatEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(wechatEvent);
     }
 

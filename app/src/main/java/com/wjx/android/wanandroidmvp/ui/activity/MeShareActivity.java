@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.ui.activity;
 
 
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -9,8 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,10 +74,53 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         initAdapter();
         initToolbar();
         initStatusBar();
+        initSideSlip();
         // 滑动流畅
         mRecyclerView.setNestedScrollingEnabled(false);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void initSideSlip() {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            // 左滑删除
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                int swipedType = ItemTouchHelper.LEFT;
+                return makeMovementFlags(0, swipedType);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // 处理数据上移
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                mPresenter.deleteShareArticle(mShareList.get(position).articleId);
+                mShareList.remove(position);
+                mMeShareAdapter.notifyItemRemoved(position);
+            }
+
+            // 设置高亮
+            @Override
+            public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                    // 滑动状态
+                    viewHolder.itemView.setBackgroundColor(Constant.getColor(mContext));
+                }
+            }
+
+            // 上移填补
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     private void initStatusBar() {
@@ -152,6 +198,11 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         mShareList.clear();
         mShareList.addAll(tempList);
         mMeShareAdapter.setShareList(mShareList);
+        Event event = new Event();
+        event.target = Event.TARGET_SQUARE;
+        event.type = Event.TYPE_DELETE_SHARE;
+        event.data = articleId+"";
+        EventBus.getDefault().post(event);
     }
 
     @Override
@@ -172,7 +223,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         // 取消收藏传递给square
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
-        squareEvent.type = Event.TYPE_REFRESH;
+        squareEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(squareEvent);
     }
 
@@ -193,7 +244,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         // 取消收藏传递给square
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
-        squareEvent.type = Event.TYPE_REFRESH;
+        squareEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
         EventBus.getDefault().post(squareEvent);
     }
 
@@ -236,7 +287,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         if (event.target == Event.TARGET_ME_SHARE) {
             if (event.type == Event.TYPE_COLLECT) {
                 int articleId = Integer.valueOf(event.data);
-                mPresenter.deleteShareArticle(articleId);
+                mPresenter.collect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;
                 e.type = Event.TYPE_START_ANIMATION;
@@ -254,7 +305,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mShareList.clear();
                 mPresenter.refreshShareArticle(0);
-            } else if (event.type == Event.TYPE_REFRESH) {
+            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mShareList.clear();
                 mPresenter.refreshShareArticle(mCurpage);
             }

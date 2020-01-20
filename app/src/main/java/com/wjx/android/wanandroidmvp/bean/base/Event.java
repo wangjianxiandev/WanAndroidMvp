@@ -10,54 +10,54 @@ import com.wjx.android.wanandroidmvp.bean.db.Article;
 public class Event {
 
     /**
-     * 切换到体系二级类别列表
-     */
-    public static final int TYPE_TREE_ARTICLE_FRAGMENT = 1;
-
-    /**
      * 登录成功
      */
-    public static final int TYPE_LOGIN = 2;
+    public static final int TYPE_LOGIN = 1;
 
     /**
      * 退出登录
      */
-    public static final int TYPE_LOGOUT = 3;
+    public static final int TYPE_LOGOUT = 2;
 
     /**
      * 收藏
      */
-    public static final int TYPE_COLLECT = 4;
+    public static final int TYPE_COLLECT = 3;
 
     /**
      * 取消收藏
      */
-    public static final int TYPE_UNCOLLECT = 5;
+    public static final int TYPE_UNCOLLECT = 4;
 
     /**
      * 切换夜间模式
      */
-    public static final int TYPE_CHANGE_DAY_NIGHT_MODE = 6;
+    public static final int TYPE_CHANGE_DAY_NIGHT_MODE = 5;
 
     /**
      * 开始动画
      */
-    public static final int TYPE_START_ANIMATION = 7;
+    public static final int TYPE_START_ANIMATION = 6;
 
     /**
      * 停止动画
      */
-    public static final int TYPE_STOP_ANIMATION = 8;
+    public static final int TYPE_STOP_ANIMATION = 7;
 
     /**
-     * 刷新列表
+     * 取消收藏刷新列表
      */
-    public static final int TYPE_REFRESH = 9;
+    public static final int TYPE_UNCOLLECT_REFRESH = 8;
 
     /**
      * 更换主题颜色
      */
-    public static final int TYPE_REFRESH_COLOR = 10;
+    public static final int TYPE_REFRESH_COLOR = 9;
+
+    /**
+     * 删除分享的文章
+     */
+    public static final int TYPE_DELETE_SHARE = 10;
 
     /**
      * 目标界面-MainActivity
