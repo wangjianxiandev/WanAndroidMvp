@@ -45,7 +45,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/item_project_author"
             app:layout_constraintStart_toEndOf="@+id/item_project_author"
-            app:layout_constraintTop_toTopOf="@+id/item_project_author" />
+            app:layout_constraintTop_toTopOf="@+id/item_project_author" />Z
 
         <TextView
             android:id="@+id/item_project_date"
@@ -84,7 +84,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="一款适用经典蓝牙的快速开发框架"
             android:textColor="@color/colorBlack333"
             android:textSize="14dp"

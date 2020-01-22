@@ -1,4 +1,4 @@
-package com.wjx.android.wanandroidmvp.Custom;
+package com.wjx.android.wanandroidmvp.Custom.header;
 
 
 import androidx.annotation.NonNull;
@@ -12,8 +12,6 @@ import java.util.Arrays;
  * @date: 2020/01/21
  * Time: 20:52
  */
-
-@SuppressWarnings({"unused", "WeakerAccess"})
 final class ScaleHelper {
 
     private float[] mScales;

@@ -178,8 +178,8 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mCurrentPage = 0;
-        mPresenter.refreshWeChatList(mCid, mCurrentPage);
+        mWechatArticleList.clear();
+        mPresenter.refreshWeChatList(mCid, 0);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -1,4 +1,4 @@
-package com.wjx.android.wanandroidmvp.Custom;
+package com.wjx.android.wanandroidmvp.Custom.header;
 
 import android.content.Context;
 import android.content.res.TypedArray;

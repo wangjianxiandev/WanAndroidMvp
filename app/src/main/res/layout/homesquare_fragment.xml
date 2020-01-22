@@ -1,21 +1,22 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.wjx.android.wanandroidmvp.Custom.CoffeeHeader
+        <com.wjx.android.wanandroidmvp.Custom.header.CoffeeHeader
             android:layout_width="match_parent"
-            android:layout_height="120dp"/>
+            android:layout_height="120dp" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/article_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/article_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
@@ -30,6 +31,6 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="60dp"
         android:src="@drawable/ic_add"
-        app:fabSize="mini"/>
+        app:fabSize="mini" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

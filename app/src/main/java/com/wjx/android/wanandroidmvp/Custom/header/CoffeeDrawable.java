@@ -1,4 +1,4 @@
-package com.wjx.android.wanandroidmvp.Custom;
+package com.wjx.android.wanandroidmvp.Custom.header;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

@@ -45,7 +45,7 @@ import butterknife.BindView;
  */
 public class ProjectListFragment extends BaseFragment<Contract.IProjectListView, ProjectListPresenter> implements Contract.IProjectListView,
         com.scwang.smartrefresh.layout.listener.OnLoadMoreListener,
-        com.scwang.smartrefresh.layout.listener.OnRefreshListener{
+        com.scwang.smartrefresh.layout.listener.OnRefreshListener {
 
     @BindView(R.id.normal_view)
     SmartRefreshLayout mSmartRefreshLayout;
@@ -53,7 +53,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     RecyclerView mRecyclerView;
 
     private ProjectListAdapter mProjectListAdapter;
-    private int mCurrentPage = 0;
+    private int mCurrentPage = 1;
     private int mCid;
 
     private Context mContext;
@@ -86,8 +86,8 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
-        mPresenter.loadProjectList(mCurrentPage, mCid);
         initAdapter();
+        mPresenter.loadProjectList(mCurrentPage, mCid);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
     }
@@ -113,7 +113,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     @Override
     public void onRefreshProjectList(List<Article> projectList) {
         mProjectArticleList.clear();
-        mProjectArticleList.addAll(0,projectList);
+        mProjectArticleList.addAll(0, projectList);
         mProjectListAdapter.setProjectList(mProjectArticleList);
     }
 
@@ -162,7 +162,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
      */
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mCurrentPage = 0;
+        mCurrentPage = 1;
         mPresenter.refreshProjectList(mCurrentPage, mCid);
     }
 

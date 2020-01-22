@@ -31,35 +31,35 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
 
     @Override
     public Observable<List<Article>> loadWeChatList(int cid, int pageNum) {
-        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
-            List<Article> weChatArticleList = LitePal.where("type=? and authorId=?",
-                    Article.TYPE_WX + "", cid + "")
-                    .order("time desc")
-                    .offset(pageNum * Constant.PAGE_SIZE)
-                    .limit(Constant.PAGE_SIZE)
-                    .find(Article.class);
-            emitter.onNext(weChatArticleList);
-            emitter.onComplete();
-        });
-        if (NetworkUtils.isConnected()) {
+//        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
+//            List<Article> weChatArticleList = LitePal.where("type=? and authorId=?",
+//                    Article.TYPE_WX + "", cid + "")
+//                    .order("time desc")
+//                    .offset(pageNum * Constant.PAGE_SIZE)
+//                    .limit(Constant.PAGE_SIZE)
+//                    .find(Article.class);
+//            emitter.onNext(weChatArticleList);
+//            emitter.onComplete();
+//        });
+//        if (NetworkUtils.isConnected()) {
             Observable<List<Article>> loadFromNet = loadWeChatArticleFromNet(cid, pageNum);
-            return Observable.concat(loadFromLocal, loadFromNet);
-        } else {
-            return loadFromLocal;
-        }
+//            return Observable.concat(loadFromLocal, loadFromNet);
+//        } else {
+            return loadFromNet;
+//        }
     }
 
     private Observable<List<Article>> loadWeChatArticleFromNet(int cid, int pageNum) {
         return mApiServer.loadWeChatList(cid, pageNum)
                 .filter(weChatListData -> weChatListData.getErrorCode() == Constant.SUCCESS)
                 .map(weChatListData -> {
-                    List<Article> allWeChatArticleList = LitePal.where("type=? and authorId=?",
-                            Article.TYPE_WX + "", cid + "")
-                            .find(Article.class);
+//                    List<Article> allWeChatArticleList = LitePal.where("type=? and authorId=?",
+//                            Article.TYPE_WX + "", cid + "")
+//                            .find(Article.class);
                     List<Article> weChatArticleList = new ArrayList<>();
                     weChatListData.getData().getDatas().stream().forEach(datasBean -> {
-                        long count = allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).count();
-                        if (count <= 0) {
+//                        long count = allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).count();
+//                        if (count <= 0) {
                             Article article = new Article();
                             article.type = Article.TYPE_WX;
                             article.title = datasBean.getTitle();
@@ -74,36 +74,36 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                             article.time = datasBean.getPublishTime();
                             article.isFresh = datasBean.isFresh();
                             weChatArticleList.add(article);
-                        } else {
-                            allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).forEach(w -> {
-                                if (w.niceDate != datasBean.getNiceDate() || w.collect != datasBean.isCollect()) {
-                                    w.title = datasBean.getTitle();
-                                    w.desc = datasBean.getDesc();
-                                    w.title = datasBean.getTitle();
-                                    w.authorId = datasBean.getChapterId();
-                                    w.author = datasBean.getAuthor();
-                                    w.chapterName = datasBean.getChapterName();
-                                    w.superChapterName = datasBean.getSuperChapterName();
-                                    w.link = datasBean.getLink();
-                                    w.niceDate = datasBean.getNiceDate();
-                                    w.collect = datasBean.isCollect();
-                                    w.time = datasBean.getPublishTime();
-                                    w.isFresh = datasBean.isFresh();
-                                    if (!w.collect) {
-                                        w.setToDefault("collect");
-                                    }
-                                    w.update(w.id);
-                                }
-                            });
-                        }
+//                        } else {
+//                            allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).forEach(w -> {
+//                                if (w.niceDate != datasBean.getNiceDate() || w.collect != datasBean.isCollect()) {
+//                                    w.title = datasBean.getTitle();
+//                                    w.desc = datasBean.getDesc();
+//                                    w.title = datasBean.getTitle();
+//                                    w.authorId = datasBean.getChapterId();
+//                                    w.author = datasBean.getAuthor();
+//                                    w.chapterName = datasBean.getChapterName();
+//                                    w.superChapterName = datasBean.getSuperChapterName();
+//                                    w.link = datasBean.getLink();
+//                                    w.niceDate = datasBean.getNiceDate();
+//                                    w.collect = datasBean.isCollect();
+//                                    w.time = datasBean.getPublishTime();
+//                                    w.isFresh = datasBean.isFresh();
+//                                    if (!w.collect) {
+//                                        w.setToDefault("collect");
+//                                    }
+//                                    w.update(w.id);
+//                                }
+//                            });
+//                        }
                     });
-                    LitePal.saveAll(weChatArticleList);
-                    List<Article> weArticleResult = LitePal.where("type=? and authorId=?", Article.TYPE_WX + "", cid + "")
-                            .order("time desc")
-                            .offset(pageNum * Constant.PAGE_SIZE)
-                            .limit(Constant.PAGE_SIZE)
-                            .find(Article.class);
-                    return weArticleResult;
+//                    LitePal.saveAll(weChatArticleList);
+//                    List<Article> weArticleResult = LitePal.where("type=? and authorId=?", Article.TYPE_WX + "", cid + "")
+//                            .order("time desc")
+//                            .offset(pageNum * Constant.PAGE_SIZE)
+//                            .limit(Constant.PAGE_SIZE)
+//                            .find(Article.class);
+                    return weChatArticleList;
                 });
     }
 
