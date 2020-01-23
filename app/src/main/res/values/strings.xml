@@ -40,8 +40,7 @@
     <string name="setting_project">开源项目</string>
     <string name="setting_version">版本</string>
     <string name="setting_exit">退出</string>
-    <string name="setting_slidable_summary">类似 iOS 左侧滑动返回</string>
-    <string name="setting_slidable_title">滑动返回</string>
+    <string name="night_mode">夜间模式</string>
     <string name="clear_cache">清除缓存</string>
     <string name="clear_success">清理成功</string>
     <string name="setting_mode">列表动画</string>

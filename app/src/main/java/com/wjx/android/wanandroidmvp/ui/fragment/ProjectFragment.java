@@ -54,6 +54,7 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
  */
 public class ProjectFragment extends BaseFragment<Contract.IProjectView, ProjectPresenter> implements Contract.IProjectView {
 
+    private static String TAG = "ProjectFragment";
     @BindView(R.id.project_tab)
     SlidingTabLayout mSlidingTabLayout;
 
@@ -68,6 +69,11 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     private int mCurPage;
 
     private Context mContext;
+
+    public static ProjectFragment getInstance() {
+        ProjectFragment fragment = new ProjectFragment();
+        return fragment;
+    }
 
     @Override
     protected int getContentViewId() {

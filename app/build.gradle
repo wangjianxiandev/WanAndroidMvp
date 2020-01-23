@@ -78,7 +78,7 @@ dependencies {
 
     implementation 'org.litepal.android:java:3.0.0'
 
-    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'androidx.preference:preference:1.1.0-alpha04'
 
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
 
@@ -87,6 +87,12 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'skin.support:skin-support:4.0.4'                   // skin-support
+    implementation 'skin.support:skin-support-appcompat:4.0.4'         // skin-support 基础控件支持
+    implementation 'skin.support:skin-support-design:4.0.4'            // skin-support-design material design 控件支持[可选]
+    implementation 'skin.support:skin-support-cardview:4.0.4'          // skin-support-cardview CardView 控件支持[可选]
+    implementation 'skin.support:skin-support-constraint-layout:4.0.4' // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
 }
 repositories {
     mavenCentral()

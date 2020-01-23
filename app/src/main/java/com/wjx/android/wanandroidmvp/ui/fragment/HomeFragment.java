@@ -90,6 +90,11 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @BindView(R.id.home_toolbar)
     Toolbar mToolbar;
 
+    public static HomeFragment getInstance() {
+        HomeFragment fragment = new HomeFragment();
+        return fragment;
+    }
+
     @Override
     protected int getContentViewId() {
         return R.layout.home_fragment;

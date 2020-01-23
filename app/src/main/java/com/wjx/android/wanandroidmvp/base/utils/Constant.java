@@ -274,6 +274,13 @@ public class Constant {
 
     public static final long EXIT_TIME = 2000;
 
+    /**
+     * Intent params
+     */
+    public static final String ARG_PARAM1 = "param1";
+
+    public static final String ARG_PARAM2 = "param2";
+
 
     /**
      * 获取随机rgb颜色值

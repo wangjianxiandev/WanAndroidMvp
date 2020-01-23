@@ -72,6 +72,13 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankHolder> {
             holder.mRank.setText(
                     Html.fromHtml(String.valueOf(rank.rank), Html.FROM_HTML_MODE_COMPACT));;
         }
+
+        if (isNightMode) {
+            holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
+            holder.mCount.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+            holder.mName.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+            holder.mRank.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+        }
     }
 
     @Override

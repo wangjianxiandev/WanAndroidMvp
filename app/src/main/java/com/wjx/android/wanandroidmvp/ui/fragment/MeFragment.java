@@ -2,17 +2,21 @@ package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -74,6 +78,11 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
 
     private Context mContext;
 
+    public static MeFragment getInstance() {
+        MeFragment fragment = new MeFragment();
+        return fragment;
+    }
+
     @Override
     protected int getContentViewId() {
         return R.layout.me_fragment;
@@ -86,8 +95,23 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
         if (!TextUtils.isEmpty(LoginUtils.getLoginUser())) {
             meName.setText(LoginUtils.getLoginUser());
         }
+        initStatusBar();
         mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void initStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        if (ColorUtils.calculateLuminance(Color.TRANSPARENT) >= 0.5) {
+            // 设置状态栏中字体的颜色为黑色
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            // 跟随系统
+            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
     }
 
     @OnClick(R.id.me_name)

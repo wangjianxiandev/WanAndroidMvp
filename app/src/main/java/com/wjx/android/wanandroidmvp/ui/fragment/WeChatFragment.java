@@ -63,6 +63,11 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     private Context mContext;
 
+    public static WeChatFragment getInstance() {
+        WeChatFragment fragment = new WeChatFragment();
+        return fragment;
+    }
+
     @Override
     protected int getContentViewId() {
         return R.layout.wechat_fragment;

@@ -36,7 +36,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="请先登录~"
-                android:textColor="@color/white"
+                android:textColor="@color/colorBlack333"
                 android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/me_info"
@@ -52,7 +52,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:text="积分 : --　排名 : --"
-                android:textColor="@color/white"
+                android:textColor="@color/colorBlack333"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="积分排行"
-                        android:textColor="@color/white"
+                        android:textColor="@color/me_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="我的收藏"
-                        android:textColor="@color/white"
+                        android:textColor="@color/me_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="我的文章"
-                        android:textColor="@color/white"
+                        android:textColor="@color/me_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -153,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="待办清单"
-                        android:textColor="@color/white"
+                        android:textColor="@color/me_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
                 </LinearLayout>

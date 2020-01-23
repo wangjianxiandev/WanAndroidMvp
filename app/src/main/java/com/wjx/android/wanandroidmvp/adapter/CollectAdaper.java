@@ -115,6 +115,10 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
                     }
                 }
             });
+
+            if (isNightMode) {
+                collectHolder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
+            }
         }
     }
 

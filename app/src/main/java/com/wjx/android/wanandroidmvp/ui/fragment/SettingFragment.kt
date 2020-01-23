@@ -2,20 +2,28 @@ package com.wjx.android.wanandroidmvp.ui.fragment
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
+import com.blankj.utilcode.util.ColorUtils.getColor
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.wjx.android.wanandroidmvp.Custom.IconPreference
 import com.wjx.android.wanandroidmvp.R
-import com.wjx.android.wanandroidmvp.base.utils.*
+import com.wjx.android.wanandroidmvp.base.utils.ColorUtil
+import com.wjx.android.wanandroidmvp.base.utils.Constant
+import com.wjx.android.wanandroidmvp.base.utils.DataCleanManager
+import com.wjx.android.wanandroidmvp.base.utils.LoginUtils
 import com.wjx.android.wanandroidmvp.bean.base.Event
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity
 import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity
 import org.greenrobot.eventbus.EventBus
-import kotlin.math.E
+
 
 /**
  * Created with Android Studio.
@@ -28,7 +36,6 @@ import kotlin.math.E
 class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
     private var colorPreview: IconPreference? = null
     private lateinit var parentActivity: SettingActivity
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.setting_fragment)
         parentActivity = activity as SettingActivity
@@ -54,11 +61,99 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
     }
 
     private fun init() {
+        val nightMode: Boolean = SPUtils.getInstance(Constant.CONFIG_SETTINGS).getBoolean(Constant.KEY_NIGHT_MODE, false)
         val version = "当前版本 " + parentActivity.packageManager.getPackageInfo(parentActivity.packageName, 0).versionName
-        findPreference("version")?.summary = version
-        findPreference("clearCache").summary = DataCleanManager.getTotalCacheSize(parentActivity)
-        findPreference("exit").isVisible = LoginUtils.isLogin()
-        findPreference("exit").onPreferenceClickListener = Preference.OnPreferenceClickListener { preference: Preference? ->
+        findPreference<Preference>("version")?.summary = version
+        findPreference<Preference>("clearCache")?.summary = DataCleanManager.getTotalCacheSize(parentActivity)
+        findPreference<Preference>("exit")?.isVisible = LoginUtils.isLogin()
+        findPreference<SwitchPreference>("night")?.isChecked = nightMode
+        findPreference<Preference>("color")?.isEnabled = !nightMode
+
+        findPreference<SwitchPreference>("night")?.setOnPreferenceChangeListener { preference, newValue ->
+            val boolValue = newValue as Boolean
+            findPreference<SwitchPreference>("night")?.isChecked = !boolValue
+            SPUtils.getInstance(Constant.CONFIG_SETTINGS).put(Constant.KEY_NIGHT_MODE, boolValue)
+            val currentMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            parentActivity.getDelegate().setLocalNightMode(
+                    if (currentMode == Configuration.UI_MODE_NIGHT_NO)
+                        AppCompatDelegate.MODE_NIGHT_YES
+                    else
+                        AppCompatDelegate.MODE_NIGHT_NO)
+            parentActivity.recreate()
+            val nightMode: Boolean = SPUtils.getInstance(Constant.CONFIG_SETTINGS).getBoolean(Constant.KEY_NIGHT_MODE, false)
+            AppCompatDelegate.setDefaultNightMode(
+                    if (nightMode)
+                        AppCompatDelegate.MODE_NIGHT_YES
+                    else
+                        AppCompatDelegate.MODE_NIGHT_NO)
+
+            if (nightMode) {
+                Constant.setColor(parentActivity, getColor(R.color.colorBlack666))
+                //通知其他界面立马修改配置
+                val event = Event()
+                event.target = Event.TARGET_HOME
+                event.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(event)
+
+                val mainEvent = Event()
+                mainEvent.target = Event.TARGET_MAIN
+                mainEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(mainEvent)
+
+                val treeEvent = Event()
+                treeEvent.target = Event.TARGET_TREE
+                treeEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(treeEvent)
+
+                val projectEvent = Event()
+                projectEvent.target = Event.TARGET_PROJECT
+                projectEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(projectEvent)
+
+                val wxEvent = Event()
+                wxEvent.target = Event.TARGET_WX
+                wxEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(wxEvent)
+
+                val meEvent = Event()
+                meEvent.target = Event.TARGET_ME
+                meEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(meEvent)
+
+                val settingEvent = Event()
+                settingEvent.target = Event.TARGET_SETTING
+                settingEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(settingEvent)
+
+                val squareEvent = Event()
+                squareEvent.target = Event.TARGET_SQUARE
+                squareEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(squareEvent)
+
+                val navEvent = Event()
+                navEvent.target = Event.TARGET_NAVI
+                navEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(navEvent)
+
+                val parentSquareEvent = Event()
+                parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
+                parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(parentSquareEvent)
+
+                val shareEvent = Event()
+                shareEvent.target = Event.TARGET_SQUARE_SHARE
+                shareEvent.type = Event.TYPE_REFRESH_COLOR
+                EventBus.getDefault().post(shareEvent)
+            }
+
+            val event = Event()
+            event.target = Event.TARGET_MAIN
+            event.type = Event.TYPE_CHANGE_DAY_NIGHT_MODE
+            EventBus.getDefault().post(event)
+            true
+        }
+
+        findPreference<Preference>("exit")?.onPreferenceClickListener = Preference.OnPreferenceClickListener { preference: Preference? ->
             MaterialDialog(parentActivity).show {
                 title(R.string.title)
                 message(text = "确定退出登录吗？")
@@ -102,21 +197,21 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             false
         }
 
-        findPreference("clearCache")?.setOnPreferenceClickListener {
+        findPreference<Preference>("clearCache")?.setOnPreferenceClickListener {
             MaterialDialog(parentActivity).show {
                 title(R.string.title)
                 message(text = "确定清除缓存吗？")
                 positiveButton(text = "清除") {
                     DataCleanManager.clearAllCache(parentActivity)
                     ToastUtils.showShort(R.string.clear_success)
-                    findPreference("clearCache").summary = DataCleanManager.getTotalCacheSize(parentActivity)
+                    findPreference<Preference>("clearCache")?.summary = DataCleanManager.getTotalCacheSize(parentActivity)
                 }
                 negativeButton(R.string.cancel)
             }
             false
         }
 
-        findPreference("color")?.setOnPreferenceClickListener {
+        findPreference<Preference>("color")?.setOnPreferenceClickListener {
             MaterialDialog(parentActivity).show {
                 title(R.string.choose_theme_color)
                 colorChooser(ColorUtil.ACCENT_COLORS, initialSelection = Constant.getColor(parentActivity), subColors = ColorUtil.PRIMARY_COLORS_SUB)
@@ -184,5 +279,4 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             false
         }
     }
-
 }

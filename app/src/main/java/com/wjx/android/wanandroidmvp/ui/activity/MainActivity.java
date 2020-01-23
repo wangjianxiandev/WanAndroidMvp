@@ -2,15 +2,19 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.app.SkinAppCompatDelegateImpl;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
     private SparseArray<Fragment> mFragmentSparseArray = new SparseArray<>();
 
+    private Fragment mCurrentFragment;
+
+    private Fragment mLastFragment;
+
     private int mLastIndex = -1;
 
     private long mExitTime;
@@ -68,14 +76,30 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView mBottomNavigationView;
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("index", mLastIndex);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mLastIndex = savedInstanceState.getInt("index");
+        switchFragment(mLastIndex);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        // 解决Fragment需要一个构造函数的问题
+        super.onCreate(null);
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         mContext = getApplicationContext();
         mBinder = ButterKnife.bind(this);
         initBottomNavigation();
-        switchFragment(INDEX_HOMEPAGE);
+        if (savedInstanceState == null) {
+            switchFragment(INDEX_HOMEPAGE);
+        }
         mBottomNavigationView.setItemIconTintList(Constant.getColorStateList(mContext));
         mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
     }
@@ -117,17 +141,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void switchFragment(int index) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (mLastIndex != -1) {
-            fragmentTransaction.hide(getFragment(mLastIndex));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        mCurrentFragment = fragmentManager.findFragmentByTag("fragment"+ index);
+        mLastFragment = fragmentManager.findFragmentByTag("fragment" + mLastIndex);
+        if (index != mLastIndex){
+            if (mLastFragment != null){
+                transaction.hide(mLastFragment);
+            }
+            if (mCurrentFragment == null){
+                mCurrentFragment = getFragment(index);
+                transaction.add(R.id.container, mCurrentFragment, "fragment" + index);
+            }else {
+                transaction.show(mCurrentFragment);
+            }
         }
+
+        if (index == mLastIndex){
+            if (mCurrentFragment == null){
+                mCurrentFragment = getFragment(index);
+                transaction.add(R.id.container, mCurrentFragment, "fragment" + index);
+            }//如果位置相同，且fragment存在，则不作任何操作
+        }
+        transaction.commit();
         mLastIndex = index;
-        Fragment fragment = getFragment(index);
-        if (fragment != null & !fragment.isAdded()) {
-            fragmentTransaction.add(R.id.container, fragment);
-        }
-        fragmentTransaction.show(fragment).commitAllowingStateLoss();
-        getSupportFragmentManager().executePendingTransactions();
     }
 
     private Fragment getFragment(int index) {
@@ -135,19 +172,19 @@ public class MainActivity extends AppCompatActivity {
         if (fragment == null) {
             switch (index) {
                 case INDEX_HOMEPAGE:
-                    fragment = new HomeFragment();
+                    fragment = HomeFragment.getInstance();
                     break;
                 case INDEX_PROJECT:
-                    fragment = new ProjectFragment();
+                    fragment = ProjectFragment.getInstance();
                     break;
                 case INDEX_SQUARE:
-                    fragment = new ParentSquareFragment();
+                    fragment = ParentSquareFragment.getInstance();
                     break;
                 case INDEX_WE_CHAT:
-                    fragment = new WeChatFragment();
+                    fragment = WeChatFragment.getInstance();
                     break;
                 case INDEX_ME:
-                    fragment = new MeFragment();
+                    fragment = MeFragment.getInstance();
                     break;
                 default:
                     break;
@@ -201,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mBottomNavigationView.setItemIconTintList(Constant.getColorStateList(mContext));
                 mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
+            } else if (event.type == Event.TYPE_CHANGE_DAY_NIGHT_MODE) {
+                recreate();
             }
         }
     }

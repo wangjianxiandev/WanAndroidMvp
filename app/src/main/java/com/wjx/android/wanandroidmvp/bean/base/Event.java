@@ -140,6 +140,9 @@ public class Event {
     public static final int TARGET_ME_SHARE = 15;
 
 
+    public static final int TARGET_ADAPTER = 16;
+
+
     public int target;
 
     public int type;

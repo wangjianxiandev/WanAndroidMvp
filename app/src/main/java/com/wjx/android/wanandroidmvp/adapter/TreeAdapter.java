@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
@@ -40,12 +41,19 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.TreeHolder> {
 
     private List<TreeData.DataBean> mTreeBeans;
 
+    /**
+     * 是否为夜间模式
+     */
+    private boolean isNightMode;
+
     public void setBeans(TreeData treeData) {
         mTreeBeans = treeData.getData();
     }
 
     public TreeAdapter(Context context) {
         mContext = context;
+        isNightMode = SPUtils.getInstance(Constant.CONFIG_SETTINGS).
+                getBoolean(Constant.KEY_NIGHT_MODE, false);
     }
 
     @NonNull
@@ -80,6 +88,10 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.TreeHolder> {
                     return tagView;
                 }
             });
+
+            if (isNightMode) {
+                holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
+            }
         }
     }
 

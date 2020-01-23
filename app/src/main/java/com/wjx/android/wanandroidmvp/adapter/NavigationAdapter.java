@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
@@ -37,12 +38,19 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
 
     private List<NavigationData.DataBean> mNavigationBeans;
 
+    /**
+     * 是否为夜间模式
+     */
+    private boolean isNightMode;
+
     public void setBeans(NavigationData navigationData) {
         mNavigationBeans = navigationData.getData();
     }
 
     public NavigationAdapter(Context context) {
         mContext = context;
+        isNightMode = SPUtils.getInstance(Constant.CONFIG_SETTINGS).
+                getBoolean(Constant.KEY_NIGHT_MODE, false);
     }
 
     @NonNull
@@ -76,6 +84,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
                     return tagView;
                 }
             });
+
+            if (isNightMode) {
+                holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
+            }
         }
     }
 

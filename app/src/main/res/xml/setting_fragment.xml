@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.preference.PreferenceCategory
         android:key="base"
         android:title="基本设置">
+
+        <SwitchPreference
+            android:key="night"
+            android:summaryOn="切换日间模式"
+            android:summaryOff="切换夜间模式"
+            android:defaultValue="false"
+            android:title="@string/night_mode"/>
 
         <Preference
             android:key="clearCache"

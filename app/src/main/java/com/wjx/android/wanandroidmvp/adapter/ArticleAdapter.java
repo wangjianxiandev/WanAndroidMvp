@@ -191,6 +191,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                 }
             });
 
+            if (isNightMode) {
+                holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
+                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+            }
+
         }
     }
 

@@ -43,6 +43,7 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
  * Time: 20:30
  */
 public class ParentSquareFragment extends BaseFragment {
+
     @BindView(R.id.square_tab)
     SlidingTabLayout mSlidingTabLayout;
 
@@ -59,6 +60,11 @@ public class ParentSquareFragment extends BaseFragment {
     private List<String> mTabNames = new ArrayList<>();
 
     private ArrayList<Fragment> mFragmentSparseArray = new ArrayList<>();
+
+    public static ParentSquareFragment getInstance() {
+        ParentSquareFragment fragment = new ParentSquareFragment();
+        return fragment;
+    }
 
     @Override
     protected int getContentViewId() {
