@@ -36,13 +36,14 @@ public class MeItemAdapter extends RecyclerView.Adapter<MeItemAdapter.MeItemHold
     private HashMap<Integer, Integer> mItemIconMap;
 
     private ArrayList<String> mItemNameList;
-    
+
     public MeItemAdapter(RecyclerView recyclerView, HashMap<Integer, Integer> hashMap, ArrayList<String> arrayList) {
         mContext = recyclerView.getContext();
         mItemIconMap = hashMap;
         mItemNameList = arrayList;
 
     }
+
     @NonNull
     @Override
     public MeItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -76,12 +77,13 @@ public class MeItemAdapter extends RecyclerView.Adapter<MeItemAdapter.MeItemHold
         CardView mCardView;
         @BindView(R.id.item_icon)
         ImageView mItemIcon;
-        
+
         @BindView(R.id.item_name)
         TextView mItemName;
+
         public MeItemHolder(@NonNull View itemView) {
             super(itemView);
-            
+
             ButterKnife.bind(this, itemView);
         }
     }

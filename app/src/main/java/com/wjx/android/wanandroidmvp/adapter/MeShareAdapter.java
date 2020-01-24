@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -121,9 +120,9 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
             });
             if (isNightMode) {
                 holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
             }
         }
     }

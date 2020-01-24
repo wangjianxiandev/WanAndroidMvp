@@ -48,7 +48,6 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
     private boolean isNightMode;
 
 
-
     public TreeArticleAdapter(Context context, List<Article> articleList) {
         mContext = context;
         mTreeArticleList.addAll(articleList);
@@ -66,7 +65,6 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
         mTreeArticleList.addAll(articleList);
         notifyDataSetChanged();
     }
-
 
 
     @NonNull
@@ -132,9 +130,9 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
 
             if (isNightMode) {
                 holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
             }
 
         }

@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -193,9 +191,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
             if (isNightMode) {
                 holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
             }
 
         }

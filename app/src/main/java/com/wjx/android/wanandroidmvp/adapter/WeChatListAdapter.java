@@ -2,7 +2,6 @@ package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +20,15 @@ import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
-import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static androidx.core.content.res.ResourcesCompat.getColor;
 
 /**
  * Created with Android Studio.
@@ -126,9 +121,9 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
 
             if (isNightMode) {
                 holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-                holder.mWechatDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mWechatType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mWeChatAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mWechatDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mWechatType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mWeChatAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
             }
         }
     }

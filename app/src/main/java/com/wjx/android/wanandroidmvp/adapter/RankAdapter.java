@@ -10,17 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.L;
 import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.db.Rank;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,14 +66,14 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankHolder> {
             holder.mName.setText(
                     Html.fromHtml(rank.username, Html.FROM_HTML_MODE_COMPACT));
             holder.mRank.setText(
-                    Html.fromHtml(String.valueOf(rank.rank), Html.FROM_HTML_MODE_COMPACT));;
+                    Html.fromHtml(String.valueOf(rank.rank), Html.FROM_HTML_MODE_COMPACT));
         }
 
         if (isNightMode) {
             holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-            holder.mCount.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-            holder.mName.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-            holder.mRank.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+            holder.mCount.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+            holder.mName.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+            holder.mRank.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
         }
     }
 

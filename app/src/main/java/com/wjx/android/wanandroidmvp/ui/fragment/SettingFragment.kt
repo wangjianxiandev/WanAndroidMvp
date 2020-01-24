@@ -70,16 +70,21 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
         findPreference<Preference>("color")?.isEnabled = !nightMode
 
         findPreference<SwitchPreference>("night")?.setOnPreferenceChangeListener { preference, newValue ->
+
             val boolValue = newValue as Boolean
             findPreference<SwitchPreference>("night")?.isChecked = !boolValue
             SPUtils.getInstance(Constant.CONFIG_SETTINGS).put(Constant.KEY_NIGHT_MODE, boolValue)
+
             val currentMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             parentActivity.getDelegate().setLocalNightMode(
                     if (currentMode == Configuration.UI_MODE_NIGHT_NO)
                         AppCompatDelegate.MODE_NIGHT_YES
                     else
                         AppCompatDelegate.MODE_NIGHT_NO)
-            parentActivity.recreate()
+            startActivity(Intent(parentActivity, SettingActivity::class.java))
+            parentActivity.overridePendingTransition(R.anim.animo_alph_open, R.anim.animo_alph_close)
+            parentActivity.finish()
+
             val nightMode: Boolean = SPUtils.getInstance(Constant.CONFIG_SETTINGS).getBoolean(Constant.KEY_NIGHT_MODE, false)
             AppCompatDelegate.setDefaultNightMode(
                     if (nightMode)
@@ -88,68 +93,71 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                         AppCompatDelegate.MODE_NIGHT_NO)
 
             if (nightMode) {
-                Constant.setColor(parentActivity, getColor(R.color.colorBlack666))
-                //通知其他界面立马修改配置
-                val event = Event()
-                event.target = Event.TARGET_HOME
-                event.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(event)
-
-                val mainEvent = Event()
-                mainEvent.target = Event.TARGET_MAIN
-                mainEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(mainEvent)
-
-                val treeEvent = Event()
-                treeEvent.target = Event.TARGET_TREE
-                treeEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(treeEvent)
-
-                val projectEvent = Event()
-                projectEvent.target = Event.TARGET_PROJECT
-                projectEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(projectEvent)
-
-                val wxEvent = Event()
-                wxEvent.target = Event.TARGET_WX
-                wxEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(wxEvent)
-
-                val meEvent = Event()
-                meEvent.target = Event.TARGET_ME
-                meEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(meEvent)
-
-                val settingEvent = Event()
-                settingEvent.target = Event.TARGET_SETTING
-                settingEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(settingEvent)
-
-                val squareEvent = Event()
-                squareEvent.target = Event.TARGET_SQUARE
-                squareEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(squareEvent)
-
-                val navEvent = Event()
-                navEvent.target = Event.TARGET_NAVI
-                navEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(navEvent)
-
-                val parentSquareEvent = Event()
-                parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
-                parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(parentSquareEvent)
-
-                val shareEvent = Event()
-                shareEvent.target = Event.TARGET_SQUARE_SHARE
-                shareEvent.type = Event.TYPE_REFRESH_COLOR
-                EventBus.getDefault().post(shareEvent)
+                Constant.setColor(parentActivity, getColor(R.color.colorGray666))
+            } else {
+                Constant.setColor(parentActivity, getColor(R.color.colorPrimary))
             }
-
+            //通知其他界面立马修改配置
             val event = Event()
-            event.target = Event.TARGET_MAIN
-            event.type = Event.TYPE_CHANGE_DAY_NIGHT_MODE
+            event.target = Event.TARGET_HOME
+            event.type = Event.TYPE_REFRESH_COLOR
             EventBus.getDefault().post(event)
+
+            val mainEvent = Event()
+            mainEvent.target = Event.TARGET_MAIN
+            mainEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(mainEvent)
+
+            val treeEvent = Event()
+            treeEvent.target = Event.TARGET_TREE
+            treeEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(treeEvent)
+
+            val projectEvent = Event()
+            projectEvent.target = Event.TARGET_PROJECT
+            projectEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(projectEvent)
+
+            val wxEvent = Event()
+            wxEvent.target = Event.TARGET_WX
+            wxEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(wxEvent)
+
+            val meEvent = Event()
+            meEvent.target = Event.TARGET_ME
+            meEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(meEvent)
+
+            val settingEvent = Event()
+            settingEvent.target = Event.TARGET_SETTING
+            settingEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(settingEvent)
+
+            val squareEvent = Event()
+            squareEvent.target = Event.TARGET_SQUARE
+            squareEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(squareEvent)
+
+            val navEvent = Event()
+            navEvent.target = Event.TARGET_NAVI
+            navEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(navEvent)
+
+            val parentSquareEvent = Event()
+            parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
+            parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(parentSquareEvent)
+
+            val shareEvent = Event()
+            shareEvent.target = Event.TARGET_SQUARE_SHARE
+            shareEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(shareEvent)
+
+            // 通知 MainActivity recreate
+            val recreateEvent = Event()
+            recreateEvent.target = Event.TARGET_MAIN
+            recreateEvent.type = Event.TYPE_CHANGE_DAY_NIGHT_MODE
+            EventBus.getDefault().post(recreateEvent)
             true
         }
 

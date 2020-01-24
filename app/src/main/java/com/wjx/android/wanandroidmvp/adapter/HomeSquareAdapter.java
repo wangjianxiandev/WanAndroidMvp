@@ -120,9 +120,9 @@ public class HomeSquareAdapter extends RecyclerView.Adapter<HomeSquareAdapter.Ho
 
             if (isNightMode) {
                 holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-                holder.mHomeSquareDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mHomeSquareType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
-                holder.mHomeSquareAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorBlack666));
+                holder.mHomeSquareDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mHomeSquareType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
+                holder.mHomeSquareAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
             }
         }
     }

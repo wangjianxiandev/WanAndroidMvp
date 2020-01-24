@@ -244,7 +244,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void loadTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
-        mTopArticleList.addAll(topArticleList);
+        mTopArticleList.addAll(0,topArticleList);
     }
 
     @Override

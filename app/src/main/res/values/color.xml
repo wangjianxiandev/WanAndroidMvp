@@ -5,7 +5,7 @@
     <color name="colorAccent">#2196F3</color>
     <color name="white">#FFFFFF</color>
     <color name="colorGray">#333</color>
-    <color name="colorBlack666">#666</color>
+    <color name="colorGray666">#666</color>
     <color name="colorBlack333">#333</color>
     <color name="windowBackground">#F5F5F5</color>
     <color name="background">#d8d8d8</color>
@@ -15,7 +15,7 @@
     <color name="primary_dark">#1976D2</color>
     <color name="primary_light">#BBDEFB</color>
     <color name="primary_text">#212121</color>
-    <color name="me_text">#FFFFFF</color>
+    <color name="always_white_text">#FFFFFF</color>
     <color name="primary_red">#F44336</color>
     <color name="primary_green">#4CAF50</color>
     <color name="primary_blue">#2196f3</color>
