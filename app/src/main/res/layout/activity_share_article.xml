@@ -94,7 +94,8 @@
             android:layout_marginBottom="12dp"
             android:gravity="center"
             android:text="分享"
-            android:textColor="@color/white"
+            android:textColor="@color/always_white_text"
+            android:background="@drawable/edit_shap"
             android:textSize="16dp" />
 
     </LinearLayout>

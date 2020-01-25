@@ -1,8 +1,11 @@
 package com.wjx.android.wanandroidmvp.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,7 +13,11 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.wjx.android.wanandroidmvp.R;
@@ -27,12 +34,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresenter> implements Contract.ILoginView {
-    private String mUserNamet;
-    private String mPassWordt;
-
-    @BindView(R.id.back)
-    ImageView mBack;
-
+    private String mUserNameText;
+    private String mPassWordText;
+    
     @BindView(R.id.username)
     EditText mUsername;
 
@@ -40,13 +44,16 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     CustomEditText mPassword;
 
     @BindView(R.id.login)
-    Button mLogin;
+    Button mLoginButton;
 
     @BindView(R.id.go_register)
     Button mRegister;
 
     @BindView(R.id.loading)
     ImageView mLoading;
+
+    @BindView(R.id.login_toolbar)
+    Toolbar mToolbar;
 
     private Context mContext;
 
@@ -59,6 +66,28 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     @Override
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
+        initToolbar();
+    }
+
+    private void initToolbar() {
+        getWindow().setStatusBarColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mToolbar.setTitle(R.string.login);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -83,9 +112,9 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
                 EventBus.getDefault().post(treeEvent);
 
                 Event squareEvent = new Event();
-                treeEvent.target = Event.TARGET_SQUARE;
-                treeEvent.type = Event.TYPE_LOGIN;
-                EventBus.getDefault().post(treeEvent);
+                squareEvent.target = Event.TARGET_SQUARE;
+                squareEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(squareEvent);
 
                 Event projectEvent = new Event();
                 projectEvent.target = Event.TARGET_PROJECT;
@@ -107,24 +136,11 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
                 meShareEvent.target = Event.TARGET_ME_SHARE;
                 meShareEvent.type = Event.TYPE_LOGIN;
                 EventBus.getDefault().post(meShareEvent);
-
                 finish();
-
-                if (TextUtils.equals(Constant.EXTRA_VALUE_COLLECT, mReferrer)) {
-//                    Intent intent = new Intent(mContext, CollectActivity.class);
-//                    startActivity(intent);
-                }
-
             } else {
                 ToastUtils.showShort(loginData.getErrorMsg());
             }
         }
-    }
-
-    @OnClick(R.id.back)
-    public void back() {
-        onBackPressed();
-        Toast.makeText(mContext, "login", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.login)
@@ -134,17 +150,17 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
             return;
         }
         startAnim();
-        mUserNamet = mUsername.getText().toString();
-        mPassWordt = mPassword.getText().toString();
-        mPresenter.login(mUserNamet, mPassWordt);
+        mUserNameText = mUsername.getText().toString();
+        mPassWordText = mPassword.getText().toString();
+        mPresenter.login(mUserNameText, mPassWordText);
     }
 
 
     private void startAnim() {
         mLoading.setVisibility(View.VISIBLE);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.loading);
-        LinearInterpolator li = new LinearInterpolator();
-        animation.setInterpolator(li);
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.loading);
+        LinearInterpolator linearInterpolator = new LinearInterpolator();
+        animation.setInterpolator(linearInterpolator);
         mLoading.startAnimation(animation);
     }
 

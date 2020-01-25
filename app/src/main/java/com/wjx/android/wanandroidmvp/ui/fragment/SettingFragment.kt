@@ -75,6 +75,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             findPreference<SwitchPreference>("night")?.isChecked = !boolValue
             SPUtils.getInstance(Constant.CONFIG_SETTINGS).put(Constant.KEY_NIGHT_MODE, boolValue)
 
+            // 切换主题
             val currentMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             parentActivity.getDelegate().setLocalNightMode(
                     if (currentMode == Configuration.UI_MODE_NIGHT_NO)

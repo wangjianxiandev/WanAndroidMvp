@@ -7,34 +7,14 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <View
-        android:id="@+id/head"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:src="@drawable/back_selector"
-        app:layout_constraintBottom_toBottomOf="@id/head"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/head" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="登录"
-        android:textColor="@color/texttipColor"
-        app:layout_constraintBottom_toBottomOf="@id/head"
+        android:titleTextColor="@color/always_white_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/head" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/username"
@@ -44,7 +24,7 @@
         android:hint="请输入用户名"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/head" />
+        app:layout_constraintTop_toBottomOf="@id/login_toolbar" />
 
     <com.wjx.android.wanandroidmvp.ui.activity.CustomEditText
         android:id="@+id/password"
@@ -61,9 +41,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/register_button_bg"
+        android:background="@drawable/edit_shap"
         android:text="登录"
-        android:textColor="@color/texttipColor"
+        android:textColor="@color/always_white_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password" />
@@ -81,8 +61,8 @@
 
     <ImageView
         android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:src="@drawable/load"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

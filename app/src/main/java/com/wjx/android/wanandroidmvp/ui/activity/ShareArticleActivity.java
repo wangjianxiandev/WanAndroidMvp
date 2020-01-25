@@ -1,9 +1,11 @@
 package com.wjx.android.wanandroidmvp.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -61,7 +63,6 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
         getWindow().setStatusBarColor(Constant.getColor(mContext));
         mToolbar.setBackgroundColor(Constant.getColor(mContext));
         mToolbar.setTitleTextColor(getColor(R.color.white));
-        mShareSubmit.setBackgroundColor(Constant.getColor(mContext));
     }
 
     @OnClick(R.id.share_submit)
@@ -93,11 +94,18 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void onAddArticle(Article addArticle) {
     }
-
 
 
     @Override
