@@ -8,9 +8,10 @@
     android:layout_marginEnd="@dimen/safe_padding"
     android:layout_marginBottom="@dimen/safe_padding"
     android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="@dimen/card_corner_radius">
+    app:cardElevation="@dimen/card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
             android:paddingStart="3dp"
             android:paddingEnd="3dp"
             android:text="置顶"
-            android:textColor="@color/primary_red"
+            android:textColor="@color/holo_red_light"
             android:textSize="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/item_home_author"
@@ -55,7 +56,7 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="新"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@color/holo_red_light"
             android:textSize="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/item_home_author"
@@ -72,7 +73,7 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="问答"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@color/holo_green_dark"
             android:textSize="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/item_home_author"

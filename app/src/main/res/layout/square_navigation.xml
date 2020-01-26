@@ -27,7 +27,7 @@
             android:id="@+id/navigation_divider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/texttipColor" />
+            android:background="@color/textTipColor" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/navigation_recyclerview"

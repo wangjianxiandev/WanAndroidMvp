@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,10 +85,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
                     return tagView;
                 }
             });
-
-            if (isNightMode) {
-                holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-            }
+            holder.itemView.getBackground().setColorFilter(
+                    mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.card_bg), PorterDuff.Mode.SRC_ATOP);
         }
     }
 

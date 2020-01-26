@@ -48,7 +48,7 @@ h
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_hint"
-            android:textColor="@color/texttipColor"
+            android:textColor="@color/textTipColor"
             android:textSize="14dp"
             android:gravity="center"
             android:layout_centerVertical="true"

@@ -28,13 +28,13 @@
             app:tl_indicator_margin_right="5dp"
             app:tl_indicator_style="BLOCK"
             app:tl_textSelectColor="@color/white"
-            app:tl_textUnselectColor="@color/texttipColor" />
+            app:tl_textUnselectColor="@color/textTipColor" />
 
         <View
             android:id="@+id/wechat_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/texttipColor"
+            android:background="@color/textTipColor"
             android:visibility="invisible" />
 
         <androidx.viewpager.widget.ViewPager

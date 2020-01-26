@@ -2,6 +2,7 @@ package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,12 +119,11 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
                     }
                 }
             });
-            if (isNightMode) {
-                holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-                holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
-                holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
-                holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
-            }
+            holder.itemView.getBackground().setColorFilter(
+                    mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.card_bg), PorterDuff.Mode.SRC_ATOP);
+            holder.mArticleDate.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
+            holder.mArticleType.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
+            holder.mArticleAuthor.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
         }
     }
 

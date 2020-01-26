@@ -11,12 +11,14 @@ import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
-import skin.support.SkinCompatManager;
-import skin.support.app.SkinAppCompatViewInflater;
-import skin.support.app.SkinCardViewInflater;
-import skin.support.constraint.app.SkinConstraintViewInflater;
-import skin.support.design.app.SkinMaterialViewInflater;
-
+/**
+ * Created with Android Studio.
+ * Description:
+ *
+ * @author: 王拣贤
+ * @date: 2019/12/18
+ * Time: 21:26
+ */
 public class WanAndroidApplication extends LitePalApplication {
     @Override
     public void onCreate() {
@@ -24,7 +26,6 @@ public class WanAndroidApplication extends LitePalApplication {
         LitePal.initialize(this);
         Utils.init(this);
         changeMode();
-//        initSkin();
     }
 
     private void changeMode() {
@@ -34,16 +35,5 @@ public class WanAndroidApplication extends LitePalApplication {
         boolean isSystemNightMode = currentMode == Configuration.UI_MODE_NIGHT_YES;
         AppCompatDelegate.setDefaultNightMode(isNightMode ? AppCompatDelegate.MODE_NIGHT_YES :
                 AppCompatDelegate.MODE_NIGHT_NO);
-    }
-
-    private void initSkin() {
-        SkinCompatManager.withoutActivity(this)
-                .addInflater(new SkinAppCompatViewInflater())
-                .addInflater(new SkinMaterialViewInflater())
-                .addInflater(new SkinConstraintViewInflater())
-                .addInflater(new SkinCardViewInflater())
-                .setSkinWindowBackgroundEnable(true)
-                .loadSkin();
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 }

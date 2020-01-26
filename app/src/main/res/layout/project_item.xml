@@ -9,8 +9,8 @@
     android:layout_marginRight="8dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="项目"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@color/holo_red_light"
             android:textSize="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/item_project_author"

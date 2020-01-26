@@ -1,6 +1,5 @@
 package com.wjx.android.wanandroidmvp.contract.rank;
 
-import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.db.Rank;
 
@@ -13,7 +12,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/13
  * Time: 10:24
  */

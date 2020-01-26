@@ -263,14 +263,14 @@ public class Constant {
     public static final int DEFAULT_TIMEOUT = 15;
 
     /**
-     * extra-key
+     * user-name
      */
-    public static final String EXTRA_KEY_REFERRER = "referrer";
+    public static final String EXTRA_KEY_USERNAME = "referrer";
 
     /**
-     * extra-value
+     * user-password
      */
-    public static final String EXTRA_VALUE_COLLECT = "collect";
+    public static final String EXTRA_VALUE_PASSWORD = "collect";
 
     public static final long EXIT_TIME = 2000;
 

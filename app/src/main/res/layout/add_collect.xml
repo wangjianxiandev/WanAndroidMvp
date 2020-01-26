@@ -109,7 +109,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/texttipColor" />
+            android:background="@color/textTipColor" />
 
         <Button
             android:id="@+id/cancel_btn"

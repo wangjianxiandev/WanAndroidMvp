@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.adapter;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,13 +69,11 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankHolder> {
             holder.mRank.setText(
                     Html.fromHtml(String.valueOf(rank.rank), Html.FROM_HTML_MODE_COMPACT));
         }
-
-        if (isNightMode) {
-            holder.itemView.setBackgroundColor(mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.white));
-            holder.mCount.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
-            holder.mName.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
-            holder.mRank.setTextColor(mContext.getColor(isNightMode ? R.color.white : R.color.colorGray666));
-        }
+        holder.itemView.getBackground().setColorFilter(
+                mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.card_bg), PorterDuff.Mode.SRC_ATOP);
+        holder.mCount.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
+        holder.mName.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
+        holder.mRank.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
     }
 
     @Override

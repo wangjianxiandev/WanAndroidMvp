@@ -57,7 +57,9 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
 
     private Context mContext;
 
-    private String mReferrer;
+    private String mRegisterName;
+
+    private String mRegisterPassword;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_login;
@@ -66,6 +68,14 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     @Override
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
+        try {
+            mRegisterName = getIntent().getExtras().getString(Constant.EXTRA_KEY_USERNAME);
+            mRegisterPassword = getIntent().getExtras().getString(Constant.EXTRA_VALUE_PASSWORD);
+            mUsername.setText(mRegisterName);
+            mPassword.setText(mRegisterPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initToolbar();
     }
 
@@ -153,6 +163,14 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
         mUserNameText = mUsername.getText().toString();
         mPassWordText = mPassword.getText().toString();
         mPresenter.login(mUserNameText, mPassWordText);
+    }
+
+    @OnClick(R.id.go_register)
+    public void register() {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
 

@@ -9,6 +9,7 @@
     </style>
 
 
+    <!--自定义dialog-->
     <style name="CustomDialog" parent="android:style/Theme.Dialog">
         <!-- 背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>

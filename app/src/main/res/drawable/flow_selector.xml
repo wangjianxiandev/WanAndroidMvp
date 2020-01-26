@@ -4,12 +4,13 @@
     <item android:state_pressed="false">
         <shape>
             <solid android:color="@color/windowBackground" />
+            <corners android:radius="@dimen/card_corner_radius"/>
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape>
             <solid android:color="@color/background" />
-
+            <corners android:radius="@dimen/card_corner_radius"/>
         </shape>
     </item>
 

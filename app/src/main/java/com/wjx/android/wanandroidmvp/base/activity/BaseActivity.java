@@ -2,17 +2,23 @@ package com.wjx.android.wanandroidmvp.base.activity;
 
 
 import android.os.Bundle;
-import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * Created with Android Studio.
+ * Description:
+ *
+ * @author: 王拣贤
+ * @date: 2019/12/18
+ * Time: 21:26
+ */
 public abstract class BaseActivity<V, P extends BasePresenter<V>> extends AppCompatActivity {
 
     protected P mPresenter;

@@ -109,6 +109,10 @@ public class CustomEditText extends ConstraintLayout {
         return mEditText.getText();
     }
 
+    public void setText(CharSequence text) {
+        mEditText.setText(text);
+    }
+
     private void showTips() {
         mShow.setImageResource(R.drawable.password_show);
         mEditText.setVisibility(View.GONE);

@@ -131,7 +131,7 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
                 public ITabView.TabTitle getTitle(int position) {
                     return new TabView.TabTitle.Builder()
                             .setContent(tabNames.get(position))
-                            .setTextColor(ContextCompat.getColor(mContext, R.color.white),
+                            .setTextColor(ContextCompat.getColor(mContext, R.color.always_white_text),
                                     Constant.randomColor())
                             .build();
                 }
