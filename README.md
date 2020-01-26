@@ -1,18 +1,31 @@
-[![Platform][1]][2] [![GitHub license][3]][4]  [![GitHub license][5]][6] 
+[![Platform][1]][2] 
 
 [1]:https://img.shields.io/badge/platform-Android-blue.svg  
 [2]:https://github.com/wangjianxiandev/WanAndroidMvp
-[3]:https://img.shields.io/github/release/wangjianxiandev/WanAndroidMvp.svg
-[4]:https://img.shields.io/badge/license-Apache%202-blue.svg
-[5]:https://github.com/wangjianxiandev/WanAndroidMvp/blob/master/LICENSE
 
 # WanAndroidMvp
-根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/blog/show/2)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，第一次搭建自己的应用架构——MVP架构的WanAndroid客户端
+根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/blog/show/2)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，这个项目是自己实习后第一次有搭建架构的思路，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
+
+## 项目地址
+[WanAndroidMvp](https://github.com/wangjianxiandev/WanAndroidMvp) 
 
 ## 参考项目UI
-- hegaojian大神的界面UI 同时引用了大神的perference自定义控件 项目地址https://github.com/wangjianxiandev/WanAndroid
-- https://github.com/milovetingting/WanAndroid/
+[参考hegaojian大神的界面UI 同时引用了大神的perference自定义控件](https://github.com/wangjianxiandev/WanAndroid)
+[WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
+- 十分感谢大神能将项目开源提供学习
 
+## 项目展示
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223529904.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223608191.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223627900.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020012622365514.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2020012622372032.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126224321943.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126224254877.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223829960.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223852440.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223935903.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223940530.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ## 项目功能
 ### 首页
 - 首页文章列表
@@ -65,6 +78,7 @@
 - 关于我们
 - 退出登录
 
+### 开源库
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
 - [网络请求的框架-Okhttp](https://github.com/square/okhttp)
 - [网络加载框架-Retrofit](https://github.com/square/retrofit)
@@ -78,3 +92,4 @@
 - [轮播图-banner](https://github.com/youth5201314/banner)
 - [控件绑定-butterknife](https://github.com/JakeWharton/butterknife)
 - [纵向导航-verticalTabLayout](https://note.youdao.com/)
+
