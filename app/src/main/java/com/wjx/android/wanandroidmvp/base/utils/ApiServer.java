@@ -36,7 +36,7 @@ import retrofit2.http.Query;
  * Created with Android Studio.
  * Description: 请求APi
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 15:56
  */

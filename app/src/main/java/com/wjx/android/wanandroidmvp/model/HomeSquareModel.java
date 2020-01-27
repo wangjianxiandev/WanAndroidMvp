@@ -1,15 +1,10 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
-import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
-
-import org.litepal.LitePal;
-import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +15,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/09
  * Time: 16:15
  */

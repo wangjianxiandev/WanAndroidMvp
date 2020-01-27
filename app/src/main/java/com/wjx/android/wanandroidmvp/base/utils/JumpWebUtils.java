@@ -9,7 +9,7 @@ import com.wjx.android.wanandroidmvp.ui.activity.WebViewActivity;
  * Created with Android Studio.
  * Description: Web View 跳转器
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 21:32
  */

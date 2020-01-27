@@ -16,9 +16,9 @@ import butterknife.Unbinder;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: Base Fragment
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/18
  * Time: 21:26
  */

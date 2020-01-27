@@ -13,9 +13,9 @@ import org.litepal.LitePalApplication;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: Base Application
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/18
  * Time: 21:26
  */

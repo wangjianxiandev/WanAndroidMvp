@@ -10,7 +10,7 @@ import android.view.animation.DecelerateInterpolator;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/29
  * Time: 19:36
  */

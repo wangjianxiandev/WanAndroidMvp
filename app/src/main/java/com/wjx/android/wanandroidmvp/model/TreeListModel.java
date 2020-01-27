@@ -1,8 +1,5 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import androidx.core.widget.NestedScrollView;
-
-import com.airbnb.lottie.L;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
@@ -21,7 +18,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/09
  * Time: 11:20
  */

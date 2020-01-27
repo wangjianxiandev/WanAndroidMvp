@@ -3,7 +3,12 @@ package com.wjx.android.wanandroidmvp.bean.db;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * 本地持久化数据
+ * Created with Android Studio.
+ * Description: 项目类别数据
+ *
+ * @author: Wangjianxian
+ * @date: 2020/01/05
+ * Time: 21:50
  */
 public class ProjectClassify extends LitePalSupport {
 

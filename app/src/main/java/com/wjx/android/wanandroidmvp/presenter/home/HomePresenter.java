@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created with Android Studio.
  * Description:对发送请求进行封装，利用RxJava处理封装的请求，并将数据和View进行绑定
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 16:00
  */

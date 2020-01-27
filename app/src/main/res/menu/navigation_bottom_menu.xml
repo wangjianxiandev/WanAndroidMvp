@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/menu_square"
-        android:icon="@drawable/menu_tree"
+        android:icon="@drawable/menu_square"
         android:title="@string/bottomname3" />
     <item
         android:id="@+id/menu_wechat"

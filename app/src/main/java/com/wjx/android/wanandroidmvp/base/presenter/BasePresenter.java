@@ -8,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created with Android Studio.
  * Description: BasePresenter作用绑定并解析View
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/18
  * Time: 19:52
  */

@@ -14,7 +14,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description: HomePager契约类
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 15:55
  */

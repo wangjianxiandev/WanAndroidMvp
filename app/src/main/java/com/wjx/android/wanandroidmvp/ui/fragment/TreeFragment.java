@@ -39,7 +39,7 @@ import q.rorbin.verticaltablayout.widget.TabView;
  * Created with Android Studio.
  * Description: 知识体系
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2/01/07
  * Time: 20:26
  */

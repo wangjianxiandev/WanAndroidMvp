@@ -1,11 +1,12 @@
 package com.wjx.android.wanandroidmvp.bean.base;
 
-import com.wjx.android.wanandroidmvp.bean.db.Article;
-
 /**
- * @author wangyz
- * @time 2019/1/23 15:45
- * @description Event
+ * Created with Android Studio.
+ * Description: EventBus
+ *
+ * @author: Wangjianxian
+ * @date: 2019/12/31
+ * Time: 23:30
  */
 public class Event {
 

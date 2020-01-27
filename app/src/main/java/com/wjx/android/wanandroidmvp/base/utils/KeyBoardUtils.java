@@ -8,7 +8,7 @@ import android.widget.EditText;
  * Created with Android Studio.
  * Description: 键盘 展开缩小
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/29
  * Time: 19:59
  */

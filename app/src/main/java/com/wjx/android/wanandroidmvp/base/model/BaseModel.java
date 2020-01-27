@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/05
  * Time: 12:32
  */

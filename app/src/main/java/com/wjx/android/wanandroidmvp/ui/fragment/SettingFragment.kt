@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.EventBus
  * Created with Android Studio.
  * Description: 设置界面
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/15
  * Time: 21:59
  */

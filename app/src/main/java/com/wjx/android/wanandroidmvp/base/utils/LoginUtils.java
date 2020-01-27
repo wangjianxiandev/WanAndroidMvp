@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
  * Created with Android Studio.
  * Description: 判断登陆状态
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/01
  * Time: 13:46
  */

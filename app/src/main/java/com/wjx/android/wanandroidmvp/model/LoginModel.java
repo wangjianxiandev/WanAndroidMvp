@@ -10,7 +10,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/11
  * Time: 22:16
  */

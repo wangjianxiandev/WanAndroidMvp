@@ -27,7 +27,7 @@ import kotlin.jvm.internal.Intrinsics;
  * Created with Android Studio.
  * Description: 静态类，用到的常量值，比如请求Url，响应时间等
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/14
  * Time: 15:35
  */

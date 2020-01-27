@@ -16,7 +16,7 @@ import io.reactivex.internal.operators.observable.ObservableAll;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/29
  * Time: 14:52
  */

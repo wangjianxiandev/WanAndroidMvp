@@ -4,7 +4,7 @@ import android.graphics.Color
 import java.util.*
 
 /**
- * 何高见
+ * 学习hegaojian大神自定义颜色
  */
 object ColorUtil {
     //自定义颜色，过滤掉与白色相近的颜色

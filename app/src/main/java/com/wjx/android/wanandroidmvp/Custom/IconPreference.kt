@@ -9,9 +9,9 @@ import com.wjx.android.wanandroidmvp.base.utils.Constant
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 学习hegaojian大神自定义动画
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/16
  * Time: 12:32
  */

@@ -6,7 +6,7 @@ import org.litepal.crud.LitePalSupport;
  * Created with Android Studio.
  * Description: 分享的文章数据
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/19
  * Time: 22:18
  */

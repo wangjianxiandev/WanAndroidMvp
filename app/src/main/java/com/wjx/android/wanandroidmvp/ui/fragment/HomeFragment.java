@@ -59,7 +59,7 @@ import butterknife.BindView;
  * Created with Android Studio.
  * Description: 通过实现View接口，Presenter在初始化时调用发送网络请求返回的数据，直接在Fragment中处理加载
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/14
  * Time: 16:33
  */

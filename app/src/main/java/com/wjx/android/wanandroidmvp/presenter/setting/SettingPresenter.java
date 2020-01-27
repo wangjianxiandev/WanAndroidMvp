@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/16
  * Time: 13:57
  */

@@ -1,7 +1,5 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import android.util.Log;
-
 import com.blankj.utilcode.util.NetworkUtils;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
@@ -22,7 +20,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description: HomePager的model层，做网络层封装并进行请求处理，创建接口实例, 并将实例缓存在本地增加用户体验
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 15:59
  */

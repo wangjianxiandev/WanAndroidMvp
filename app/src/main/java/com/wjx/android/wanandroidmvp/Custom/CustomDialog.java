@@ -16,7 +16,7 @@ import com.wjx.android.wanandroidmvp.R;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/18
  * Time: 10:06
  */

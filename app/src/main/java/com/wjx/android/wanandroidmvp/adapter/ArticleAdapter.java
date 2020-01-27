@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * Created with Android Studio.
  * Description: 首页文章adapter
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 18:30
  */

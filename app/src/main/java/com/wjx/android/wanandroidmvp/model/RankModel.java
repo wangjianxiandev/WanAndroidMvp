@@ -1,18 +1,12 @@
 package com.wjx.android.wanandroidmvp.model;
 
-import android.graphics.pdf.PdfDocument;
-
 import com.blankj.utilcode.util.NetworkUtils;
-import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.db.Rank;
-import com.wjx.android.wanandroidmvp.bean.rank.RankData;
 import com.wjx.android.wanandroidmvp.contract.rank.Contract;
 
 import org.litepal.LitePal;
-import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +17,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/13
  * Time: 10:35
  */

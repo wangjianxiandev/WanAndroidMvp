@@ -9,7 +9,7 @@ import io.reactivex.Observable;
  * Created with Android Studio.
  * Description: 注册契约类
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/26
  * Time: 15:15
  */

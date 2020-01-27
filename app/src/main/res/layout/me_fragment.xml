@@ -77,7 +77,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/jifen" />
+                        android:src="@drawable/integral" />
                     <TextView
                         android:id="@+id/jifen"
                         android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/wenzhang"/>
+                        android:src="@drawable/me_article"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/renwu" />
+                        android:src="@drawable/todo" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,14 +187,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginRight="16dp"
-                        android:src="@drawable/web" />
+                        android:src="@drawable/kaiyuan_web" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="开源网站"
-                        android:textColor="@color/colorBlack333"
+                        android:textColor="@color/me_item_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -219,14 +219,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginRight="16dp"
-                        android:src="@drawable/jairu" />
+                        android:src="@drawable/jiaru_kaiyuan" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="加入我们"
-                        android:textColor="@color/colorBlack333"
+                        android:text="加入开源"
+                        android:textColor="@color/me_item_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -250,14 +250,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginRight="16dp"
-                        android:src="@drawable/shezhi" />
+                        android:src="@drawable/setting" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="系统设置"
-                        android:textColor="@color/colorBlack333"
+                        android:textColor="@color/me_item_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 

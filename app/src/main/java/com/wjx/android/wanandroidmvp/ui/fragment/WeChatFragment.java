@@ -42,7 +42,7 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/26
  * Time: 20:13
  */

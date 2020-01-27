@@ -15,7 +15,7 @@ import com.youth.banner.loader.ImageLoader;
  * Created with Android Studio.
  * Description: 图片加载器
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/18
  * Time: 21:32
  */

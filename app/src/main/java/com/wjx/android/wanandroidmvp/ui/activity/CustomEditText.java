@@ -15,9 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.wjx.android.wanandroidmvp.R;
 
 /**
- * @author wangyz
- * @time 2019/5/16 10:16
- * @description CustomEditText
+ * 自定义EditText
  */
 public class CustomEditText extends ConstraintLayout {
 

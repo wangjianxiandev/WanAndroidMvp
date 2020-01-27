@@ -4,7 +4,7 @@ package com.wjx.android.wanandroidmvp.bean.collect;
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/14
  * Time: 16:07
  */

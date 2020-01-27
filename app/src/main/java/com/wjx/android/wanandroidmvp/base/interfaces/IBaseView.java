@@ -4,7 +4,7 @@ package com.wjx.android.wanandroidmvp.base.interfaces;
  * Created with Android Studio.
  * Description: 用来指示错误和完成的接口
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/27
  * Time: 10:52
  */

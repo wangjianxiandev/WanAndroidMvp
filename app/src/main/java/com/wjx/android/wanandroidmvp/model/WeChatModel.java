@@ -2,10 +2,8 @@ package com.wjx.android.wanandroidmvp.model;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.wjx.android.wanandroidmvp.base.model.BaseModel;
-import com.wjx.android.wanandroidmvp.base.utils.ApiServer;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.db.Author;
-import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.contract.wechat.Contract;
 
 import org.litepal.LitePal;
@@ -14,15 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created with Android Studio.
  * Description:
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/29
  * Time: 12:06
  */
