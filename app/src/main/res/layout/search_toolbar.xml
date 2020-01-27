@@ -3,55 +3,19 @@
     android:id="@+id/search_toolbar"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/colorPrimary"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     app:layout_scrollFlags="scroll|enterAlways">
 
-    <ImageButton
-        android:id="@+id/search_back_ib"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_back" />
+    <EditText
+        android:id="@+id/search_edit"
+        android:hint="@string/search_hint"
+        android:layout_width="150dp"
+        android:layout_height="24dp"
+        android:background="@null"/>
 
     <ImageView
-        android:id="@+id/search_tv"
-        android:layout_width="54dp"
-        android:layout_height="28dp"
-        android:layout_gravity="end"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/ic_search"
-        android:contentDescription="@null"
-        android:gravity="center" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/search_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:inputType="text"
-            android:labelFor="@id/search_edit"
-            android:textColor="@color/black"
-            android:textSize="14dp"
-            android:paddingStart="27dp"
-            android:paddingEnd="1dp"/>
-h
-        <TextView
-            android:id="@+id/search_hint_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/search_hint"
-            android:textColor="@color/textTipColor"
-            android:textSize="14dp"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="6dp" />
-    </RelativeLayout>
+        android:id="@+id/anim_img"
+        android:layout_width="150dp"
+        android:layout_height="24dp"/>
 </androidx.appcompat.widget.Toolbar>

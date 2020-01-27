@@ -140,8 +140,10 @@ public class Event {
      */
     public static final int TARGET_ME_SHARE = 15;
 
-
-    public static final int TARGET_ADAPTER = 16;
+    /**
+     * 目标界面-搜索页面
+     */
+    public static final int TARGET_SEARCH = 16;
 
 
     public int target;

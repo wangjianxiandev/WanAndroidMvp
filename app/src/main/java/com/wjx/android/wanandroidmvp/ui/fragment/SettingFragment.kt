@@ -69,6 +69,8 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
         findPreference<SwitchPreference>("night")?.isChecked = nightMode
         findPreference<Preference>("color")?.isEnabled = !nightMode
 
+
+        // 绑定夜间模式响应事件
         findPreference<SwitchPreference>("night")?.setOnPreferenceChangeListener { preference, newValue ->
 
             val boolValue = newValue as Boolean
@@ -154,6 +156,11 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             shareEvent.type = Event.TYPE_REFRESH_COLOR
             EventBus.getDefault().post(shareEvent)
 
+            val searchEvent = Event()
+            searchEvent.target = Event.TARGET_SEARCH
+            searchEvent.type = Event.TYPE_REFRESH_COLOR
+            EventBus.getDefault().post(searchEvent)
+
             // 通知 MainActivity recreate
             val recreateEvent = Event()
             recreateEvent.target = Event.TARGET_MAIN
@@ -162,6 +169,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             true
         }
 
+        // 绑定退出登录响应事件
         findPreference<Preference>("exit")?.onPreferenceClickListener = Preference.OnPreferenceClickListener { preference: Preference? ->
             MaterialDialog(parentActivity).show {
                 title(R.string.title)
@@ -206,6 +214,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             false
         }
 
+        // 绑定清理缓存响应事件
         findPreference<Preference>("clearCache")?.setOnPreferenceClickListener {
             MaterialDialog(parentActivity).show {
                 title(R.string.title)
@@ -220,6 +229,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             false
         }
 
+        // 绑定选择颜色响应事件
         findPreference<Preference>("color")?.setOnPreferenceClickListener {
             MaterialDialog(parentActivity).show {
                 title(R.string.choose_theme_color)
@@ -281,6 +291,11 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     shareEvent.target = Event.TARGET_SQUARE_SHARE
                     shareEvent.type = Event.TYPE_REFRESH_COLOR
                     EventBus.getDefault().post(shareEvent)
+
+                    val searchEvent = Event()
+                    searchEvent.target = Event.TARGET_SEARCH
+                    searchEvent.type = Event.TYPE_REFRESH_COLOR
+                    EventBus.getDefault().post(searchEvent)
                 }
                 positiveButton(R.string.done)
                 negativeButton(R.string.cancel)
