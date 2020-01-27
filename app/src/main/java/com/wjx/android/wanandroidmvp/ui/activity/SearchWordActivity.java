@@ -1,6 +1,7 @@
 package com.wjx.android.wanandroidmvp.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.os.Build;
@@ -146,6 +147,12 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                 mSearchAnimImage.setImageDrawable(animatedVectorDrawableCompat);
                 ((Animatable) mSearchAnimImage.getDrawable()).start();
             }
+        });
+        mSearchAnimImage.setOnClickListener(v -> {
+            Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
+            intent.putExtra(Constant.KEY_KEYWORD, mSearchEdit.getText().toString());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
 
     }

@@ -2,7 +2,6 @@ package com.wjx.android.wanandroidmvp.base.utils;
 
 import com.wjx.android.wanandroidmvp.bean.collect.AddCollect;
 import com.wjx.android.wanandroidmvp.bean.collect.CollectData;
-import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.bean.home.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
@@ -14,6 +13,7 @@ import com.wjx.android.wanandroidmvp.bean.me.RegisterData;
 import com.wjx.android.wanandroidmvp.bean.rank.RankData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
 import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
+import com.wjx.android.wanandroidmvp.bean.searchresult.SearchResultData;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
 import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.bean.share.ShareData;
@@ -23,8 +23,6 @@ import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeListArticle;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
-
-import org.litepal.util.Const;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -140,6 +138,15 @@ public interface ApiServer {
     @GET(Constant.HOT_SEARCH_URL)
     Observable<SearchWordData> loadSearchWordData();
 
+    /**
+     * 搜索结果数据
+     * @param pageNum
+     * @param keyWords
+     * @return
+     */
+    @POST(Constant.SEARCH_URL)
+    Observable<SearchResultData> loadSearchResultData(@Path("pageNum") int pageNum, @Query("k") String keyWords);
+
 
     /**
      * 登陆数据
@@ -147,7 +154,7 @@ public interface ApiServer {
      * @param passWord
      * @return
      */
-    @POST(Constant.URL_LOGIN)
+    @POST(Constant.LOGIN_URL)
     Observable<LoginData> login(@Query("username") String userName, @Query("password") String passWord);
 
     /**
@@ -157,14 +164,14 @@ public interface ApiServer {
      * @param repassword
      * @return
      */
-    @POST(Constant.URL_REGISTER)
+    @POST(Constant.REGISTER_URL)
     Observable<RegisterData> register(@Query("username") String userName, @Query("password") String password, @Query("repassword") String repassword);
 
     /**
      * 登出
      * @return
      */
-    @GET(Constant.URL_LOGINOUT)
+    @GET(Constant.LOGINOUT_URL)
     Observable<LogoutData> logout();
 
     /**
@@ -172,7 +179,7 @@ public interface ApiServer {
      * @param id
      * @return
      */
-    @POST(Constant.URL_COLLECT)
+    @POST(Constant.COLLECT_URL)
     Observable<Collect> onCollect(@Path("id") int id);
 
     /**
@@ -180,7 +187,7 @@ public interface ApiServer {
      * @param id
      * @return
      */
-    @POST(Constant.URL_UNCOLLECT)
+    @POST(Constant.UNCOLLECT_URL)
     Observable<Collect> unCollect(@Path("id") int id);
 
     /**
@@ -189,7 +196,7 @@ public interface ApiServer {
      * @param originId
      * @return
      */
-    @POST(Constant.URL_UNCOLLECT_INCLUDE_ADD)
+    @POST(Constant.UNCOLLECT_INCLUDE_ADD_URL)
     Observable<Collect> unCollect(@Path("id") int id, @Query("originId") int originId);
 
     /**
@@ -198,7 +205,7 @@ public interface ApiServer {
      * @param pageNum
      * @return
      */
-    @GET(Constant.URL_COLLECT_LIST)
+    @GET(Constant.COLLECT_LIST_URL)
     Observable<CollectData> loadCollect(@Path("pageNum") int pageNum);
 
     /**
@@ -209,21 +216,21 @@ public interface ApiServer {
      * @param link
      * @return
      */
-    @POST(Constant.URL_ADD_COLLECT)
+    @POST(Constant.ADD_COLLECT_URL)
     Observable<AddCollect> addCollect(@Query("title") String title, @Query("author") String author, @Query("link") String link);
 
     /**
      * 获取个人积分排行
      * @return
      */
-    @GET(Constant.URL_INTEGRAL)
+    @GET(Constant.INTEGRAL_URL)
     Observable<IntegralData> loadIntegralData();
 
     /**
      * 获取积分排行列表
      * @return
      */
-    @GET(Constant.URL_RANK)
+    @GET(Constant.RANK_URL)
     Observable<RankData> loadRankData(@Path("pageNum") int pageNum);
 
     /**
@@ -231,7 +238,7 @@ public interface ApiServer {
      * @param pageNum
      * @return
      */
-    @GET(Constant.URL_SHARE_ARTICLE)
+    @GET(Constant.SHARE_ARTICLE_URL)
     Observable<ShareData> loadShareArticle(@Path("pageNum") int pageNum);
 
     /**
@@ -239,6 +246,6 @@ public interface ApiServer {
      * @param id
      * @return
      */
-    @POST(Constant.URL_DELETE_SHARE_ARTICLE)
+    @POST(Constant.DELETE_SHARE_ARTICLE_URL)
     Observable<DeleteShare> deleteShareArticle(@Path("id") int id);
 }

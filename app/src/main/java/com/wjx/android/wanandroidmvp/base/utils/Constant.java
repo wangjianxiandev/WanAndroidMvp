@@ -105,72 +105,72 @@ public class Constant {
     /**
      * 注册URL
      */
-    public static final String URL_REGISTER = "/user/register";
+    public static final String REGISTER_URL = "/user/register";
 
     /**
      * 登录URL
      */
-    public static final String URL_LOGIN = "/user/login";
+    public static final String LOGIN_URL = "/user/login";
 
     /**
      * 登出URL
      */
-    public static final String URL_LOGINOUT = "user/logout/json";
+    public static final String LOGINOUT_URL = "user/logout/json";
 
     /**
      * 收藏文章的url
      */
-    public static final String URL_COLLECT = "/lg/collect/{id}/json";
+    public static final String COLLECT_URL = "/lg/collect/{id}/json";
 
     /**
      * 取消收藏文章的url
      */
-    public static final String URL_UNCOLLECT = "/lg/uncollect_originId/{id}/json";
+    public static final String UNCOLLECT_URL = "/lg/uncollect_originId/{id}/json";
 
     /**
      * 取消收藏文章的url(包含自己录入的内容)
      */
-    public static final String URL_UNCOLLECT_INCLUDE_ADD = "/lg/uncollect/{id}/json";
+    public static final String UNCOLLECT_INCLUDE_ADD_URL = "/lg/uncollect/{id}/json";
 
     /**
      * 收藏文章列表的url
      */
-    public static final String URL_COLLECT_LIST = "/lg/collect/list/{pageNum}/json";
+    public static final String COLLECT_LIST_URL = "/lg/collect/list/{pageNum}/json";
 
     /**
      * 添加站外收藏
      */
-    public static final String URL_ADD_COLLECT = "/lg/collect/add/json";
+    public static final String ADD_COLLECT_URL = "/lg/collect/add/json";
 
     /**
      * 搜索的url
      */
-    public static final String URL_SEARCH = "/article/query/{PageNum}/json";
+    public static final String SEARCH_URL = "/article/query/{pageNum}/json";
 
     /**
      * 获取个人积分排行
      */
-    public static final String URL_INTEGRAL = "/lg/coin/userinfo/json";
+    public static final String INTEGRAL_URL = "/lg/coin/userinfo/json";
 
     /**
      * 积分排行
      */
-    public static final String URL_RANK = "/coin/rank/{pageNum}/json";
+    public static final String RANK_URL = "/coin/rank/{pageNum}/json";
 
     /**
      * 获取分享的文章的列表
      */
-    public static final String URL_SHARE_ARTICLE = "/user/lg/private_articles/{pageNum}/json";
+    public static final String SHARE_ARTICLE_URL = "/user/lg/private_articles/{pageNum}/json";
 
     /**
      * 删除分享的文章
      */
-    public static final String URL_DELETE_SHARE_ARTICLE = "/lg/user_article/delete/{id}/json";
+    public static final String DELETE_SHARE_ARTICLE_URL = "/lg/user_article/delete/{id}/json";
 
     /**
      * 积分规则
      */
-    public static final String URL_INTEGRAL_HELP = "https://www.wanandroid.com/blog/show/2653";
+    public static final String INTEGRAL_HELP_URL = "https://www.wanandroid.com/blog/show/2653";
 
     /**
      * 获取成功
@@ -273,14 +273,6 @@ public class Constant {
     public static final String EXTRA_VALUE_PASSWORD = "collect";
 
     public static final long EXIT_TIME = 2000;
-
-    /**
-     * Intent params
-     */
-    public static final String ARG_PARAM1 = "param1";
-
-    public static final String ARG_PARAM2 = "param2";
-
 
     /**
      * 获取随机rgb颜色值

@@ -19,6 +19,8 @@
             android:layout_height="24dp"
             android:background="@null"
             android:hint="@string/search_hint"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:textCursorDrawable="@drawable/solid_shape_cursor_line" />
         <ImageView
             android:id="@+id/anim_img"

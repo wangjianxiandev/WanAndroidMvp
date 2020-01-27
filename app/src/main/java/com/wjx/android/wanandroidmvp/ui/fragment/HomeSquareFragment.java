@@ -57,7 +57,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     private HomeSquareAdapter mHomeSquareAdapter;
 
-    private int mCurpage = 0;
+    private int mCurrentPage = 0;
 
     private List<Article> mHomeSquareList = new ArrayList<>();
 
@@ -92,7 +92,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
     protected void init() {
         mContext = getContext().getApplicationContext();
         initAdapter();
-        mPresenter.loadHomeSquareData(mCurpage);
+        mPresenter.loadHomeSquareData(mCurrentPage);
         mSmartRefreshLayout.setOnRefreshListener(this);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         initFloatBtnColor();
@@ -130,7 +130,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void loadHomeSquareData(List<Article> homeSquareData) {
-        if (mCurpage == 0) {
+        if (mCurrentPage == 0) {
             mHomeSquareList.clear();
         }
         mHomeSquareList.addAll(homeSquareData);
@@ -200,14 +200,14 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        mCurpage++;
-        mPresenter.loadHomeSquareData(mCurpage);
+        mCurrentPage++;
+        mPresenter.loadHomeSquareData(mCurrentPage);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mCurpage = 0;
-        mPresenter.refreshHomeSquareData(mCurpage);
+        mCurrentPage = 0;
+        mPresenter.refreshHomeSquareData(mCurrentPage);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -235,7 +235,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
                 mPresenter.refreshHomeSquareData(0);
             } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mHomeSquareList.clear();
-                mPresenter.refreshHomeSquareData(mCurpage);
+                mPresenter.refreshHomeSquareData(mCurrentPage);
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 initFloatBtnColor();
             } else if (event.type == Event.TYPE_DELETE_SHARE) {

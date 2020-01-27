@@ -165,30 +165,22 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                 holder.mCollectView.setSelected(articleBean.collect);
             }
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    JumpWebUtils.startWebView(mContext,
-                            mArticleList.get(realPosition).title,
-                            mArticleList.get(realPosition).link);
+            holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
+                    mArticleList.get(realPosition).title,
+                    mArticleList.get(realPosition).link));
+            holder.mCollectView.setOnClickListener(view -> {
+                if (!LoginUtils.isLogin()) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                } else {
+                    Event event = new Event();
+                    event.target = Event.TARGET_HOME;
+                    event.type = articleBean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
+                    event.data = articleBean.articleId + "";
+                    EventBus.getDefault().post(event);
                 }
-            });
-            holder.mCollectView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!LoginUtils.isLogin()) {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                    } else {
-                        Event event = new Event();
-                        event.target = Event.TARGET_HOME;
-                        event.type = articleBean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
-                        event.data = articleBean.articleId + "";
-                        EventBus.getDefault().post(event);
-                    }
 
-                }
             });
 
             holder.itemView.getBackground().setColorFilter(mContext.getColor(

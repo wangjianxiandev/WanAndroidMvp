@@ -12,7 +12,8 @@
             android:id="@+id/share_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:titleTextColor="@color/always_white_text" />
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -92,10 +93,10 @@
             android:layout_height="48dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="12dp"
+            android:background="@drawable/edit_shap"
             android:gravity="center"
             android:text="分享"
             android:textColor="@color/always_white_text"
-            android:background="@drawable/edit_shap"
             android:textSize="16dp" />
 
     </LinearLayout>

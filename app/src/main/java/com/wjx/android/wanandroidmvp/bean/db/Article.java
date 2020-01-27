@@ -42,6 +42,11 @@ public class Article extends LitePalSupport {
      */
     public static final int TYPE_TOP = 6;
 
+    /**
+     * 搜索结果文章
+     */
+    public static final int TYPE_SEARCH = 7;
+
     public int id;
 
     public int type;

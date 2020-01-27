@@ -1,4 +1,4 @@
-package com.wjx.android.wanandroidmvp.ui.activity;
+package com.wjx.android.wanandroidmvp.Custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -65,8 +65,6 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
     private ArrayList<Fragment> mFragmentSparseArray = new ArrayList<>();
 
-    private int mCurPage;
-
     private Context mContext;
 
     public static ProjectFragment getInstance() {
@@ -98,7 +96,6 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
         initStatusBar();
         initTabColor();
         mPresenter.loadProjectClassify();
-        mCurPage = 0;
         setChildViewVisibility(View.VISIBLE);
         mViewPager.setOffscreenPageLimit(2);
     }
@@ -164,7 +161,7 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
             @Override
             public void onPageSelected(int position) {
-//                mCurPage = position;
+
             }
 
             @Override

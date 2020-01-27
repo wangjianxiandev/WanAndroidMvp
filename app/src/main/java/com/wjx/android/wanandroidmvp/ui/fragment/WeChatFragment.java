@@ -59,7 +59,7 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     private ArrayList<Fragment> mFragmentSparseArray = new ArrayList<>();
 
-    private int mCurPage = 0;
+    private int mCurrentPage = 0;
 
     private Context mContext;
 
@@ -153,7 +153,7 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
             @Override
             public void onPageSelected(int position) {
-                mCurPage = position;
+                mCurrentPage = position;
             }
 
             @Override

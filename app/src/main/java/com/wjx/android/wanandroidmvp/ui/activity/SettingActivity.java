@@ -63,7 +63,6 @@ public class SettingActivity extends AppCompatActivity {
 
     private void initToolbar() {
         mToolbar.setTitle(R.string.setting);
-        mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(Constant.getColor(mContext));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {

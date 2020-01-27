@@ -3,7 +3,6 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -35,7 +33,6 @@ import com.wjx.android.wanandroidmvp.presenter.rank.RankPresenter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.litepal.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +67,7 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
 
     private List<Rank> mRankList = new ArrayList<>();
 
-    private int mCurPageNum = 1;
+    private int mCurrentPage = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +96,7 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
             case R.id.help:
                 JumpWebUtils.startWebView(this,
                         getString(R.string.integral_rule),
-                        Constant.URL_INTEGRAL_HELP);
+                        Constant.INTEGRAL_HELP_URL);
 
         }
         return super.onOptionsItemSelected(item);
@@ -113,7 +110,7 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
     @Override
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
-        mPresenter.loadRankData(mCurPageNum);
+        mPresenter.loadRankData(mCurrentPage);
         initExtra();
         initAdapter();
         initStatusBar();
@@ -204,14 +201,14 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        mCurPageNum++;
-        mPresenter.loadRankData(mCurPageNum);
+        mCurrentPage++;
+        mPresenter.loadRankData(mCurrentPage);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mCurPageNum = 1;
-        mPresenter.refreshRankData(mCurPageNum);
+        mCurrentPage = 1;
+        mPresenter.refreshRankData(mCurrentPage);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

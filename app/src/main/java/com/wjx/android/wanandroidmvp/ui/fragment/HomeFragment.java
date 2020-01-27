@@ -71,7 +71,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private ArticleAdapter mArticleAdapter;
 
-    private int mCurpage = 0;
+    private int mCurrentPage = 0;
 
     private Banner mBanner;
 
@@ -143,7 +143,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         initStatusBar();
         mPresenter.loadBanner();
         mPresenter.loadTopArticle();
-        mPresenter.loadArticle(mCurpage);
+        mPresenter.loadArticle(mCurrentPage);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅
@@ -256,7 +256,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void loadArticle(List<Article> articleList) {
         // 解决首页加载两次问题
-        if (mCurpage == 0) {
+        if (mCurrentPage == 0) {
             mArticleList.clear();
             articleList.addAll(0, mTopArticleList);
         }
@@ -352,7 +352,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mArticleList.clear();
                 mPresenter.refreshTopArticle();
-                mPresenter.refreshArticle(mCurpage);
+                mPresenter.refreshArticle(mCurrentPage);
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mToolbar.setBackgroundColor(Constant.getColor(mContext));
             }
@@ -366,8 +366,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
      */
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        mCurpage++;
-        mPresenter.loadArticle(mCurpage);
+        mCurrentPage++;
+        mPresenter.loadArticle(mCurrentPage);
     }
 
     /**
@@ -379,7 +379,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mPresenter.refreshBanner();
         mPresenter.refreshTopArticle();
-        mCurpage = 0;
-        mPresenter.refreshArticle(mCurpage);
+        mCurrentPage = 0;
+        mPresenter.refreshArticle(mCurrentPage);
     }
 }

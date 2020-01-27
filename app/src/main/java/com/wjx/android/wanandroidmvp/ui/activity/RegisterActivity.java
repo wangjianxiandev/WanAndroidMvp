@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -18,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.wjx.android.wanandroidmvp.Custom.CustomEditText;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;

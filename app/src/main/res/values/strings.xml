@@ -33,6 +33,7 @@
     <string name="help">帮助</string>
     <string name="integral_rule">积分规则</string>
     <string name="collect_page">我的收藏</string>
+    <string name="search_result">搜索结果</string>
     <string name="me_share">我的分享</string>
     <!--设置页面-->
     <string name="setting">设置</string>

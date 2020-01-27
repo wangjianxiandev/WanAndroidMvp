@@ -47,7 +47,7 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
         com.scwang.smartrefresh.layout.listener.OnRefreshListener {
 
     private CollectAdaper mCollectAdapter;
-    private int mCurpage = 0;
+    private int mCurrentPage = 0;
 
     private Context mContext;
 
@@ -71,7 +71,7 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
     @Override
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
-        mPresenter.loadCollectData(mCurpage);
+        mPresenter.loadCollectData(mCurrentPage);
         initAdapter();
         initToolbar();
         initStatusBar();
@@ -123,7 +123,6 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
     private void initToolbar() {
         mToolbar.setBackgroundColor(Constant.getColor(mContext));
         mToolbar.setTitle(R.string.collect_page);
-        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -266,13 +265,13 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        mCurpage++;
-        mPresenter.loadCollectData(mCurpage);
+        mCurrentPage++;
+        mPresenter.loadCollectData(mCurrentPage);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mCurpage = 0;
-        mPresenter.refreshCollectData(mCurpage);
+        mCurrentPage = 0;
+        mPresenter.refreshCollectData(mCurrentPage);
     }
 }

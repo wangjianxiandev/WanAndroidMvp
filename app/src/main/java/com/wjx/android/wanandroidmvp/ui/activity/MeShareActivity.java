@@ -45,7 +45,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         com.scwang.smartrefresh.layout.listener.OnRefreshListener {
 
     private MeShareAdapter mMeShareAdapter;
-    private int mCurpage = 1;
+    private int mCurrentPage = 1;
 
     private Context mContext;
 
@@ -69,7 +69,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
     @Override
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
-        mPresenter.loadShareArticle(mCurpage);
+        mPresenter.loadShareArticle(mCurrentPage);
         initAdapter();
         initToolbar();
         initStatusBar();
@@ -138,7 +138,6 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
     private void initToolbar() {
         mToolbar.setBackgroundColor(Constant.getColor(mContext));
         mToolbar.setTitle(R.string.me_share);
-        mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -271,14 +270,14 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        mCurpage++;
-        mPresenter.loadShareArticle(mCurpage);
+        mCurrentPage++;
+        mPresenter.loadShareArticle(mCurrentPage);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mCurpage = 1;
-        mPresenter.refreshShareArticle(mCurpage);
+        mCurrentPage = 1;
+        mPresenter.refreshShareArticle(mCurrentPage);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -306,7 +305,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
                 mPresenter.refreshShareArticle(0);
             } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mShareList.clear();
-                mPresenter.refreshShareArticle(mCurpage);
+                mPresenter.refreshShareArticle(mCurrentPage);
             }
         }
     }

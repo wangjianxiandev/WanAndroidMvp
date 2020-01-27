@@ -100,66 +100,9 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             } else {
                 Constant.setColor(parentActivity, getColor(R.color.colorPrimary))
             }
+
             //通知其他界面立马修改配置
-            val event = Event()
-            event.target = Event.TARGET_HOME
-            event.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(event)
-
-            val mainEvent = Event()
-            mainEvent.target = Event.TARGET_MAIN
-            mainEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(mainEvent)
-
-            val treeEvent = Event()
-            treeEvent.target = Event.TARGET_TREE
-            treeEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(treeEvent)
-
-            val projectEvent = Event()
-            projectEvent.target = Event.TARGET_PROJECT
-            projectEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(projectEvent)
-
-            val wxEvent = Event()
-            wxEvent.target = Event.TARGET_WX
-            wxEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(wxEvent)
-
-            val meEvent = Event()
-            meEvent.target = Event.TARGET_ME
-            meEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(meEvent)
-
-            val settingEvent = Event()
-            settingEvent.target = Event.TARGET_SETTING
-            settingEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(settingEvent)
-
-            val squareEvent = Event()
-            squareEvent.target = Event.TARGET_SQUARE
-            squareEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(squareEvent)
-
-            val navEvent = Event()
-            navEvent.target = Event.TARGET_NAVI
-            navEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(navEvent)
-
-            val parentSquareEvent = Event()
-            parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
-            parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(parentSquareEvent)
-
-            val shareEvent = Event()
-            shareEvent.target = Event.TARGET_SQUARE_SHARE
-            shareEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(shareEvent)
-
-            val searchEvent = Event()
-            searchEvent.target = Event.TARGET_SEARCH
-            searchEvent.type = Event.TYPE_REFRESH_COLOR
-            EventBus.getDefault().post(searchEvent)
+            refreshColor()
 
             // 通知 MainActivity recreate
             val recreateEvent = Event()
@@ -237,70 +180,78 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                 { dialog, color ->
                     Constant.setColor(parentActivity, color)
                     //通知其他界面立马修改配置
-                    val event = Event()
-                    event.target = Event.TARGET_HOME
-                    event.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(event)
-
-                    val mainEvent = Event()
-                    mainEvent.target = Event.TARGET_MAIN
-                    mainEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(mainEvent)
-
-                    val treeEvent = Event()
-                    treeEvent.target = Event.TARGET_TREE
-                    treeEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(treeEvent)
-
-                    val projectEvent = Event()
-                    projectEvent.target = Event.TARGET_PROJECT
-                    projectEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(projectEvent)
-
-                    val wxEvent = Event()
-                    wxEvent.target = Event.TARGET_WX
-                    wxEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(wxEvent)
-
-                    val meEvent = Event()
-                    meEvent.target = Event.TARGET_ME
-                    meEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(meEvent)
-
-                    val settingEvent = Event()
-                    settingEvent.target = Event.TARGET_SETTING
-                    settingEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(settingEvent)
-
-                    val squareEvent = Event()
-                    squareEvent.target = Event.TARGET_SQUARE
-                    squareEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(squareEvent)
-
-                    val navEvent = Event()
-                    navEvent.target = Event.TARGET_NAVI
-                    navEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(navEvent)
-
-                    val parentSquareEvent = Event()
-                    parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
-                    parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(parentSquareEvent)
-
-                    val shareEvent = Event()
-                    shareEvent.target = Event.TARGET_SQUARE_SHARE
-                    shareEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(shareEvent)
-
-                    val searchEvent = Event()
-                    searchEvent.target = Event.TARGET_SEARCH
-                    searchEvent.type = Event.TYPE_REFRESH_COLOR
-                    EventBus.getDefault().post(searchEvent)
+                    refreshColor()
                 }
                 positiveButton(R.string.done)
                 negativeButton(R.string.cancel)
             }
             false
         }
+    }
+    private fun refreshColor() {
+        val event = Event()
+        event.target = Event.TARGET_HOME
+        event.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(event)
+
+        val mainEvent = Event()
+        mainEvent.target = Event.TARGET_MAIN
+        mainEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(mainEvent)
+
+        val treeEvent = Event()
+        treeEvent.target = Event.TARGET_TREE
+        treeEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(treeEvent)
+
+        val projectEvent = Event()
+        projectEvent.target = Event.TARGET_PROJECT
+        projectEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(projectEvent)
+
+        val wxEvent = Event()
+        wxEvent.target = Event.TARGET_WX
+        wxEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(wxEvent)
+
+        val meEvent = Event()
+        meEvent.target = Event.TARGET_ME
+        meEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(meEvent)
+
+        val settingEvent = Event()
+        settingEvent.target = Event.TARGET_SETTING
+        settingEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(settingEvent)
+
+        val squareEvent = Event()
+        squareEvent.target = Event.TARGET_SQUARE
+        squareEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(squareEvent)
+
+        val navEvent = Event()
+        navEvent.target = Event.TARGET_NAVI
+        navEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(navEvent)
+
+        val parentSquareEvent = Event()
+        parentSquareEvent.target = Event.TARGET_PARENT_SQUARE
+        parentSquareEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(parentSquareEvent)
+
+        val shareEvent = Event()
+        shareEvent.target = Event.TARGET_SQUARE_SHARE
+        shareEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(shareEvent)
+
+        val searchEvent = Event()
+        searchEvent.target = Event.TARGET_SEARCH
+        searchEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(searchEvent)
+
+        val searchResultEvent  = Event()
+        searchResultEvent.target = Event.TARGET_SEARCH_RESULT
+        searchResultEvent.type = Event.TYPE_REFRESH_COLOR
+        EventBus.getDefault().post(searchResultEvent)
     }
 }
