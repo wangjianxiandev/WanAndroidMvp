@@ -52,7 +52,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
     RecyclerView mRecyclerView;
 
     private WeChatListAdapter mWeChatListAdapter;
-    private int mCurrentPage = 0;
+    private int mCurrentPage = 1;
     private int mCid = 0;
 
     private Context mContext;
@@ -179,7 +179,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mWechatArticleList.clear();
-        mPresenter.refreshWeChatList(mCid, 0);
+        mPresenter.refreshWeChatList(mCid, 1);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -207,10 +207,10 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
                 }
             } else if (event.type == Event.TYPE_LOGIN) {
                 mWechatArticleList.clear();
-                mPresenter.refreshWeChatList(mCid, 0);
+                mPresenter.refreshWeChatList(mCid, 1);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mWechatArticleList.clear();
-                mPresenter.refreshWeChatList(mCid, 0);
+                mPresenter.refreshWeChatList(mCid, 1);
             } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mWechatArticleList.clear();
                 mPresenter.refreshWeChatList(mCid, mCurrentPage);
