@@ -34,6 +34,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.litepal.util.Const;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -184,12 +185,12 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                     tagText.setText(tabNames.get(position));
                     tagText.getBackground().setColorFilter(Constant.randomColor(), PorterDuff.Mode.SRC_ATOP);
                     tagText.setTextColor(getColor(R.color.white));
-                    mTopSearchFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-                        @Override
-                        public boolean onTagClick(View view, int position, FlowLayout parent) {
-                            Toast.makeText(SearchWordActivity.this, tabNames.get(position), Toast.LENGTH_SHORT).show();
-                            return true;
-                        }
+                    mTopSearchFlowLayout.setOnTagClickListener((view, position1, parent1) -> {
+                        Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
+                        intent.putExtra(Constant.KEY_KEYWORD, tabNames.get(position1));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        return true;
                     });
                     return tagText;
                 }
