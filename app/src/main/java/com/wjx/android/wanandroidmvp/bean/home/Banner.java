@@ -8,7 +8,7 @@ import java.util.List;
  * Created with Android Studio.
  * Description: 首页Banner 实体类
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 15:58
  */

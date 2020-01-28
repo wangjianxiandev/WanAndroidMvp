@@ -6,7 +6,7 @@ import java.util.List;
  * Created with Android Studio.
  * Description: 注册
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2020/01/26
  * Time: 15:14
  */

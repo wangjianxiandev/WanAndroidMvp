@@ -6,7 +6,7 @@ import java.util.List;
  * Created with Android Studio.
  * Description: 首页文章列表原始实体类
  *
- * @author: 王拣贤
+ * @author: Wangjianxian
  * @date: 2019/12/19
  * Time: 18:14
  */
