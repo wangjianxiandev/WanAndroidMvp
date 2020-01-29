@@ -38,7 +38,7 @@ public class SearchResultModel extends BaseModel implements Contract.ISearchResu
                     List<Article> searchResultList = new ArrayList<>();
                     searchResultData.getData().getDatas().stream().forEach(datasBean -> {
                         Article article = new Article();
-                        article.type = Article.TYPE_HOME;
+                        article.type = Article.TYPE_SEARCH_RESULT;
                         article.articleId = datasBean.getId();
                         article.title = datasBean.getTitle();
                         article.author = datasBean.getAuthor();

@@ -61,6 +61,11 @@ public class Event {
     public static final int TYPE_DELETE_SHARE = 10;
 
     /**
+     * 删除搜索历史纪录
+     */
+    public static final int TYPE_DELETE_SEARCH = 11;
+
+    /**
      * 目标界面-MainActivity
      */
     public static final int TARGET_MAIN = 1;

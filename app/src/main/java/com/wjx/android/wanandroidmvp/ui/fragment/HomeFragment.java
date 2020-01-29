@@ -137,13 +137,13 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
+        mPresenter.loadTopArticle();
+        mPresenter.loadArticle(mCurrentPage);
         initAdapter();
         initBanner();
         initToolbar();
         initStatusBar();
         mPresenter.loadBanner();
-        mPresenter.loadTopArticle();
-        mPresenter.loadArticle(mCurrentPage);
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅

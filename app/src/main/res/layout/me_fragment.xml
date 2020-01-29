@@ -194,7 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="开源网站"
-                        android:textColor="@color/me_item_text"
+                        android:textColor="@color/item_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -226,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="加入开源"
-                        android:textColor="@color/me_item_text"
+                        android:textColor="@color/item_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -257,7 +257,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="系统设置"
-                        android:textColor="@color/me_item_text"
+                        android:textColor="@color/item_text"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 

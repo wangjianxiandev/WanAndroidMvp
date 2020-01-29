@@ -3,7 +3,7 @@
 [1]:https://img.shields.io/badge/platform-Android-blue.svg  
 [2]:https://github.com/wangjianxiandev/WanAndroidMvp
 
-# WanAndroidMvp
+# WanAndroid 新手项目
 根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/blog/show/2)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，这个项目是自己实习后第一次有搭建架构的思路，实现的一个尽可能体验较佳的App，不足之处请大家多多指教（**欢迎 Star ！**）
 
 ## 项目地址
@@ -63,7 +63,9 @@
 - 取消收藏
 
 ### 搜索
-- 首页文章搜索（待完成）
+- 首页文章搜索
+- 关键词搜索
+- 搜索历史记录
 
 ### 积分
 - 积分排行榜

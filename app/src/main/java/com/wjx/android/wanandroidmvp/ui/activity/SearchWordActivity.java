@@ -6,20 +6,23 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.wjx.android.wanandroidmvp.R;
+import com.wjx.android.wanandroidmvp.adapter.SearchHistoryAdapter;
+import com.wjx.android.wanandroidmvp.adapter.SearchResultAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.KeyBoardUtils;
@@ -34,8 +37,9 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.litepal.util.Const;
+import org.litepal.LitePal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,12 +58,16 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
 
     @BindView(R.id.search_edit)
     EditText mSearchEdit;
+
     @BindView(R.id.search_text_top)
     TextView mTopSearchWord;
+
     @BindView(R.id.search_clear)
     TextView mSearchClear;
-    @BindView(R.id.search_recyclerview)
+
+    @BindView(R.id.search_recycler)
     RecyclerView mRecyclerView;
+
     @BindView(R.id.search_flowlayout)
     TagFlowLayout mTopSearchFlowLayout;
 
@@ -70,6 +78,10 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     ImageView mSearchAnimImage;
 
     private Context mContext;
+
+    private List<String> mSearchHistoryList = new ArrayList<>();
+
+    private SearchHistoryAdapter mSearchHistoryAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,11 +107,10 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     }
 
     private void clearHistoryData() {
-    }
-
-    private void backPressed() {
-        KeyBoardUtils.closeKeyboard(this, mSearchEdit);
-        onBackPressed();
+        Constant.deleteAllSearchHistory(mContext);
+        mSearchHistoryList.clear();
+        mSearchHistoryList = Constant.getSearchHistory(mContext);
+        mSearchHistoryAdapter.setSearchHistoryList(mSearchHistoryList);
     }
 
     @Override
@@ -114,7 +125,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
         initStatusBar();
         initSearchEdit();
         initCircleAnimation();
-        initRecyclerView();
+        initAdapter();
         mPresenter.loadSearchWordData();
     }
 
@@ -150,6 +161,9 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
             }
         });
         mSearchAnimImage.setOnClickListener(v -> {
+            Constant.setSearchHistory(mSearchEdit.getText().toString(), mContext);
+            mSearchHistoryList.add(mSearchEdit.getText().toString());
+            mSearchHistoryAdapter.setSearchHistoryList(Constant.getSearchHistory(mContext));
             Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
             intent.putExtra(Constant.KEY_KEYWORD, mSearchEdit.getText().toString());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -161,8 +175,11 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     private void initCircleAnimation() {
     }
 
-    private void initRecyclerView() {
-
+    private void initAdapter() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mSearchHistoryList.addAll(Constant.getSearchHistory(mContext));
+        mSearchHistoryAdapter = new SearchHistoryAdapter(mContext, mSearchHistoryList);
+        mRecyclerView.setAdapter(mSearchHistoryAdapter);
     }
 
     @Override
@@ -186,6 +203,8 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                     tagText.getBackground().setColorFilter(Constant.randomColor(), PorterDuff.Mode.SRC_ATOP);
                     tagText.setTextColor(getColor(R.color.white));
                     mTopSearchFlowLayout.setOnTagClickListener((view, position1, parent1) -> {
+                        Constant.setSearchHistory(tabNames.get(position1), mContext);
+                        mSearchHistoryAdapter.setSearchHistoryList(Constant.getSearchHistory(mContext));
                         Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
                         intent.putExtra(Constant.KEY_KEYWORD, tabNames.get(position1));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -197,7 +216,6 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
             });
         }
     }
-
 
     @Override
     public void onLoading() {
@@ -215,10 +233,14 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Event event){
+    public void onEvent(Event event) {
         if (event.target == Event.TARGET_SEARCH) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mSearchToolbar.setBackgroundColor(Constant.getColor(mContext));
+            } else if (event.type == Event.TYPE_DELETE_SEARCH) {
+                mSearchHistoryList.clear();
+                mSearchHistoryList.addAll(Constant.getSearchHistory(mContext));
+                mSearchHistoryAdapter.setSearchHistoryList(mSearchHistoryList);
             }
         }
     }

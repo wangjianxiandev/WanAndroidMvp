@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -14,10 +15,15 @@ import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tencent.mmkv.MMKV;
 import com.wjx.android.wanandroidmvp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -317,6 +323,7 @@ public class Constant {
 
     /**
      * dp与px转换
+     *
      * @param context
      * @param dp
      * @return
@@ -329,6 +336,7 @@ public class Constant {
 
     /**
      * px转换为dp
+     *
      * @param context
      * @param pxValue
      * @return
@@ -344,6 +352,7 @@ public class Constant {
 
     /**
      * 获取ActionBar高度
+     *
      * @param context
      * @return
      */
@@ -361,7 +370,7 @@ public class Constant {
      */
     public static int getColor(Context context) {
         SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
-        int defaultColor = ContextCompat.getColor(context,R.color.colorPrimary);
+        int defaultColor = ContextCompat.getColor(context, R.color.colorPrimary);
         int color = setting.getInt("color", defaultColor);
         if (color != 0 && Color.alpha(color) != 255) {
             return defaultColor;
@@ -378,18 +387,150 @@ public class Constant {
         setting.edit().putInt("color", color).apply();
     }
 
+    /**
+     * BottomNavigation 适配颜色
+     *
+     * @param context
+     * @return
+     */
     public static final ColorStateList getColorStateList(Context context) {
         Intrinsics.checkParameterIsNotNull(context, "context");
-        int[] colors = new int[]{getColor(context), ContextCompat.getColor(context,R.color.colorGray)};
+        int[] colors = new int[]{getColor(context), ContextCompat.getColor(context, R.color.colorGray)};
         int[][] states = new int[][]{{android.R.attr.state_checked, android.R.attr.state_checked}, new int[0]};
         return new ColorStateList(states, colors);
     }
 
-    @NotNull
+    /**
+     * Float button 适配颜色
+     *
+     * @param context
+     * @return
+     */
     public static final ColorStateList getOneColorStateList(@NotNull Context context) {
         Intrinsics.checkParameterIsNotNull(context, "context");
         int[] colors = new int[]{getColor(context)};
         int[][] states = new int[][]{new int[0]};
         return new ColorStateList(states, colors);
     }
+
+    private final static String PREFERENCE_NAME = "service_name";
+    private final static String SEARCH_HISTORY = "search_history";
+
+    /**
+     * 保存历史记录
+     * @param inputText
+     * @param context
+     */
+    public static void setSearchHistory(String inputText, Context context) {
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        if (TextUtils.isEmpty(inputText)) {
+            return;
+        }
+        //获取之前保存的历史记录
+        String savedHistory = sp.getString(SEARCH_HISTORY, "");
+        //逗号截取 保存在数组中
+        String[] tmpHistory = savedHistory.split(",");
+        //将改数组转换成ArrayList
+        List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
+        SharedPreferences.Editor editor = sp.edit();
+        if (historyList.size() > 0) {
+            // 移除之前重复添加的元素
+            for (int i = 0; i < historyList.size(); i++) {
+                if (inputText.equals(historyList.get(i))) {
+                    historyList.remove(i);
+                    break;
+                }
+            }
+            // 将新输入的文字添加集合的第0位也就是最前面(实现倒序)
+            historyList.add(0, inputText);
+            // 最多保存10条搜索记录 删除最早搜索的那一项
+            if (historyList.size() > 10) {
+                historyList.remove(historyList.size() - 1);
+            }
+            // 逗号拼接
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < historyList.size(); i++) {
+                sb.append(historyList.get(i) + ",");
+            }
+            // 保存到sp
+            editor.putString(SEARCH_HISTORY, sb.toString());
+            editor.commit();
+        } else {
+            // 之前未添加过
+            editor.putString(SEARCH_HISTORY, inputText + ",");
+            editor.commit();
+        }
+    }
+
+    /**
+     * 删除某项历史记录
+     * @param deleteText
+     * @param context
+     */
+    public static void deleteSearchHistory(String deleteText, Context context) {
+        // 获取所有的历史记录
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        String longHistory = sp.getString(SEARCH_HISTORY, "");
+        String[] tmpHistory = longHistory.split(",");
+        List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
+        SharedPreferences.Editor editor = sp.edit();
+        if (historyList.size() > 0) {
+            // 移除之前重复添加的元素
+            for (int i = 0; i < historyList.size(); i++) {
+                if (deleteText.equals(historyList.get(i))) {
+                    historyList.remove(i);
+                    break;
+                }
+            }
+            // 逗号拼接
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < historyList.size(); i++) {
+                sb.append(historyList.get(i) + ",");
+            }
+            // 保存到sp
+            editor.putString(SEARCH_HISTORY, sb.toString());
+            editor.commit();
+        }
+    }
+
+    /**
+     * 获取搜索历史
+     * @param context
+     * @return
+     */
+    public static List<String> getSearchHistory(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        String longHistory = sp.getString(SEARCH_HISTORY, "");
+        // split后长度为1有一个空串对象
+        String[] tmpHistory = longHistory.split(",");
+        List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
+        // 如果没有搜索记录，split之后第0位是个空串的情况下
+        if (historyList.size() == 1 && historyList.get(0).equals("")) {
+            // 清空集合，这个很关键
+            historyList.clear();
+        }
+        return historyList;
+    }
+
+    /**
+     * 清空历史
+     * @param deleteText
+     * @param context
+     */
+    public static void deleteAllSearchHistory(Context context) {
+        // 获取所有的历史记录
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        String longHistory = sp.getString(SEARCH_HISTORY, "");
+        String[] tmpHistory = longHistory.split(",");
+        List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
+        SharedPreferences.Editor editor = sp.edit();
+        if (historyList.size() > 0) {
+            // 移除之前重复添加的元素
+            historyList.clear();
+            // 保存到sp
+            editor.putString(SEARCH_HISTORY, "");
+            editor.commit();
+        }
+    }
+
 }

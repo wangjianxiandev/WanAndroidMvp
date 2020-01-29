@@ -23,6 +23,7 @@ public class SearchWordModel implements Contract.ISearchModel {
     public Observable<SearchWordData> loadSearchWordData() {
         return getApiServer().loadSearchWordData();
     }
+
     /**
      * 获取请求对象
      * @return 当前的请求对象
