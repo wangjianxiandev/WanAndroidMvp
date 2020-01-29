@@ -86,7 +86,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             if (matcher.find()) {
                 highLightTitle = highLightTitle.replace("<em class='highlight'>", "").replace("</em>", "");
                 setText(holder.mArticleContent, highLightTitle, matcher.group(1),
-                        isNightMode ? mContext.getColor(R.color.card_bg) : mContext.getColor(R.color.hight_light_purple));
+                        isNightMode ? mContext.getColor(R.color.card_bg) : Constant.getColor(mContext));
             }
             if (!article.author.equals("")) {
                 holder.mArticleAuthor.setText(

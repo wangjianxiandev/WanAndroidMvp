@@ -367,6 +367,9 @@ public class Constant {
 
     /**
      * 获取主题颜色
+     *
+     * @param context
+     * @return
      */
     public static int getColor(Context context) {
         SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
@@ -380,11 +383,42 @@ public class Constant {
     }
 
     /**
+     * 获取切换夜间模式之前的主题色
+     *
+     * @param context
+     * @return
+     */
+    public static int getLastColor(Context context) {
+        SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
+        int defaultColor = ContextCompat.getColor(context, R.color.colorPrimary);
+        int color = setting.getInt("lastColor", defaultColor);
+        if (color != 0 && Color.alpha(color) != 255) {
+            return defaultColor;
+        } else {
+            return color;
+        }
+    }
+
+    /**
      * 设置主题颜色
+     *
+     * @param context
+     * @param color
      */
     public static void setColor(Context context, int color) {
         SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
         setting.edit().putInt("color", color).apply();
+    }
+
+    /**
+     * 设置切换夜间模式之前的主题颜色
+     *
+     * @param context
+     * @param color
+     */
+    public static void setLastColor(Context context, int color) {
+        SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
+        setting.edit().putInt("lastColor", color).apply();
     }
 
     /**
@@ -418,12 +452,13 @@ public class Constant {
 
     /**
      * 保存历史记录
-     * @param inputText
+     *
+     * @param editText
      * @param context
      */
-    public static void setSearchHistory(String inputText, Context context) {
+    public static void setSearchHistory(String editText, Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        if (TextUtils.isEmpty(inputText)) {
+        if (TextUtils.isEmpty(editText)) {
             return;
         }
         //获取之前保存的历史记录
@@ -436,13 +471,13 @@ public class Constant {
         if (historyList.size() > 0) {
             // 移除之前重复添加的元素
             for (int i = 0; i < historyList.size(); i++) {
-                if (inputText.equals(historyList.get(i))) {
+                if (editText.equals(historyList.get(i))) {
                     historyList.remove(i);
                     break;
                 }
             }
             // 将新输入的文字添加集合的第0位也就是最前面(实现倒序)
-            historyList.add(0, inputText);
+            historyList.add(0, editText);
             // 最多保存10条搜索记录 删除最早搜索的那一项
             if (historyList.size() > 10) {
                 historyList.remove(historyList.size() - 1);
@@ -457,13 +492,14 @@ public class Constant {
             editor.commit();
         } else {
             // 之前未添加过
-            editor.putString(SEARCH_HISTORY, inputText + ",");
+            editor.putString(SEARCH_HISTORY, editText + ",");
             editor.commit();
         }
     }
 
     /**
      * 删除某项历史记录
+     *
      * @param deleteText
      * @param context
      */
@@ -495,6 +531,7 @@ public class Constant {
 
     /**
      * 获取搜索历史
+     *
      * @param context
      * @return
      */
@@ -514,7 +551,7 @@ public class Constant {
 
     /**
      * 清空历史
-     * @param deleteText
+     *
      * @param context
      */
     public static void deleteAllSearchHistory(Context context) {

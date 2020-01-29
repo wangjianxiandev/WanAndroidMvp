@@ -22,6 +22,7 @@ import com.wjx.android.wanandroidmvp.base.utils.LoginUtils
 import com.wjx.android.wanandroidmvp.bean.base.Event
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity
 import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity
+import kotlinx.android.synthetic.main.me_fragment.*
 import org.greenrobot.eventbus.EventBus
 
 
@@ -96,9 +97,10 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                         AppCompatDelegate.MODE_NIGHT_NO)
 
             if (nightMode) {
+                Constant.setLastColor(parentActivity, Constant.getColor(parentActivity))
                 Constant.setColor(parentActivity, getColor(R.color.colorGray666))
             } else {
-                Constant.setColor(parentActivity, getColor(R.color.colorPrimary))
+                Constant.setColor(parentActivity, Constant.getLastColor(parentActivity))
             }
 
             //通知其他界面立马修改配置

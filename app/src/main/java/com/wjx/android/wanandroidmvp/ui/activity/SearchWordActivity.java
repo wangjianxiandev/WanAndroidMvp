@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.ColorUtils;
@@ -122,11 +124,30 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
         initColor();
+        initToolbar();
         initStatusBar();
         initSearchEdit();
         initCircleAnimation();
         initAdapter();
         mPresenter.loadSearchWordData();
+    }
+
+    private void initToolbar() {
+        mSearchToolbar.setBackgroundColor(Constant.getColor(mContext));
+        setSupportActionBar(mSearchToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initColor() {
