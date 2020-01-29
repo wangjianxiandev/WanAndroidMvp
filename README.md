@@ -3,13 +3,13 @@
 根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，这个项目是自己实习后第一次有搭建架构的思路，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
 
 ## 项目地址
-[WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp) 
+[WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp)  **（欢迎star）**
 
 ## 下载体验
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200129172735955.png)
 
 ## 参考项目
-[参考hegaojian大神的item布局 同时引用了大神的perference自定义控件](https://github.com/wangjianxiandev/WanAndroid)
+[参考hegaojian大神的item布局，同时引用了大神的自定义perference控件](https://github.com/wangjianxiandev/WanAndroid)
 [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - **十分感谢大神能将项目开源提供学习**
 
