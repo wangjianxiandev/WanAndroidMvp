@@ -2,27 +2,15 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.app.SkinAppCompatDelegateImpl;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.SparseArray;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -36,7 +24,6 @@ import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ParentSquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
 
-import com.wjx.android.wanandroidmvp.ui.fragment.SquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.WeChatFragment;
 
 
@@ -143,22 +130,22 @@ public class MainActivity extends AppCompatActivity {
     private void switchFragment(int index) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        mCurrentFragment = fragmentManager.findFragmentByTag("fragment"+ index);
+        mCurrentFragment = fragmentManager.findFragmentByTag("fragment" + index);
         mLastFragment = fragmentManager.findFragmentByTag("fragment" + mLastIndex);
-        if (index != mLastIndex){
-            if (mLastFragment != null){
+        if (index != mLastIndex) {
+            if (mLastFragment != null) {
                 transaction.hide(mLastFragment);
             }
-            if (mCurrentFragment == null){
+            if (mCurrentFragment == null) {
                 mCurrentFragment = getFragment(index);
                 transaction.add(R.id.container, mCurrentFragment, "fragment" + index);
-            }else {
+            } else {
                 transaction.show(mCurrentFragment);
             }
         }
 
-        if (index == mLastIndex){
-            if (mCurrentFragment == null){
+        if (index == mLastIndex) {
+            if (mCurrentFragment == null) {
                 mCurrentFragment = getFragment(index);
                 transaction.add(R.id.container, mCurrentFragment, "fragment" + index);
             }//如果位置相同，且fragment存在，则不作任何操作
