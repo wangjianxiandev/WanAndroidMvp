@@ -1,14 +1,17 @@
 
 # WanAndroid 适合新手学习的项目
-根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/blog/show/2)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，这个项目是自己实习后第一次有搭建架构的思路，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
+根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，这个项目是自己实习后第一次有搭建架构的思路，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
 
 ## 项目地址
-[WanAndroidMvp](https://github.com/wangjianxiandev/WanAndroidMvp) 
+[WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp) 
 
-## 参考项目UI
-[参考hegaojian大神的界面UI 同时引用了大神的perference自定义控件](https://github.com/wangjianxiandev/WanAndroid)
+## 下载体验
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200129172735955.png)
+
+## 参考项目
+[参考hegaojian大神的item布局 同时引用了大神的perference自定义控件](https://github.com/wangjianxiandev/WanAndroid)
 [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
-- 十分感谢大神能将项目开源提供学习
+- **十分感谢大神能将项目开源提供学习**
 
 ## 项目展示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223529904.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
