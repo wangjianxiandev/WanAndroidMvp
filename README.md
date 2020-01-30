@@ -13,7 +13,7 @@
 [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - **十分感谢大神能将项目开源提供学习**
 
-## 项目展示
+## 项目展示 (版本1.0)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223529904.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223608191.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223627900.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
@@ -77,6 +77,10 @@
 - 版本信息
 - 关于我们
 - 退出登录
+
+### 体验
+- 收藏震动
+- 无闪动切换夜间模式
 
 ### 开源库
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)

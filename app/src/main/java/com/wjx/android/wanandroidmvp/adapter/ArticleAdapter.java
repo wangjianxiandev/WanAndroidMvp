@@ -169,6 +169,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                     mArticleList.get(realPosition).title,
                     mArticleList.get(realPosition).link));
             holder.mCollectView.setOnClickListener(view -> {
+                Constant.Vibrate(mContext, 50);
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

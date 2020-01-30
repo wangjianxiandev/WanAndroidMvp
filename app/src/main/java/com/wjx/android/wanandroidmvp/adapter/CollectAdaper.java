@@ -99,20 +99,18 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
             });
 
             collectHolder.mCollectView.setSelected(true);
-            collectHolder.mCollectView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!LoginUtils.isLogin()) {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                    } else {
-                        Event event = new Event();
-                        event.target = Event.TARGET_COLLECT;
-                        event.type = Event.TYPE_UNCOLLECT;
-                        event.data = collect.articleId + ";" + collect.originId;
-                        EventBus.getDefault().post(event);
-                    }
+            collectHolder.mCollectView.setOnClickListener(v -> {
+                Constant.Vibrate(mContext, 50);
+                if (!LoginUtils.isLogin()) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                } else {
+                    Event event = new Event();
+                    event.target = Event.TARGET_COLLECT;
+                    event.type = Event.TYPE_UNCOLLECT;
+                    event.data = collect.articleId + ";" + collect.originId;
+                    EventBus.getDefault().post(event);
                 }
             });
 

@@ -44,7 +44,7 @@ import q.rorbin.verticaltablayout.widget.TabView;
  * @date: 2019/12/26
  * Time: 20:13
  */
-public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePresenter> implements Contract.ISquareView {
+public class NavigationFragment extends BaseFragment<Contract.ISquareView, SquarePresenter> implements Contract.ISquareView {
 
     @BindView(R.id.navigation_tab_layout)
     VerticalTabLayout mVerticalTabLayout;
@@ -134,7 +134,7 @@ public class SquareFragment extends BaseFragment<Contract.ISquareView, SquarePre
                 public ITabView.TabTitle getTitle(int position) {
                     return new TabView.TabTitle.Builder()
                             .setContent(tabNames.get(position))
-                            .setTextColor(ContextCompat.getColor(getContext(), R.color.white),
+                            .setTextColor(ContextCompat.getColor(mContext, R.color.always_white_text),
                                     Constant.randomColor())
                             .build();
                 }

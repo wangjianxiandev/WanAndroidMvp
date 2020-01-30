@@ -102,31 +102,25 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
                 holder.mCollectView.setSelected(articleBean.collect);
             }
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    JumpWebUtils.startWebView(mContext,
-                            mTreeArticleList.get(position).title,
-                            mTreeArticleList.get(position).link);
-                }
-            });
-            holder.mCollectView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!LoginUtils.isLogin()) {
-                        Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                    } else {
-                        Event event = new Event();
-                        event.target = Event.TARGET_TREE;
-                        event.type = articleBean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
-                        event.data = articleBean.articleId + "";
-                        EventBus.getDefault().post(event);
-                    }
+            holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
+                    mTreeArticleList.get(position).title,
+                    mTreeArticleList.get(position).link));
 
+            holder.mCollectView.setOnClickListener(view -> {
+                Constant.Vibrate(mContext, 50);
+                if (!LoginUtils.isLogin()) {
+                    Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                } else {
+                    Event event = new Event();
+                    event.target = Event.TARGET_TREE;
+                    event.type = articleBean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
+                    event.data = articleBean.articleId + "";
+                    EventBus.getDefault().post(event);
                 }
+
             });
             holder.itemView.getBackground().setColorFilter(
                     mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.card_bg), PorterDuff.Mode.SRC_ATOP);

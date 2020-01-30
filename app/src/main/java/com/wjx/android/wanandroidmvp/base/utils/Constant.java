@@ -1,11 +1,13 @@
 package com.wjx.android.wanandroidmvp.base.utils;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -568,6 +570,16 @@ public class Constant {
             editor.putString(SEARCH_HISTORY, "");
             editor.commit();
         }
+    }
+
+    /**
+     * 设置震动
+     * @param context
+     * @param milliseconds
+     */
+    public static void Vibrate(Context context, long milliseconds) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+        vibrator.vibrate(milliseconds);
     }
 
 }

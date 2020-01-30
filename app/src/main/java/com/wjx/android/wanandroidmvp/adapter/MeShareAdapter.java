@@ -88,14 +88,9 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
                     share.chapterName);
             holder.mArticleType.setText(Html.fromHtml(category, Html.FROM_HTML_MODE_COMPACT));
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    JumpWebUtils.startWebView(mContext,
-                            share.title,
-                            share.link);
-                }
-            });
+            holder.itemView.setOnClickListener(v -> JumpWebUtils.startWebView(mContext,
+                    share.title,
+                    share.link));
 
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
@@ -103,20 +98,18 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
                 holder.mCollectView.setSelected(share.isCollect);
             }
 
-            holder.mCollectView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!LoginUtils.isLogin()) {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                    } else {
-                        Event event = new Event();
-                        event.target = Event.TARGET_ME_SHARE;
-                        event.type = share.isCollect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
-                        event.data = share.articleId + "";
-                        EventBus.getDefault().post(event);
-                    }
+            holder.mCollectView.setOnClickListener(v -> {
+                Constant.Vibrate(mContext, 50);
+                if (!LoginUtils.isLogin()) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                } else {
+                    Event event = new Event();
+                    event.target = Event.TARGET_ME_SHARE;
+                    event.type = share.isCollect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
+                    event.data = share.articleId + "";
+                    EventBus.getDefault().post(event);
                 }
             });
             holder.itemView.getBackground().setColorFilter(

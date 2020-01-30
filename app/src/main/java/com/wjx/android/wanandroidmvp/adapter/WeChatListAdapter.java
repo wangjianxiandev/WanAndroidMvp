@@ -88,35 +88,29 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
             if (bean.isFresh) {
                 holder.mNewView.setVisibility(View.VISIBLE);
             }
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    JumpWebUtils.startWebView(mContext,
-                            mWeChatList.get(position).title,
-                            mWeChatList.get(position).link);
-                }
-            });
+            holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
+                    mWeChatList.get(position).title,
+                    mWeChatList.get(position).link));
 
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {
                 holder.mCollectView.setSelected(bean.collect);
             }
-            holder.mCollectView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!LoginUtils.isLogin()) {
-                        Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                    } else {
-                        Event event = new Event();
-                        event.target = Event.TARGET_WX;
-                        event.type = bean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
-                        event.data = bean.articleId + ";" + bean.authorId;
-                        EventBus.getDefault().post(event);
-                    }
+
+            holder.mCollectView.setOnClickListener(view -> {
+                Constant.Vibrate(mContext, 50);
+                if (!LoginUtils.isLogin()) {
+                    Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                } else {
+                    Event event = new Event();
+                    event.target = Event.TARGET_WX;
+                    event.type = bean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
+                    event.data = bean.articleId + ";" + bean.authorId;
+                    EventBus.getDefault().post(event);
                 }
             });
             holder.itemView.getBackground().setColorFilter(

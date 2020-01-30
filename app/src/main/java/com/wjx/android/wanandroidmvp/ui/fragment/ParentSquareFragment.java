@@ -157,7 +157,7 @@ public class ParentSquareFragment extends BaseFragment {
         mTabNames.add(2, "导航");
         mFragmentSparseArray.add(0, new HomeSquareFragment());
         mFragmentSparseArray.add(1, new TreeFragment());
-        mFragmentSparseArray.add(2, new SquareFragment());
+        mFragmentSparseArray.add(2, new NavigationFragment());
     }
 
     @Override

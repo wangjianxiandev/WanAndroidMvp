@@ -86,34 +86,27 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             holder.mProjectImageView.setVisibility(View.VISIBLE);
             holder.mItemTop.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(bean.envelopePic).into(holder.mProjectImageView);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    JumpWebUtils.startWebView(mContext,
-                            mProjectList.get(position).title,
-                            mProjectList.get(position).link);
-                }
-            });
+            holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
+                    mProjectList.get(position).title,
+                    mProjectList.get(position).link));
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {
                 holder.mCollectView.setSelected(bean.collect);
             }
-            holder.mCollectView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!LoginUtils.isLogin()) {
-                        Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(intent);
-                    } else {
-                        Event event = new Event();
-                        event.target = Event.TARGET_PROJECT;
-                        event.type = bean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
-                        event.data = bean.articleId + ";" + bean.projectType;
-                        EventBus.getDefault().post(event);
-                    }
+            holder.mCollectView.setOnClickListener(view -> {
+                Constant.Vibrate(mContext, 50);
+                if (!LoginUtils.isLogin()) {
+                    Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                } else {
+                    Event event = new Event();
+                    event.target = Event.TARGET_PROJECT;
+                    event.type = bean.collect ? Event.TYPE_UNCOLLECT : Event.TYPE_COLLECT;
+                    event.data = bean.articleId + ";" + bean.projectType;
+                    EventBus.getDefault().post(event);
                 }
             });
             holder.itemView.getBackground().setColorFilter(
