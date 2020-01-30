@@ -13,13 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
-
-import com.blankj.utilcode.util.SPUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.tencent.mmkv.MMKV;
 import com.wjx.android.wanandroidmvp.R;
 
 import org.jetbrains.annotations.NotNull;

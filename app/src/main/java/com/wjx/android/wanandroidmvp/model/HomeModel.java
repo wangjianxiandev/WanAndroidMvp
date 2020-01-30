@@ -92,7 +92,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
 //            emitter.onComplete();
 //        });
 //        if (NetworkUtils.isConnected()) {
-            Observable<List<Article>> loadFromNet = loadArticleFromNet(pageNum);
+        Observable<List<Article>> loadFromNet = loadArticleFromNet(pageNum);
 //            return Observable.concat(loadFromLocal, loadFromNet);
 //        } else {
 //            return loadFromLocal;
@@ -110,10 +110,10 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
 //            emitter.onComplete();
 //        });
 //        if (NetworkUtils.isConnected()) {
-            Observable<List<Article>> loadFromNet = loadTopArticleFromNet();
+        Observable<List<Article>> loadFromNet = loadTopArticleFromNet();
 //            return Observable.concat(loadFromLocal, loadFromNet);
 //        } else {
-            return loadFromNet;
+        return loadFromNet;
 //        }
     }
 
@@ -195,21 +195,21 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                     articleBean.getData().getDatas().stream().forEach(datasBean -> {
 //                        long count = allArticles.stream().filter(m -> m.id == datasBean.getId()).count();
 //                        if (count <= 0) {
-                            Article article = new Article();
-                            article.type = Article.TYPE_HOME;
-                            article.articleId = datasBean.getId();
-                            article.title = datasBean.getTitle();
-                            article.author = datasBean.getAuthor();
-                            article.chapterName = datasBean.getChapterName();
-                            article.superChapterName = datasBean.getSuperChapterName();
-                            article.time = datasBean.getPublishTime();
-                            article.link = datasBean.getLink();
-                            article.collect = datasBean.isCollect();
-                            article.niceDate = datasBean.getNiceDate();
-                            article.shareUser = datasBean.getShareUser();
-                            article.isFresh = datasBean.isFresh();
-                            article.isTop = false;
-                            articleList.add(article);
+                        Article article = new Article();
+                        article.type = Article.TYPE_HOME;
+                        article.articleId = datasBean.getId();
+                        article.title = datasBean.getTitle();
+                        article.author = datasBean.getAuthor();
+                        article.chapterName = datasBean.getChapterName();
+                        article.superChapterName = datasBean.getSuperChapterName();
+                        article.time = datasBean.getPublishTime();
+                        article.link = datasBean.getLink();
+                        article.collect = datasBean.isCollect();
+                        article.niceDate = datasBean.getNiceDate();
+                        article.shareUser = datasBean.getShareUser();
+                        article.isFresh = datasBean.isFresh();
+                        article.isTop = false;
+                        articleList.add(article);
 //                        } else {
 //                            allArticles.stream().filter(m -> m.id == datasBean.getId()).forEach(m -> {
 //                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect() || m.isFresh != datasBean.isFresh()) {

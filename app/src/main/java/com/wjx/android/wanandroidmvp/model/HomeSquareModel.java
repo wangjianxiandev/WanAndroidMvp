@@ -55,20 +55,20 @@ public class HomeSquareModel extends BaseModel implements Contract.IHomeSquareMo
                     squareData.getData().getDatas().stream().forEach(datasBean -> {
 //                        long count = allHomeSquareData.stream().filter(m -> m.articleId == datasBean.getId()).count();
 //                        if (count <= 0) {
-                            Article article = new Article();
-                            article.type = Article.TYPE_SQUARE;
-                            article.articleId = datasBean.getId();
-                            article.title = datasBean.getTitle();
-                            article.author = datasBean.getAuthor();
-                            article.chapterName = datasBean.getChapterName();
-                            article.superChapterName = datasBean.getSuperChapterName();
-                            article.time = datasBean.getPublishTime();
-                            article.link = datasBean.getLink();
-                            article.collect = datasBean.isCollect();
-                            article.niceDate = datasBean.getNiceDate();
-                            article.shareUser = datasBean.getShareUser();
-                            article.isFresh = datasBean.isFresh();
-                            squareArticleList.add(article);
+                        Article article = new Article();
+                        article.type = Article.TYPE_SQUARE;
+                        article.articleId = datasBean.getId();
+                        article.title = datasBean.getTitle();
+                        article.author = datasBean.getAuthor();
+                        article.chapterName = datasBean.getChapterName();
+                        article.superChapterName = datasBean.getSuperChapterName();
+                        article.time = datasBean.getPublishTime();
+                        article.link = datasBean.getLink();
+                        article.collect = datasBean.isCollect();
+                        article.niceDate = datasBean.getNiceDate();
+                        article.shareUser = datasBean.getShareUser();
+                        article.isFresh = datasBean.isFresh();
+                        squareArticleList.add(article);
 //                        } else {
 //                            allHomeSquareData.stream().filter(m -> m.articleId == datasBean.getId()).forEach(m -> {
 //                                if (m.niceDate != datasBean.getNiceDate() ||

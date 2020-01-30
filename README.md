@@ -8,12 +8,7 @@
 ## 下载体验
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200129172735955.png)
 
-## 参考项目
-[参考hegaojian大神的item布局，同时引用了大神的自定义perference控件](https://github.com/wangjianxiandev/WanAndroid)
-[WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
-- **十分感谢大神能将项目开源提供学习**
-
-## 项目展示 (版本1.0)
+## 项目展示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223529904.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223608191.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223627900.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
@@ -78,11 +73,9 @@
 - 关于我们
 - 退出登录
 
-### 体验
-- 收藏震动
-- 无闪动切换夜间模式
-
-### 开源库
+### 开源
+- [引用hegaojian大神的自定义颜色展示的perference控件](https://github.com/wangjianxiandev/WanAndroid)
+- [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
 - [网络请求的框架-Okhttp](https://github.com/square/okhttp)
 - [网络加载框架-Retrofit](https://github.com/square/retrofit)

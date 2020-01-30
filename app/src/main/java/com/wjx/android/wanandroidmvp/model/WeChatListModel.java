@@ -42,10 +42,10 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
 //            emitter.onComplete();
 //        });
 //        if (NetworkUtils.isConnected()) {
-            Observable<List<Article>> loadFromNet = loadWeChatArticleFromNet(cid, pageNum);
+        Observable<List<Article>> loadFromNet = loadWeChatArticleFromNet(cid, pageNum);
 //            return Observable.concat(loadFromLocal, loadFromNet);
 //        } else {
-            return loadFromNet;
+        return loadFromNet;
 //        }
     }
 
@@ -60,20 +60,20 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                     weChatListData.getData().getDatas().stream().forEach(datasBean -> {
 //                        long count = allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).count();
 //                        if (count <= 0) {
-                            Article article = new Article();
-                            article.type = Article.TYPE_WX;
-                            article.title = datasBean.getTitle();
-                            article.articleId = datasBean.getId();
-                            article.desc = datasBean.getDesc();
-                            article.authorId = datasBean.getChapterId();
-                            article.author = datasBean.getAuthor();
-                            article.chapterName = datasBean.getChapterName();
-                            article.superChapterName = datasBean.getSuperChapterName();
-                            article.link = datasBean.getLink();
-                            article.niceDate = datasBean.getNiceDate();
-                            article.time = datasBean.getPublishTime();
-                            article.isFresh = datasBean.isFresh();
-                            weChatArticleList.add(article);
+                        Article article = new Article();
+                        article.type = Article.TYPE_WX;
+                        article.title = datasBean.getTitle();
+                        article.articleId = datasBean.getId();
+                        article.desc = datasBean.getDesc();
+                        article.authorId = datasBean.getChapterId();
+                        article.author = datasBean.getAuthor();
+                        article.chapterName = datasBean.getChapterName();
+                        article.superChapterName = datasBean.getSuperChapterName();
+                        article.link = datasBean.getLink();
+                        article.niceDate = datasBean.getNiceDate();
+                        article.time = datasBean.getPublishTime();
+                        article.isFresh = datasBean.isFresh();
+                        weChatArticleList.add(article);
 //                        } else {
 //                            allWeChatArticleList.stream().filter(w -> w.articleId == datasBean.getId()).forEach(w -> {
 //                                if (w.niceDate != datasBean.getNiceDate() || w.collect != datasBean.isCollect()) {

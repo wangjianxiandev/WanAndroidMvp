@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +27,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
-import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;;
+import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.GlideImageLoader;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
@@ -306,7 +305,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void onLoading() {
-        Toast.makeText(mContext, "onLoading", Toast.LENGTH_SHORT).show();
     }
 
     @Override
