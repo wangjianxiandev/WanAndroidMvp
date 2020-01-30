@@ -94,6 +94,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             } else {
                 holder.mCollectView.setSelected(bean.collect);
             }
+
             holder.mCollectView.setOnClickListener(view -> {
                 Constant.Vibrate(mContext, 50);
                 if (!LoginUtils.isLogin()) {
@@ -109,6 +110,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                     EventBus.getDefault().post(event);
                 }
             });
+
             holder.itemView.getBackground().setColorFilter(
                     mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.card_bg), PorterDuff.Mode.SRC_ATOP);
             holder.mProjectDate.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));

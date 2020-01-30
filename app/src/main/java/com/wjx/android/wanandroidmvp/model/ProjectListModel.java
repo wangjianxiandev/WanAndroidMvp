@@ -72,6 +72,7 @@ public class ProjectListModel extends BaseModel implements Contract.IProjectList
                         article.projectType = datasBean.getChapterId();
                         article.link = datasBean.getLink();
                         article.desc = datasBean.getDesc();
+                        article.collect = datasBean.isCollect();
                         article.envelopePic = datasBean.getEnvelopePic();
                         projectArticleLists.add(article);
 //                        } else {
