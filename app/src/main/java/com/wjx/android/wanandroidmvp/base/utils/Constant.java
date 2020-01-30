@@ -11,9 +11,13 @@ import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.wjx.android.wanandroidmvp.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -574,6 +578,33 @@ public class Constant {
     public static void Vibrate(Context context, long milliseconds) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
         vibrator.vibrate(milliseconds);
+    }
+
+    /**
+     * 显示SnackBar
+     * @param activity
+     * @param msg
+     */
+    public static void showSnackMessage(Activity activity, String msg) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE
+        );
+        final Snackbar snackbar = Snackbar.make(activity.getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(ContextCompat.getColor(activity,R.color.always_white_text));
+        snackbar.setActionTextColor(ContextCompat.getColor(activity,R.color.always_white_text));
+        view.setBackgroundColor(getColor(activity));
+        snackbar.setAction("知道了", v -> {
+            snackbar.dismiss();
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        }).show();
+        snackbar.addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                super.onDismissed(transientBottomBar, event);
+                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            }
+        });
     }
 
 }

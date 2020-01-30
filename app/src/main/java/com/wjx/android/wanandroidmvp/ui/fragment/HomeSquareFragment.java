@@ -152,8 +152,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
-                mHomeSquareAdapter.setHomeSquareList(mHomeSquareList);
+                Constant.showSnackMessage(getActivity(), "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -168,8 +167,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == 0) {
-                mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
-                mHomeSquareAdapter.setHomeSquareList(mHomeSquareList);
+                Constant.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -215,6 +213,8 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         if (event.target == Event.TARGET_SQUARE) {
             if (event.type == Event.TYPE_COLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
+                mHomeSquareAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;
@@ -222,6 +222,8 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
                 EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
+                mHomeSquareAdapter.setHomeSquareList(mHomeSquareList);
                 mPresenter.unCollect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;

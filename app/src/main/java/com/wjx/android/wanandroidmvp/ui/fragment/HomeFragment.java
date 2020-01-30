@@ -23,8 +23,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.snackbar.Snackbar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
@@ -47,6 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.PhantomReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +91,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     NestedScrollView mNestedScrollView;
     @BindView(R.id.home_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.loading)
+    LoadingView mLoadingView;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -142,12 +148,18 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         initBanner();
         initToolbar();
         initStatusBar();
+        initLoadingView();
         mPresenter.loadBanner();
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
+    }
+
+    private void initLoadingView() {
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.startTranglesAnimation();
     }
 
     private void initToolbar() {
@@ -243,7 +255,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void loadTopArticle(List<Article> topArticleList) {
         mTopArticleList.clear();
-        mTopArticleList.addAll(0,topArticleList);
+        mTopArticleList.addAll(0, topArticleList);
     }
 
     @Override
@@ -254,6 +266,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void loadArticle(List<Article> articleList) {
+        if (mLoadingView.getVisibility() == View.VISIBLE) {
+            mLoadingView.setVisibility(View.GONE);
+        }
         // 解决首页加载两次问题
         if (mCurrentPage == 0) {
             mArticleList.clear();
@@ -279,8 +294,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
-                mArticleAdapter.setArticleList(mArticleList);
+                Constant.showSnackMessage(getActivity(), "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -294,9 +308,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
-                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
-                mArticleAdapter.setArticleList(mArticleList);
+            if (collect.getErrorCode() == Constant.SUCCESS) {
+                Constant.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -314,6 +327,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         ToastUtils.showShort("加载失败");
+        mLoadingView.setVisibility(View.GONE);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
@@ -329,6 +343,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         if (event.target == Event.TARGET_HOME) {
             if (event.type == Event.TYPE_COLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
+                mArticleAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;
@@ -336,6 +352,8 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                 EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
+                mArticleAdapter.notifyDataSetChanged();
                 mPresenter.unCollect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;
@@ -343,9 +361,11 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                 EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_LOGIN) {
                 mArticleList.clear();
+                mPresenter.refreshTopArticle();
                 mPresenter.refreshArticle(0);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mArticleList.clear();
+                mPresenter.refreshTopArticle();
                 mPresenter.refreshArticle(0);
             } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
                 mArticleList.clear();

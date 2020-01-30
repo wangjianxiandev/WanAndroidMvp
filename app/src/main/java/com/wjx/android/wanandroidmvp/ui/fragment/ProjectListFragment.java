@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ProjectListAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
+import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
@@ -125,8 +126,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == 0) {
-                mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
-                mProjectListAdapter.setProjectList(mProjectArticleList);
+                Constant.showSnackMessage(getActivity(), "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -141,8 +141,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == 0) {
-                mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
-                mProjectListAdapter.setProjectList(mProjectArticleList);
+                Constant.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -197,6 +196,8 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
                 String[] data = event.data.split(";");
                 if (data.length > 1 && mCid == Integer.valueOf(data[1])) {
                     int articleId = Integer.valueOf(data[0]);
+                    mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
+                    mProjectListAdapter.notifyDataSetChanged();
                     mPresenter.collect(articleId);
                     Event e = new Event();
                     e.target = Event.TARGET_MAIN;
@@ -207,6 +208,8 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
                 String[] data = event.data.split(";");
                 if (data.length > 1 && mCid == Integer.valueOf(data[1])) {
                     int articleId = Integer.valueOf(data[0]);
+                    mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
+                    mProjectListAdapter.notifyDataSetChanged();
                     mPresenter.unCollect(articleId);
                     Event e = new Event();
                     e.target = Event.TARGET_MAIN;
