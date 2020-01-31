@@ -167,8 +167,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
-                mTreeArticleAdapter.setArticleList(mTreeArticleList);
+                Constant.showSnackMessage(this, "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -182,9 +181,8 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
-                mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
-                mTreeArticleAdapter.setArticleList(mTreeArticleList);
+            if (collect.getErrorCode() == Constant.SUCCESS) {
+                Constant.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -229,6 +227,8 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
         if (event.target == Event.TARGET_TREE) {
             if (event.type == Event.TYPE_COLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
+                mTreeArticleAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;
@@ -236,6 +236,8 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
                 EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
+                mTreeArticleAdapter.notifyDataSetChanged();
                 mPresenter.unCollect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;

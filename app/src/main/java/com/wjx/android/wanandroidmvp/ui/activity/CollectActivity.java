@@ -175,6 +175,10 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
             if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data.split(";")[0]);
                 int originId = Integer.valueOf(event.data.split(";")[1]);
+                List<Collect> tempList = mCollectList.stream().filter(a -> a.articleId != articleId).collect(Collectors.toList());
+                mCollectList.clear();
+                mCollectList.addAll(tempList);
+                mCollectAdapter.setCollectList(mCollectList);
                 mPresenter.unCollect(articleId, originId);
             }
         }
@@ -206,11 +210,8 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
-                List<Collect> tempList = mCollectList.stream().filter(a -> a.articleId != articleId).collect(Collectors.toList());
-                mCollectList.clear();
-                mCollectList.addAll(tempList);
-                mCollectAdapter.setCollectList(mCollectList);
+            if (collect.getErrorCode() == Constant.SUCCESS) {
+                Constant.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }

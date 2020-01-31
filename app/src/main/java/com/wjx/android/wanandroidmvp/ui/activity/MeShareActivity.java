@@ -211,8 +211,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect = true;
-                mMeShareAdapter.setShareList(mShareList);
+                Constant.showSnackMessage(this, "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -232,9 +231,8 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
-                mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect = false;
-                mMeShareAdapter.setShareList(mShareList);
+            if (collect.getErrorCode() == Constant.SUCCESS) {
+                Constant.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -285,6 +283,8 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         if (event.target == Event.TARGET_ME_SHARE) {
             if (event.type == Event.TYPE_COLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect = true;
+                mMeShareAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;
@@ -292,6 +292,8 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
                 EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect = false;
+                mMeShareAdapter.notifyDataSetChanged();
                 mPresenter.unCollect(articleId);
                 Event e = new Event();
                 e.target = Event.TARGET_MAIN;

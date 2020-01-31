@@ -12,6 +12,7 @@
         android:layout_height="300dp"
         android:layout_centerInParent="true"
         app:lottie_autoPlay="true"
+        app:lottie_imageAssetsFolder="splash"
         app:lottie_fileName="android.json"
         app:lottie_loop="false">
     </com.airbnb.lottie.LottieAnimationView>

@@ -171,8 +171,7 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
         EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                mSearchResultList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
-                mSearchResultAdapter.setSearchResultList(mSearchResultList);
+                Constant.showSnackMessage(this, "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -186,9 +185,8 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
-                mSearchResultList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
-                mSearchResultAdapter.setSearchResultList(mSearchResultList);
+            if (collect.getErrorCode() == Constant.SUCCESS) {
+                Constant.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -232,9 +230,13 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
         if (event.target == Event.TARGET_SEARCH_RESULT) {
             if (event.type == Event.TYPE_COLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mSearchResultList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
+                mSearchResultAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
+                mSearchResultList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
+                mSearchResultAdapter.notifyDataSetChanged();
                 mPresenter.unCollect(articleId);
             } else if (event.type == Event.TYPE_LOGIN) {
                 mSearchResultList.clear();

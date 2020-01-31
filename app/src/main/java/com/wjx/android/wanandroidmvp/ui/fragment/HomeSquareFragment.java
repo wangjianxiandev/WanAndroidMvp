@@ -166,7 +166,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
+            if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");

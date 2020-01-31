@@ -5,7 +5,7 @@
 ## 项目地址
 [WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp)  **（欢迎star）**
 
-## 下载体验
+## 下载体验 (1.0.2)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200129172735955.png)
 
 ## 项目展示
@@ -72,6 +72,10 @@
 - 版本信息
 - 关于我们
 - 退出登录
+
+### 体验
+- 收藏震动
+- 无闪动切换夜间模式
 
 ### 开源
 - [引用hegaojian大神的自定义颜色展示的perference控件](https://github.com/wangjianxiandev/WanAndroid)

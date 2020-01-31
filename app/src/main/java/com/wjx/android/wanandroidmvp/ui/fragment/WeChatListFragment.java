@@ -146,7 +146,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
+            if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
@@ -161,7 +161,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
         if (collect != null) {
-            if (collect.getErrorCode() == 0) {
+            if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
