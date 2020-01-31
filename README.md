@@ -9,9 +9,11 @@
 - 优化收藏加载速度
 - 增加启动动画
 - 加入收藏提示
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200131163750265.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200131165119329.png)
+
 ## 版本1.0.1
 加入自定义加载动画（试水）
+
 ## 项目展示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223529904.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200126223608191.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)

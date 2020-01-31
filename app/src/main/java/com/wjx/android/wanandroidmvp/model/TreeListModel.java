@@ -29,35 +29,36 @@ public class TreeListModel extends BaseModel implements Contract.ITreeListModel 
     }
     @Override
     public Observable<List<Article>> loadTreeList(int pageNum, int cid) {
-        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
-            List<Article> treeList = LitePal.where("type=? and treeType=?"
-                    , Article.TYPE_TREE+"", cid +"")
-                    .order("time desc")
-                    .offset(pageNum * Constant.PAGE_SIZE)
-                    .limit(Constant.PAGE_SIZE)
-                    .find(Article.class);
-            emitter.onNext(treeList);
-            emitter.onComplete();
-        });
-        if (NetworkUtils.isConnected()) {
+//        Observable<List<Article>> loadFromLocal = Observable.create(emitter -> {
+//            List<Article> treeList = LitePal.where("type=? and treeType=?"
+//                    , Article.TYPE_TREE+"", cid +"")
+//                    .order("time desc")
+//                    .offset(pageNum * Constant.PAGE_SIZE)
+//                    .limit(Constant.PAGE_SIZE)
+//                    .find(Article.class);
+//            emitter.onNext(treeList);
+//            emitter.onComplete();
+//        });
+//        if (NetworkUtils.isConnected()) {
             Observable<List<Article>> loadFromNet = loadTreeListFromNet(pageNum, cid);
-            return Observable.concat(loadFromLocal, loadFromNet);
-        } else {
-            return loadFromLocal;
-        }
+//            return Observable.concat(loadFromLocal, loadFromNet);
+//        } else {
+//            return loadFromLocal;
+//        }
+        return loadFromNet;
     }
 
     private Observable<List<Article>> loadTreeListFromNet(int pageNum, int cid) {
         return mApiServer.loadTreeArticle(pageNum,cid)
                 .filter(treeListArticle -> treeListArticle.getErrorCode() == Constant.SUCCESS)
                 .map(treeListArticle -> {
-                    List<Article> allTreeList = LitePal.where("type=? and treeType=?"
-                            , Article.TYPE_TREE + "", cid + "")
-                            .find(Article.class);
+//                    List<Article> allTreeList = LitePal.where("type=? and treeType=?"
+//                            , Article.TYPE_TREE + "", cid + "")
+//                            .find(Article.class);
                     List<Article> treeArticleList = new ArrayList<>();
                     treeListArticle.getData().getDatas().stream().forEach(datasBean -> {
-                        long count = allTreeList.stream().filter(m -> m.articleId == datasBean.getId()).count();
-                        if (count <= 0) {
+//                        long count = allTreeList.stream().filter(m -> m.articleId == datasBean.getId()).count();
+//                        if (count <= 0) {
                             Article article = new Article();
                             article.type = Article.TYPE_TREE;
                             article.articleId = datasBean.getId();
@@ -74,37 +75,37 @@ public class TreeListModel extends BaseModel implements Contract.ITreeListModel 
                             article.shareUser = datasBean.getShareUser();
                             article.treeType = cid;
                             treeArticleList.add(article);
-                        } else {
-                            allTreeList.stream().filter(m ->m.articleId == datasBean.getId()).forEach(m ->{
-                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect()) {
-                                    m.title = datasBean.getTitle();
-                                    m.desc = datasBean.getDesc();
-                                    m.authorId = datasBean.getChapterId();
-                                    m.author = datasBean.getAuthor();
-                                    m.chapterName = datasBean.getChapterName();
-                                    m.superChapterName = datasBean.getSuperChapterName();
-                                    m.time = datasBean.getPublishTime();
-                                    m.niceDate = datasBean.getNiceDate();
-                                    m.link = datasBean.getLink();
-                                    m.collect = datasBean.isCollect();
-                                    m.shareUser = datasBean.getShareUser();
-                                    if (!m.collect) {
-                                        m.setToDefault("collect");
-                                    }
-                                    m.update(m.id);
-                                }
-                            });
-
-                        }
+//                        } else {
+//                            allTreeList.stream().filter(m ->m.articleId == datasBean.getId()).forEach(m ->{
+//                                if (m.niceDate != datasBean.getNiceDate() || m.collect != datasBean.isCollect()) {
+//                                    m.title = datasBean.getTitle();
+//                                    m.desc = datasBean.getDesc();
+//                                    m.authorId = datasBean.getChapterId();
+//                                    m.author = datasBean.getAuthor();
+//                                    m.chapterName = datasBean.getChapterName();
+//                                    m.superChapterName = datasBean.getSuperChapterName();
+//                                    m.time = datasBean.getPublishTime();
+//                                    m.niceDate = datasBean.getNiceDate();
+//                                    m.link = datasBean.getLink();
+//                                    m.collect = datasBean.isCollect();
+//                                    m.shareUser = datasBean.getShareUser();
+//                                    if (!m.collect) {
+//                                        m.setToDefault("collect");
+//                                    }
+//                                    m.update(m.id);
+//                                }
+//                            });
+//
+//                        }
                     });
-                    LitePal.saveAll(treeArticleList);
-                    List<Article> resultTreeArticle = LitePal.where("type=? and treeType=?"
-                            , Article.TYPE_TREE + "", cid + "")
-                            .order("time desc")
-                            .offset(pageNum * Constant.PAGE_SIZE)
-                            .limit(Constant.PAGE_SIZE)
-                            .find(Article.class);
-                    return resultTreeArticle;
+//                    LitePal.saveAll(treeArticleList);
+//                    List<Article> resultTreeArticle = LitePal.where("type=? and treeType=?"
+//                            , Article.TYPE_TREE + "", cid + "")
+//                            .order("time desc")
+//                            .offset(pageNum * Constant.PAGE_SIZE)
+//                            .limit(Constant.PAGE_SIZE)
+//                            .find(Article.class);
+                    return treeArticleList;
                 });
     }
 

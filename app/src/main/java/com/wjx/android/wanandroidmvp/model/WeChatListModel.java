@@ -71,6 +71,7 @@ public class WeChatListModel extends BaseModel implements Contract.IWeChatListMo
                         article.superChapterName = datasBean.getSuperChapterName();
                         article.link = datasBean.getLink();
                         article.niceDate = datasBean.getNiceDate();
+                        article.collect = datasBean.isCollect();
                         article.time = datasBean.getPublishTime();
                         article.isFresh = datasBean.isFresh();
                         weChatArticleList.add(article);
