@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
 public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresenter> implements Contract.ILoginView {
     private String mUserNameText;
     private String mPassWordText;
-    
+
     @BindView(R.id.username)
     EditText mUsername;
 
@@ -61,6 +62,7 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     private String mRegisterName;
 
     private String mRegisterPassword;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_login;
@@ -78,6 +80,8 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
             e.printStackTrace();
         }
         initToolbar();
+        mLoginButton.getBackground().setColorFilter(
+                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void initToolbar() {

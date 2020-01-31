@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -53,6 +55,9 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
     @BindView(R.id.loading)
     ImageView mLoading;
 
+    @BindView(R.id.register)
+    Button mRegisterButton;
+
     private Context mContext;
 
 
@@ -65,6 +70,8 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
         initToolbar();
+        mRegisterButton.getBackground().setColorFilter(
+                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void initToolbar() {

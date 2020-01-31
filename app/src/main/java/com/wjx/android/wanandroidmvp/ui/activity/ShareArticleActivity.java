@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -63,6 +64,8 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
         getWindow().setStatusBarColor(Constant.getColor(mContext));
         mToolbar.setBackgroundColor(Constant.getColor(mContext));
         mToolbar.setTitleTextColor(getColor(R.color.white));
+        mShareSubmit.getBackground().setColorFilter(
+                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     @OnClick(R.id.share_submit)
