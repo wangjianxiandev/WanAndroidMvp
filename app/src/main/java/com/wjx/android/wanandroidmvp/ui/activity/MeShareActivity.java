@@ -222,6 +222,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
         squareEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        squareEvent.data = articleId + "";
         EventBus.getDefault().post(squareEvent);
     }
 

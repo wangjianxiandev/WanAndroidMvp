@@ -11,13 +11,14 @@
 - 修复从收藏列表取消收藏后文章列表加载错乱bug
 - 加入每个页面的加载动画
 - 加入文章详情页的收藏、分享、使用系统浏览器打开的功能
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200202181501788.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200202190916424.png)
 ## 上一版本1.0.2
 - 优化收藏加载速度
 - 增加启动动画
 - 加入收藏提示
 ## 上一版本1.0.1
-加入自定义加载动画（试水）
+- 加入自定义加载动画（试水）
+- 使用**LitePal**数据库对数据进行本地化存储，但是会出现列表错乱，数据重复加载的问题（已摒弃）
 ## 项目展示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112206926.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112516770.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
