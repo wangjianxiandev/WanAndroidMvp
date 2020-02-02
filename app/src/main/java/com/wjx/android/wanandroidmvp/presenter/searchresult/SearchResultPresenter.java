@@ -30,10 +30,8 @@ public class SearchResultPresenter extends BasePresenter<Contract.ISearchResultV
 
     @Override
     public void loadSearchResult(int pageNum, String keyWord) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 0) {
             getView().onLoading();
-        } else {
-            return;
         }
         iSearchResultModel.loadSearchResult(pageNum, keyWord)
                 .subscribeOn(Schedulers.io())
@@ -70,11 +68,6 @@ public class SearchResultPresenter extends BasePresenter<Contract.ISearchResultV
 
     @Override
     public void refreshSearchResult(int pageNum, String keyWord) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iSearchResultModel.refreshSearchResult(pageNum, keyWord)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,11 +102,6 @@ public class SearchResultPresenter extends BasePresenter<Contract.ISearchResultV
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iSearchResultModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -148,11 +136,6 @@ public class SearchResultPresenter extends BasePresenter<Contract.ISearchResultV
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iSearchResultModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

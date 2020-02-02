@@ -104,7 +104,9 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
 
             holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
                     mTreeArticleList.get(position).title,
-                    mTreeArticleList.get(position).link));
+                    mTreeArticleList.get(position).link,
+                    mTreeArticleList.get(position).articleId,
+                    mTreeArticleList.get(position).collect));
 
             holder.mCollectView.setOnClickListener(view -> {
                 Constant.Vibrate(mContext, 50);

@@ -90,7 +90,9 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
             }
             holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
                     mWeChatList.get(position).title,
-                    mWeChatList.get(position).link));
+                    mWeChatList.get(position).link,
+                    mWeChatList.get(position).articleId,
+                    mWeChatList.get(position).collect));
 
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);

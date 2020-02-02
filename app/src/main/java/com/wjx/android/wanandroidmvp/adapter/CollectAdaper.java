@@ -94,7 +94,9 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
                 public void onClick(View v) {
                     JumpWebUtils.startWebView(mContext,
                             collect.title,
-                            collect.link);
+                            collect.link,
+                            collect.originId,
+                            true);
                 }
             });
 

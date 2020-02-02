@@ -28,10 +28,8 @@ public class TreeListPresenter extends BasePresenter<Contract.ITreeListView> imp
     }
     @Override
     public void loadTreeList(int pageNum, int cid) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 0) {
             getView().onLoading();
-        } else {
-            return;
         }
         iTreeListModel.loadTreeList(pageNum, cid)
                 .subscribeOn(Schedulers.io())
@@ -67,11 +65,6 @@ public class TreeListPresenter extends BasePresenter<Contract.ITreeListView> imp
 
     @Override
     public void refreshTreeList(int pageNum, int cid) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iTreeListModel.refreshTreeList(pageNum, cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -106,11 +99,6 @@ public class TreeListPresenter extends BasePresenter<Contract.ITreeListView> imp
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iTreeListModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -146,11 +134,6 @@ public class TreeListPresenter extends BasePresenter<Contract.ITreeListView> imp
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iTreeListModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

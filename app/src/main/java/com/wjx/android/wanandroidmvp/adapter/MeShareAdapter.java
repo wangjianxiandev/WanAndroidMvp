@@ -90,7 +90,9 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
 
             holder.itemView.setOnClickListener(v -> JumpWebUtils.startWebView(mContext,
                     share.title,
-                    share.link));
+                    share.link,
+                    share.articleId,
+                    share.isCollect));
 
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);

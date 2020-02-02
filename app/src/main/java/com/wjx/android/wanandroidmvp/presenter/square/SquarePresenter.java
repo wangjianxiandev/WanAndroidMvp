@@ -27,11 +27,6 @@ public class SquarePresenter extends BasePresenter<Contract.ISquareView> impleme
 
     @Override
     public void loadNavigation() {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iSquareModel.loadNavigation()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

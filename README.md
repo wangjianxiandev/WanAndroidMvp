@@ -5,12 +5,18 @@
 ## 项目地址
 [WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp)  **（欢迎star）**
 
-## 下载体验(1.0.2)
+## 下载体验
+
+## 当前版本（2.0）
+- 修复从收藏列表取消收藏后文章列表加载错乱bug
+- 加入每个页面的加载动画
+- 加入文章详情页的收藏、分享、使用系统浏览器打开的功能
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200202181501788.png)
+## 上一版本1.0.2
 - 优化收藏加载速度
 - 增加启动动画
 - 加入收藏提示
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200131165119329.png)
-## 版本1.0.1
+## 上一版本1.0.1
 加入自定义加载动画（试水）
 ## 项目展示
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112206926.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
@@ -79,9 +85,9 @@
 ### 体验
 - 收藏震动
 - 无闪动切换夜间模式
-
+- 自定义三角加载动画
 ### 开源
-- [引用hegaojian大神的自定义颜色展示的perference控件](https://github.com/wangjianxiandev/WanAndroid)
+- [参考hegaojian大神的自定义颜色展示的perference控件](https://github.com/wangjianxiandev/WanAndroid)
 - [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
 - [网络请求的框架-Okhttp](https://github.com/square/okhttp)

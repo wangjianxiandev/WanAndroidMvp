@@ -90,7 +90,9 @@ public class HomeSquareAdapter extends RecyclerView.Adapter<HomeSquareAdapter.Ho
 
             holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
                     mHomeSquareList.get(position).title,
-                    mHomeSquareList.get(position).link));
+                    mHomeSquareList.get(position).link,
+                    mHomeSquareList.get(position).articleId,
+                    mHomeSquareList.get(position).collect));
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {

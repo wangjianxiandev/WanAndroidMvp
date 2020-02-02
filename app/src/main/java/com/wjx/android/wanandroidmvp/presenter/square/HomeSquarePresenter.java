@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
  * Description:
  *
  * @author: Wangjianxian
- * @date: 2020/01/09
+ * @date: 2020/01/0
  * Time: 16:27
  */
 public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView> implements Contract.IHomeSquarePresenter {
@@ -31,10 +31,8 @@ public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView>
 
     @Override
     public void loadHomeSquareData(int pageNum) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 0) {
             getView().onLoading();
-        } else {
-            return;
         }
         iHomeSquareModel.loadHomeSquareData(pageNum)
                 .subscribeOn(Schedulers.io())
@@ -70,11 +68,6 @@ public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView>
 
     @Override
     public void refreshHomeSquareData(int pageNum) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeSquareModel.refreshHomeSquareData(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,11 +102,6 @@ public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView>
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeSquareModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -148,11 +136,6 @@ public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView>
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeSquareModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

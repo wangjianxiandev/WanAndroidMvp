@@ -30,10 +30,8 @@ public class ProjectListPresenter extends BasePresenter<Contract.IProjectListVie
 
     @Override
     public void loadProjectList(int pageNum, int cid) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 1) {
             getView().onLoading();
-        } else {
-            return;
         }
         iProjectListModel.loadProjectList(pageNum, cid)
                 .subscribeOn(Schedulers.io())
@@ -69,11 +67,6 @@ public class ProjectListPresenter extends BasePresenter<Contract.IProjectListVie
 
     @Override
     public void refreshProjectList(int pageNum, int cid) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iProjectListModel.refreshProjectList(pageNum, cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,11 +102,6 @@ public class ProjectListPresenter extends BasePresenter<Contract.IProjectListVie
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iProjectListModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -148,11 +136,6 @@ public class ProjectListPresenter extends BasePresenter<Contract.IProjectListVie
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iProjectListModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

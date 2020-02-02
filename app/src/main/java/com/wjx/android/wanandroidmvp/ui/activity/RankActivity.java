@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.R;
@@ -127,9 +128,9 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
     private void initExtra() {
         Intent intent = getIntent();
         String rank = intent.getStringExtra(Constant.KEY_RANK);
-        String countcoin = intent.getStringExtra(Constant.KEY_COUNTCOIN);
+        String countCoin = intent.getStringExtra(Constant.KEY_COUNTCOIN);
         mMeRank.setText(rank);
-        mMeCountCoin.setText(countcoin);
+        mMeCountCoin.setText(countCoin);
         mMeName.setText(LoginUtils.getLoginUser());
     }
 
@@ -170,7 +171,7 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
     }
 
     @Override
-    public void onLoadRankData(List<Rank> rankList) {
+    public void onLoadRankData(List<Rank> rankList) { ;
         mRankList.addAll(rankList);
         mRankAdapter.setRankList(mRankList);
     }
@@ -184,11 +185,11 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadFailed() {
+        ToastUtils.showShort("加载失败");
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }

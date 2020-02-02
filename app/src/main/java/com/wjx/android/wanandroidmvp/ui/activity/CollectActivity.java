@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +19,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wjx.android.wanandroidmvp.Custom.CustomDialog;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.CollectAdaper;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
@@ -62,6 +62,9 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
 
     @BindView(R.id.collect_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.loading_view)
+    LoadingView mLoadingView;
 
     @Override
     protected int getContentViewId() {
@@ -176,16 +179,24 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
                 int articleId = Integer.valueOf(event.data.split(";")[0]);
                 int originId = Integer.valueOf(event.data.split(";")[1]);
                 List<Collect> tempList = mCollectList.stream().filter(a -> a.articleId != articleId).collect(Collectors.toList());
+                changeCollectState(originId);
                 mCollectList.clear();
                 mCollectList.addAll(tempList);
                 mCollectAdapter.setCollectList(mCollectList);
                 mPresenter.unCollect(articleId, originId);
+            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
+                int originId = Integer.valueOf(event.data);
+                List<Collect> tempList = mCollectList.stream().filter(a -> a.originId != originId).collect(Collectors.toList());
+                mCollectList.clear();
+                mCollectList.addAll(tempList);
+                mCollectAdapter.setCollectList(mCollectList);
             }
         }
     }
 
     @Override
     public void onLoadCollectData(List<Collect> collectList) {
+        mLoadingView.setVisibility(View.GONE);
         mCollectList.addAll(collectList);
         mCollectAdapter.setCollectList(mCollectList);
     }
@@ -205,10 +216,6 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
 
     @Override
     public void onUnCollect(com.wjx.android.wanandroidmvp.bean.collect.Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "取消收藏");
@@ -216,44 +223,55 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
                 ToastUtils.showShort("取消收藏失败");
             }
         }
+    }
+
+    private void changeCollectState(int originId) {
         // 取消收藏传递给home
         Event homeEvent = new Event();
         homeEvent.target = Event.TARGET_HOME;
-        homeEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        homeEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        homeEvent.data = originId + "";
         EventBus.getDefault().post(homeEvent);
 
         // 取消收藏传递给project
         Event projectEvent = new Event();
         projectEvent.target = Event.TARGET_PROJECT;
-        projectEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        projectEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        projectEvent.data = originId + "";
         EventBus.getDefault().post(projectEvent);
 
         // 取消收藏传递给square
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
-        squareEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        squareEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        squareEvent.data = originId + "";
         EventBus.getDefault().post(squareEvent);
 
         // 取消收藏传递给tree
         Event treeEvent = new Event();
         treeEvent.target = Event.TARGET_TREE;
-        treeEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        treeEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        treeEvent.data = originId + "";
         EventBus.getDefault().post(treeEvent);
 
         // 取消收藏传递给wechat
         Event wechatEvent = new Event();
         wechatEvent.target = Event.TARGET_WX;
-        wechatEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        wechatEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        wechatEvent.data = originId + "";
         EventBus.getDefault().post(wechatEvent);
     }
 
     @Override
     public void onLoading() {
-
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.startTranglesAnimation();
     }
 
     @Override
     public void onLoadFailed() {
+        mLoadingView.setVisibility(View.GONE);
+        ToastUtils.showShort("加载失败");
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }

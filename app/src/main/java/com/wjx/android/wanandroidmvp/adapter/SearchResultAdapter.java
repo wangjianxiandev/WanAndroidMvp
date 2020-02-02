@@ -105,7 +105,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
             holder.itemView.setOnClickListener(v -> JumpWebUtils.startWebView(mContext,
                     article.title,
-                    article.link));
+                    article.link,
+                    article.articleId,
+                    article.collect));
 
             holder.mQuestionView.setVisibility(View.VISIBLE);
             holder.mQuestionView.setText(R.string.search_hint);

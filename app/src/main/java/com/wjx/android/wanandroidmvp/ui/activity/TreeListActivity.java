@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.TreeArticleAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
@@ -60,6 +61,9 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     @BindView(R.id.tree_title)
     TextView mTitle;
+
+    @BindView(R.id.loading_view)
+    LoadingView mLoadingView;
 
     private String title;
 
@@ -147,6 +151,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     @Override
     public void onLoadTreeList(List<Article> treeListData) {
+        mLoadingView.setVisibility(View.GONE);
         mTreeArticleList.addAll(treeListData);
         mTreeArticleAdapter.setArticleList(mTreeArticleList);
 
@@ -161,10 +166,6 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     @Override
     public void onCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "收藏成功");
@@ -176,10 +177,6 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     @Override
     public void onUnCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "取消收藏");
@@ -191,15 +188,13 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     @Override
     public void onLoading() {
-
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.startTranglesAnimation();
     }
 
     @Override
     public void onLoadFailed() {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
+        mLoadingView.setVisibility(View.GONE);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
@@ -230,28 +225,23 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
                 mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
                 mTreeArticleAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
-                Event e = new Event();
-                e.target = Event.TARGET_MAIN;
-                e.type = Event.TYPE_START_ANIMATION;
-                EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
                 mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
                 mTreeArticleAdapter.notifyDataSetChanged();
                 mPresenter.unCollect(articleId);
-                Event e = new Event();
-                e.target = Event.TARGET_MAIN;
-                e.type = Event.TYPE_START_ANIMATION;
-                EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_LOGIN) {
                 mTreeArticleList.clear();
                 mPresenter.refreshTreeList(0, mCid);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mTreeArticleList.clear();
                 mPresenter.refreshTreeList(0, mCid);
-            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
-                mTreeArticleList.clear();
-                mPresenter.refreshTreeList(mCurrentPage, mCid);
+            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
+                int articleId = Integer.valueOf(event.data);
+                // 刷新的收藏状态一定是和之前的相反
+                mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect =
+                        !mTreeArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect;
+                mTreeArticleAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -255,15 +255,10 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadFailed() {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         ToastUtils.showShort("加载失败");
         mSwipeRefreshLayout.setRefreshing(false);
     }

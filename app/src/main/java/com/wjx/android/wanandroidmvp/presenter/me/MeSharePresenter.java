@@ -29,10 +29,8 @@ public class MeSharePresenter extends BasePresenter<Contract.IMeShareView> imple
     }
     @Override
     public void loadShareArticle(int pageNum) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 1) {
             getView().onLoading();
-        } else{
-            return;
         }
         iMeShareModel.loadShareArticle(pageNum)
                 .subscribeOn(Schedulers.io())
@@ -68,11 +66,6 @@ public class MeSharePresenter extends BasePresenter<Contract.IMeShareView> imple
 
     @Override
     public void refreshShareArticle(int pageNum) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else{
-            return;
-        }
         iMeShareModel.refreshShareArticle(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -107,11 +100,6 @@ public class MeSharePresenter extends BasePresenter<Contract.IMeShareView> imple
 
     @Override
     public void deleteShareArticle(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else{
-            return;
-        }
         iMeShareModel.deleteShareArticle(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -146,11 +134,6 @@ public class MeSharePresenter extends BasePresenter<Contract.IMeShareView> imple
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iMeShareModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -185,11 +168,6 @@ public class MeSharePresenter extends BasePresenter<Contract.IMeShareView> imple
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iMeShareModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

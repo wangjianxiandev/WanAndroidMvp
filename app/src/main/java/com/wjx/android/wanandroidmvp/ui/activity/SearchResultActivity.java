@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.SearchResultAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
@@ -67,6 +68,9 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
 
     @BindView(R.id.search_result_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.loading_view)
+    LoadingView mLoadingView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,6 +156,7 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
 
     @Override
     public void onLoadSearchResult(List<Article> searchWordData) {
+        mLoadingView.setVisibility(View.GONE);
         mSearchResultList.addAll(searchWordData);
         mSearchResultAdapter.setSearchResultList(mSearchResultList);
     }
@@ -165,10 +170,6 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
 
     @Override
     public void onCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "收藏成功");
@@ -180,10 +181,6 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
 
     @Override
     public void onUnCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "取消收藏");
@@ -195,19 +192,19 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
 
     @Override
     public void onLoading() {
-
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.startTranglesAnimation();
     }
 
     @Override
     public void onLoadSuccess() {
-        LogUtils.i();
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
 
     @Override
     public void onLoadFailed() {
-        LogUtils.i();
+        mLoadingView.setVisibility(View.GONE);
         ToastUtils.showShort("加载失败");
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
@@ -246,6 +243,12 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
                 mPresenter.loadSearchResult(0, mKeyWords);
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mToolbar.setBackgroundColor(Constant.getColor(mContext));
+            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
+                int articleId = Integer.valueOf(event.data);
+                // 刷新的收藏状态一定是和之前的相反
+                mSearchResultList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect =
+                        !mSearchResultList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect;
+                mSearchResultAdapter.notifyDataSetChanged();
             }
         }
     }

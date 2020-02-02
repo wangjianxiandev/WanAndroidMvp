@@ -1,13 +1,9 @@
-package com.wjx.android.wanandroidmvp.presenter.rank;
-
-import android.renderscript.ScriptC;
+package com.wjx.android.wanandroidmvp.presenter.webview;
 
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
-import com.wjx.android.wanandroidmvp.bean.db.Rank;
-import com.wjx.android.wanandroidmvp.contract.rank.Contract;
-import com.wjx.android.wanandroidmvp.model.RankModel;
-
-import java.util.List;
+import com.wjx.android.wanandroidmvp.bean.collect.Collect;
+import com.wjx.android.wanandroidmvp.contract.webview.Contract;
+import com.wjx.android.wanandroidmvp.model.WebViewModel;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,44 +15,35 @@ import io.reactivex.schedulers.Schedulers;
  * Description:
  *
  * @author: Wangjianxian
- * @date: 2020/01/13
- * Time: 10:58
+ * @date: 2020/02/01
+ * Time: 16:17
  */
-public class RankPresenter extends BasePresenter<Contract.IRankView> implements Contract.IRankPResenter {
-    Contract.IRankModel iRankModel;
-
-    public RankPresenter() {
-        iRankModel = new RankModel();
+public class WebViewPresenter extends BasePresenter<Contract.IWebView> implements Contract.IWebViewPresenter {
+    Contract.IWebViewModel iWebViewModel;
+    public WebViewPresenter() {
+        iWebViewModel = new WebViewModel();
     }
-
     @Override
-    public void loadRankData(int pageNum) {
-        if (isViewAttached() && pageNum == 1) {
-            getView().onLoading();
-        }
-        iRankModel.loadRankData(pageNum)
+    public void collect(int articleId) {
+        iWebViewModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Rank>>() {
+                .subscribe(new Observer<Collect>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(List<Rank> rankList) {
+                    public void onNext(Collect collect) {
                         if (isViewAttached()) {
-                            getView().onLoadRankData(rankList);
-                            getView().onLoadSuccess();
+                            getView().onCollect(collect);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        if (isViewAttached()) {
-                            getView().onLoadFailed();
-                        }
                     }
 
                     @Override
@@ -67,30 +54,26 @@ public class RankPresenter extends BasePresenter<Contract.IRankView> implements 
     }
 
     @Override
-    public void refreshRankData(int pageNum) {
-        iRankModel.refreshRankData(pageNum)
+    public void unCollect(int articleId) {
+        iWebViewModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Rank>>() {
+                .subscribe(new Observer<Collect>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mCompositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(List<Rank> rankList) {
+                    public void onNext(Collect collect) {
                         if (isViewAttached()) {
-                            getView().onRefreshRankData(rankList);
-                            getView().onLoadSuccess();
+                            getView().onUnCollect(collect);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        if (isViewAttached()) {
-                            getView().onLoadFailed();
-                        }
                     }
 
                     @Override

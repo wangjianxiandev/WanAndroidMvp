@@ -22,7 +22,6 @@ import com.wjx.android.wanandroidmvp.base.utils.LoginUtils
 import com.wjx.android.wanandroidmvp.bean.base.Event
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity
 import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity
-import kotlinx.android.synthetic.main.me_fragment.*
 import org.greenrobot.eventbus.EventBus
 
 
@@ -129,17 +128,17 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
                     val treeEvent = Event()
                     treeEvent.target = Event.TARGET_TREE
-                    treeEvent.type = Event.TYPE_LOGIN
+                    treeEvent.type = Event.TYPE_LOGOUT
                     EventBus.getDefault().post(treeEvent)
 
                     val projectEvent = Event()
                     projectEvent.target = Event.TARGET_PROJECT
-                    projectEvent.type = Event.TYPE_LOGIN
+                    projectEvent.type = Event.TYPE_LOGOUT
                     EventBus.getDefault().post(projectEvent)
 
                     val wxEvent = Event()
                     wxEvent.target = Event.TARGET_WX
-                    wxEvent.type = Event.TYPE_LOGIN
+                    wxEvent.type = Event.TYPE_LOGOUT
                     EventBus.getDefault().post(wxEvent)
 
                     val shareEvent = Event()
@@ -151,6 +150,12 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     meEvent.target = Event.TARGET_ME
                     meEvent.type = Event.TYPE_LOGOUT
                     EventBus.getDefault().post(meEvent)
+
+                    val webEvent = Event()
+                    webEvent.target = Event.TARGET_WEB_VIEW
+                    webEvent.type = Event.TYPE_LOGOUT
+                    EventBus.getDefault().post(webEvent)
+
                     startActivity(Intent(parentActivity, LoginActivity::class.java))
                     parentActivity.finish()
                 }
@@ -232,7 +237,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
         EventBus.getDefault().post(squareEvent)
 
         val navEvent = Event()
-        navEvent.target = Event.TARGET_NAVI
+        navEvent.target = Event.TARGET_NAVIGATION
         navEvent.type = Event.TYPE_REFRESH_COLOR
         EventBus.getDefault().post(navEvent)
 

@@ -189,9 +189,9 @@ public class Constant {
     public static final int PAGE_SIZE = 20;
 
     /**
-     * key-link
+     * key-articleid
      */
-    public static final String KEY_LINK = "link";
+    public static final String KEY_ARTICLEID = "articleid";
 
     /**
      * key-title
@@ -207,6 +207,11 @@ public class Constant {
      * key-url
      */
     public static final String KEY_URL = "url";
+
+    /**
+     * key-iscollect
+     */
+    public static final String KEY_COLLECT = "iscollect";
 
     /**
      * key-rank
@@ -229,34 +234,10 @@ public class Constant {
     public static final String KEY_NIGHT_MODE = "night_mode";
 
     /**
-     * key-user
-     */
-    public static final String KEY_USER = "user";
-
-    /**
-     * key-cookie-username
-     */
-    public static final String KEY_USER_COOKIE = "loginUserName";
-
-    /**
      * 设置文件的保存名称
      */
     public static final String CONFIG_SETTINGS = "settings";
 
-    /**
-     * Cookie文件的保存名称
-     */
-    public static final String CONFIG_COOKIE = "cookie";
-
-    /**
-     * Cookie过期时间
-     */
-    public static final String CONFIG_COOKIE_EXPIRE = "cookie_expire";
-
-    /**
-     * 最大有效期(ms),默认距离上次30天
-     */
-    public static final long TIME_MAX_EXPIRE = 30 * 24 * 3600 * 1000L;
 
     /**
      * 搜索结果正则表达式
@@ -264,9 +245,9 @@ public class Constant {
     public static final String REGEX = "<em class='highlight'>(.+)</em>";
 
     /**
-     * 超时时间
+     * 非文章详情页
      */
-    public static final int DEFAULT_TIMEOUT = 15;
+    public static final int NOT_ARTICLE_WEBVIEW = 0;
 
     /**
      * user-name
@@ -278,6 +259,9 @@ public class Constant {
      */
     public static final String EXTRA_VALUE_PASSWORD = "collect";
 
+    /**
+     * 两次点击返回键的时间差
+     */
     public static final long EXIT_TIME = 2000;
 
     /**

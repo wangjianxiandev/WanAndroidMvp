@@ -110,7 +110,6 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
     public void onAddArticle(Article addArticle) {
     }
 
-
     @Override
     public void onLoading() {
 

@@ -73,14 +73,13 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
                     TextView tagView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.flow_layout, parent, false);
                     tagView.setText(articlesBean.get(position).getTitle());
                     tagView.setTextColor(Constant.randomColor());
-                    holder.mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-                        @Override
-                        public boolean onTagClick(View view, int position, FlowLayout parent) {
-                            JumpWebUtils.startWebView(mContext,
-                                    articlesBean.get(position).getTitle(),
-                                    articlesBean.get(position).getLink());
-                            return true;
-                        }
+                    holder.mTagFlowLayout.setOnTagClickListener((view, position1, parent1) -> {
+                        JumpWebUtils.startWebView(mContext,
+                                articlesBean.get(position1).getTitle(),
+                                articlesBean.get(position1).getLink(),
+                                articlesBean.get(position1).getId(),
+                                articlesBean.get(position1).isCollect());
+                        return true;
                     });
                     return tagView;
                 }

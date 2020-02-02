@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.navigation_bottom)
     BottomNavigationView mBottomNavigationView;
 
+    @BindView(R.id.loading_view)
+    LoadingView mLoadingView;
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -99,28 +103,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBottomNavigation() {
         mBottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.menu_home:
-                                switchFragment(INDEX_HOMEPAGE);
-                                return true;
-                            case R.id.menu_project:
-                                switchFragment(INDEX_PROJECT);
-                                return true;
-                            case R.id.menu_square:
-                                switchFragment(INDEX_SQUARE);
-                                return true;
-                            case R.id.menu_wechat:
-                                switchFragment(INDEX_WE_CHAT);
-                                return true;
-                            case R.id.menu_me:
-                                switchFragment(INDEX_ME);
-                                return true;
-                            default:
-                                return false;
-                        }
+                menuItem -> {
+                    switch (menuItem.getItemId()) {
+                        case R.id.menu_home:
+                            switchFragment(INDEX_HOMEPAGE);
+                            return true;
+                        case R.id.menu_project:
+                            switchFragment(INDEX_PROJECT);
+                            return true;
+                        case R.id.menu_square:
+                            switchFragment(INDEX_SQUARE);
+                            return true;
+                        case R.id.menu_wechat:
+                            switchFragment(INDEX_WE_CHAT);
+                            return true;
+                        case R.id.menu_me:
+                            switchFragment(INDEX_ME);
+                            return true;
+                        default:
+                            return false;
                     }
                 });
         showBadgeView(4, 6);
@@ -227,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
                 mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
             } else if (event.type == Event.TYPE_CHANGE_DAY_NIGHT_MODE) {
                 recreate();
+            } else if (event.type == Event.TYPE_START_ANIMATION) {
+                mLoadingView.setVisibility(View.VISIBLE);
+                mLoadingView.startTranglesAnimation();
+            } else if (event.type == Event.TYPE_STOP_ANIMATION) {
+                mLoadingView.setVisibility(View.GONE);
             }
         }
     }

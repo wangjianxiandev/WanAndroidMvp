@@ -57,6 +57,7 @@ public class HomeModel extends BaseModel implements Contract.IHomeModel {
                     banner.getData()
                             .stream().forEach(dataBean -> {
                         Banner bannerDB = new Banner();
+                        bannerDB.id = dataBean.getId();
                         bannerDB.title = dataBean.getTitle();
                         bannerDB.imagePath = dataBean.getImagePath();
                         bannerDB.url = dataBean.getUrl();

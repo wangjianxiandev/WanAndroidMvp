@@ -34,11 +34,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
     @Override
     public void loadBanner() {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeModel.loadBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -73,11 +68,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
     @Override
     public void refreshBanner() {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeModel.refreshBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,10 +102,8 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
     @Override
     public void loadArticle(int pageNum) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 0) {
             getView().onLoading();
-        } else {
-            return;
         }
         iHomeModel.loadArticle(pageNum)
                 .subscribeOn(Schedulers.io())
@@ -151,11 +139,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
     @Override
     public void refreshArticle(int pageNum) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeModel.refreshArticle(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -252,11 +235,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -291,11 +269,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iHomeModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

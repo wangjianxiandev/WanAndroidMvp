@@ -32,10 +32,8 @@ public class WeChatListPresenter extends BasePresenter<Contract.IWeChatListView>
     }
     @Override
     public void loadWeChatList(int cid, int pageNum) {
-        if (isViewAttached()){
+        if (isViewAttached() && pageNum == 1){
             getView().onLoading();
-        } else {
-            return;
         }
         iWeChatListModel.loadWeChatList(cid, pageNum)
                 .subscribeOn(Schedulers.io())
@@ -71,11 +69,6 @@ public class WeChatListPresenter extends BasePresenter<Contract.IWeChatListView>
 
     @Override
     public void refreshWeChatList(int cid, int pageNum) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iWeChatListModel.refreshWeChatList(cid, pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -111,11 +104,6 @@ public class WeChatListPresenter extends BasePresenter<Contract.IWeChatListView>
 
     @Override
     public void collect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iWeChatListModel.collect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -150,11 +138,6 @@ public class WeChatListPresenter extends BasePresenter<Contract.IWeChatListView>
 
     @Override
     public void unCollect(int articleId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iWeChatListModel.unCollect(articleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

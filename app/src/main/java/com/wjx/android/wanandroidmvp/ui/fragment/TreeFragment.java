@@ -178,12 +178,10 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadFailed() {
-
     }
 
     @Override

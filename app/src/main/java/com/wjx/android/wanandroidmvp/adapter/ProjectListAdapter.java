@@ -88,7 +88,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             Glide.with(mContext).load(bean.envelopePic).into(holder.mProjectImageView);
             holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
                     mProjectList.get(position).title,
-                    mProjectList.get(position).link));
+                    mProjectList.get(position).link,
+                    mProjectList.get(position).articleId,
+                    mProjectList.get(position).collect));
             if (!LoginUtils.isLogin()) {
                 holder.mCollectView.setSelected(false);
             } else {

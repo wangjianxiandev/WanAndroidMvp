@@ -28,10 +28,8 @@ public class CollectPresenter extends BasePresenter<Contract.ICollectView> imple
     }
     @Override
     public void loadCollectData(int pageNum) {
-        if (isViewAttached()) {
+        if (isViewAttached() && pageNum == 0) {
             getView().onLoading();
-        } else {
-            return;
         }
         iCollectModel.loadCollectData(pageNum)
                 .subscribeOn(Schedulers.io())
@@ -67,11 +65,6 @@ public class CollectPresenter extends BasePresenter<Contract.ICollectView> imple
 
     @Override
     public void refreshCollectData(int pageNum) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iCollectModel.refreshCollectData(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -106,11 +99,6 @@ public class CollectPresenter extends BasePresenter<Contract.ICollectView> imple
 
     @Override
     public void addCollect(String title, String author, String link) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iCollectModel.addCollect(title, author, link)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -146,11 +134,6 @@ public class CollectPresenter extends BasePresenter<Contract.ICollectView> imple
 
     @Override
     public void unCollect(int articleId, int originId) {
-        if (isViewAttached()) {
-            getView().onLoading();
-        }  else {
-            return;
-        }
         iCollectModel.unCollect(articleId, originId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -14,8 +14,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -115,7 +113,6 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
         stopAnim();
         if (loginData != null) {
             if (loginData.getErrorCode() == 0) {
-
                 Event event = new Event();
                 event.target = Event.TARGET_HOME;
                 event.type = Event.TYPE_LOGIN;
@@ -151,6 +148,11 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
                 meShareEvent.target = Event.TARGET_ME_SHARE;
                 meShareEvent.type = Event.TYPE_LOGIN;
                 EventBus.getDefault().post(meShareEvent);
+
+                Event webEvent = new Event();
+                webEvent.target = Event.TARGET_WEB_VIEW;
+                webEvent.type = Event.TYPE_LOGIN;
+                EventBus.getDefault().post(webEvent);
                 finish();
             } else {
                 ToastUtils.showShort(loginData.getErrorMsg());

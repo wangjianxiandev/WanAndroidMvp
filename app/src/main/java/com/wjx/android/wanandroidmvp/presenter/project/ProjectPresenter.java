@@ -30,11 +30,6 @@ public class ProjectPresenter extends BasePresenter<Contract.IProjectView> imple
 
     @Override
     public void loadProjectClassify() {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iProjectModel.loadProjectClassify()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,11 +64,6 @@ public class ProjectPresenter extends BasePresenter<Contract.IProjectView> imple
 
     @Override
     public void refreshProjectClassify() {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iProjectModel.refreshProjectClassify()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

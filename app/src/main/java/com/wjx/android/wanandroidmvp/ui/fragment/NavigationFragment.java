@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -188,12 +187,10 @@ public class NavigationFragment extends BaseFragment<Contract.ISquareView, Squar
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadFailed() {
-
     }
 
     @Override
@@ -204,7 +201,7 @@ public class NavigationFragment extends BaseFragment<Contract.ISquareView, Squar
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Event event) {
-        if (event.target == Event.TARGET_NAVI) {
+        if (event.target == Event.TARGET_NAVIGATION) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
             }

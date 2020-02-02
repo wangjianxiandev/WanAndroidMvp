@@ -24,4 +24,8 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="article_detail_toolbar">
+        <item name="android:colorControlNormal">#FFFFFFFF</item>
+    </style>
+
 </resources>

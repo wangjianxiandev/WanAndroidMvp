@@ -15,6 +15,10 @@
     <string name="collect_category">分类：%1$s</string>
     <string name="anonymous_user">匿名用户</string>
     <string name="search_hint">搜索</string>
+    <string name="collect">收藏</string>
+    <string name="share">分享</string>
+    <string name="open_it_with_system_browser">使用系统浏览器打开</string>
+    <string name="app_title_url">%1$s 分享的【%2$s】戳此链接查看☞：%3$s</string>
 
     <!-- 异常页面-->
     <string name="network_error">内容加载失败，请检查网络设置</string>

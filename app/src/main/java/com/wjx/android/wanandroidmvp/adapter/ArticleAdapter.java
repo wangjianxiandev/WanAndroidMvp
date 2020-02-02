@@ -166,7 +166,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
             holder.itemView.setOnClickListener(view -> JumpWebUtils.startWebView(mContext,
                     mArticleList.get(realPosition).title,
-                    mArticleList.get(realPosition).link));
+                    mArticleList.get(realPosition).link,
+                    mArticleList.get(realPosition).articleId,
+                    mArticleList.get(realPosition).collect));
             holder.mCollectView.setOnClickListener(view -> {
                 Constant.Vibrate(mContext, 50);
                 if (!LoginUtils.isLogin()) {

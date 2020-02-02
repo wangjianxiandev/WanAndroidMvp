@@ -24,7 +24,6 @@ import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
-import com.wjx.android.wanandroidmvp.bean.share.DeleteShare;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
 import com.wjx.android.wanandroidmvp.presenter.square.HomeSquarePresenter;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -130,6 +129,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void loadHomeSquareData(List<Article> homeSquareData) {
+        stopLoadingView();
         if (mCurrentPage == 0) {
             mHomeSquareList.clear();
         }
@@ -146,10 +146,6 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void onCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "收藏成功");
@@ -161,10 +157,6 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void onUnCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "取消收藏");
@@ -174,17 +166,28 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
         }
     }
 
-    @Override
-    public void onLoading() {
-
+    public void startLoadingView() {
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_START_ANIMATION;
+        EventBus.getDefault().post(e);
     }
 
-    @Override
-    public void onLoadFailed() {
+    public void stopLoadingView() {
         Event e = new Event();
         e.target = Event.TARGET_MAIN;
         e.type = Event.TYPE_STOP_ANIMATION;
         EventBus.getDefault().post(e);
+    }
+
+    @Override
+    public void onLoading() {
+        startLoadingView();
+    }
+
+    @Override
+    public void onLoadFailed() {
+        stopLoadingView();
         ToastUtils.showShort("加载失败");
         mSmartRefreshLayout.finishRefresh(false);
         mSmartRefreshLayout.finishLoadMore(false);
@@ -216,28 +219,23 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
                 mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
                 mHomeSquareAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
-                Event e = new Event();
-                e.target = Event.TARGET_MAIN;
-                e.type = Event.TYPE_START_ANIMATION;
-                EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
                 mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
                 mHomeSquareAdapter.setHomeSquareList(mHomeSquareList);
                 mPresenter.unCollect(articleId);
-                Event e = new Event();
-                e.target = Event.TARGET_MAIN;
-                e.type = Event.TYPE_START_ANIMATION;
-                EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_LOGIN) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(0);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mHomeSquareList.clear();
                 mPresenter.refreshHomeSquareData(0);
-            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
-                mHomeSquareList.clear();
-                mPresenter.refreshHomeSquareData(mCurrentPage);
+            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
+                int articleId = Integer.valueOf(event.data);
+                // 刷新的收藏状态一定是和之前的相反
+                mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect =
+                        !mHomeSquareList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect;
+                mHomeSquareAdapter.notifyDataSetChanged();
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 initFloatBtnColor();
             } else if (event.type == Event.TYPE_DELETE_SHARE) {

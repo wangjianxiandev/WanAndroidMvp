@@ -28,11 +28,6 @@ public class TreePresenter extends BasePresenter<Contract.ITreeView> implements 
 
     @Override
     public void loadTree() {
-        if (isViewAttached()) {
-            getView().onLoading();
-        } else {
-            return;
-        }
         iTreeModel.loadTreeData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

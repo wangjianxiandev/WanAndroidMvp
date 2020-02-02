@@ -26,14 +26,14 @@ public class LoadingView extends View {
     private int cvX, cvY;
 
     // 三角形边长
-    private int edge = 200;
+    private int edge = 80;
 
     private Paint mPaint;
 
     private Path mPath;
 
     // 一共四个三角形的三角形数组
-    private TriangleView[] triangles  = new TriangleView[4];
+    private TriangleView[] triangles = new TriangleView[4];
 
     private STATUS currentStatus = STATUS.MID_LOADING;
 
@@ -67,7 +67,6 @@ public class LoadingView extends View {
     private ValueAnimator mValueAnimator;
 
 
-
     private void init() {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
@@ -88,12 +87,12 @@ public class LoadingView extends View {
         currentStatus = STATUS.MID_LOADING;
         TriangleView triangleView = new TriangleView();
         //offset就是CD的长度，利用勾股定理
-        int offset = (int) Math.sqrt(Math.pow(edge,2) - Math.pow(edge/2,2));
-        triangleView.startX = cvX + offset/2;
-        triangleView.startY = cvY + edge/2;
-        triangleView.endX1 = cvX + offset/2;
-        triangleView.endY1 = cvY - edge/2;
-        triangleView.endX2 = cvX - offset/2;
+        int offset = (int) Math.sqrt(Math.pow(edge, 2) - Math.pow(edge / 2, 2));
+        triangleView.startX = cvX + offset / 2;
+        triangleView.startY = cvY + edge / 2;
+        triangleView.endX1 = cvX + offset / 2;
+        triangleView.endY1 = cvY - edge / 2;
+        triangleView.endX2 = cvX - offset / 2;
         triangleView.endY2 = cvY;
         //current为延伸中的实时坐标，默认在起始点位置
         triangleView.currentX1 = triangleView.startX;
@@ -119,7 +118,7 @@ public class LoadingView extends View {
         secondTriangle.endX1 = secondTriangle.startX;
         secondTriangle.endY1 = secondTriangle.startY + edge;
         secondTriangle.endX2 = secondTriangle.startX + offset;
-        secondTriangle.endY2 = secondTriangle.startY + edge/2;
+        secondTriangle.endY2 = secondTriangle.startY + edge / 2;
         secondTriangle.color = "#67c6ca";
         triangles[2] = secondTriangle;
         //计算第三个三角形的坐标位置
@@ -131,20 +130,20 @@ public class LoadingView extends View {
         thirdTriangle.endX2 = triangleView.endX2;
         thirdTriangle.endY2 = thirdTriangle.endY1 + edge;
         thirdTriangle.color = "#eb7583";
-        triangles[3]  = thirdTriangle;
+        triangles[3] = thirdTriangle;
     }
 
     public void startTranglesAnimation() {
         //初始化三角形位置
         initTriangle();
         //如果有动画已经在执行了，取消当前执行的动画。
-        if (mValueAnimator != null && mValueAnimator.isRunning()){
+        if (mValueAnimator != null && mValueAnimator.isRunning()) {
             mValueAnimator.cancel();
         }
         //动画插值从0变成1
-        mValueAnimator = ValueAnimator.ofFloat(0,1);
-        //每次动画的执行时长为300毫秒
-        mValueAnimator.setDuration(300);
+        mValueAnimator = ValueAnimator.ofFloat(0, 1);
+        //每次动画的执行时长为150毫秒
+        mValueAnimator.setDuration(150);
         //无限次执行
         mValueAnimator.setRepeatCount(-1);
         //每次执行的方案都是从头开始
@@ -169,24 +168,24 @@ public class LoadingView extends View {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 //当上一个动画状态执行完之后进入下一个阶段。
-                if (currentStatus == STATUS.MID_LOADING){
+                if (currentStatus == STATUS.MID_LOADING) {
                     currentStatus = STATUS.FIRST_LOADING;
-                }else if (currentStatus == STATUS.FIRST_LOADING){
+                } else if (currentStatus == STATUS.FIRST_LOADING) {
                     currentStatus = STATUS.SECOND_LOADING;
-                }else if (currentStatus == STATUS.SECOND_LOADING){
+                } else if (currentStatus == STATUS.SECOND_LOADING) {
                     currentStatus = STATUS.THIRD_LOADING;
-                }else if (currentStatus == STATUS.THIRD_LOADING){
+                } else if (currentStatus == STATUS.THIRD_LOADING) {
                     currentStatus = STATUS.LOADING_COMPLETE;
                     reverseTriangleStart();
-                }else if (currentStatus == STATUS.LOADING_COMPLETE){
+                } else if (currentStatus == STATUS.LOADING_COMPLETE) {
                     currentStatus = STATUS.THIRD_DISMISS;
-                }else if (currentStatus == STATUS.THIRD_DISMISS){
+                } else if (currentStatus == STATUS.THIRD_DISMISS) {
                     currentStatus = STATUS.FIRST_DISMISS;
-                }else if (currentStatus == STATUS.FIRST_DISMISS){
+                } else if (currentStatus == STATUS.FIRST_DISMISS) {
                     currentStatus = STATUS.SECOND_DISMISS;
-                }else if (currentStatus == STATUS.SECOND_DISMISS){
+                } else if (currentStatus == STATUS.SECOND_DISMISS) {
                     currentStatus = STATUS.MID_DISMISS;
-                }else if (currentStatus == STATUS.MID_DISMISS){
+                } else if (currentStatus == STATUS.MID_DISMISS) {
                     currentStatus = STATUS.MID_LOADING;
                     reverseTriangleStart();
                 }
@@ -197,20 +196,20 @@ public class LoadingView extends View {
             //或者目前的插值(0-1)
             float fraction = animation.getAnimatedFraction();
             //如果目前的动画是消失状态，则插值正好是反过来的，是1-0，所以需要用1-fraction
-            if (currentStatus == STATUS.FIRST_DISMISS || currentStatus == STATUS.SECOND_DISMISS || currentStatus == STATUS.THIRD_DISMISS || currentStatus == STATUS.MID_DISMISS){
+            if (currentStatus == STATUS.FIRST_DISMISS || currentStatus == STATUS.SECOND_DISMISS || currentStatus == STATUS.THIRD_DISMISS || currentStatus == STATUS.MID_DISMISS) {
                 fraction = 1 - fraction;
             }
             //根据目前执行的状态，取出对应的需要处理的三角形
             TriangleView triangleView = triangles[0];
-            if (currentStatus == STATUS.MID_LOADING || currentStatus == STATUS.MID_DISMISS){
+            if (currentStatus == STATUS.MID_LOADING || currentStatus == STATUS.MID_DISMISS) {
                 triangleView = triangles[0];
-            }else if (currentStatus == STATUS.FIRST_LOADING || currentStatus == STATUS.FIRST_DISMISS){
+            } else if (currentStatus == STATUS.FIRST_LOADING || currentStatus == STATUS.FIRST_DISMISS) {
                 triangleView = triangles[1];
-            }else if (currentStatus == STATUS.SECOND_LOADING || currentStatus == STATUS.SECOND_DISMISS){
+            } else if (currentStatus == STATUS.SECOND_LOADING || currentStatus == STATUS.SECOND_DISMISS) {
                 triangleView = triangles[2];
-            }else if (currentStatus == STATUS.THIRD_LOADING || currentStatus == STATUS.THIRD_DISMISS){
+            } else if (currentStatus == STATUS.THIRD_LOADING || currentStatus == STATUS.THIRD_DISMISS) {
                 triangleView = triangles[3];
-            }else if (currentStatus == STATUS.LOADING_COMPLETE){
+            } else if (currentStatus == STATUS.LOADING_COMPLETE) {
                 //如果是LOADING_COMPLETE状态的话，此次动画效果保持不变
                 invalidate();
                 return;
@@ -227,8 +226,8 @@ public class LoadingView extends View {
         mValueAnimator.start();
     }
 
-    private void reverseTriangleStart(){
-        for (int i = 0; i < triangles.length; i++){
+    private void reverseTriangleStart() {
+        for (int i = 0; i < triangles.length; i++) {
             int startX = triangles[i].startX;
             int startY = triangles[i].startY;
             triangles[i].startX = triangles[i].endX1;
@@ -243,25 +242,24 @@ public class LoadingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < triangles.length;i++){
+        for (int i = 0; i < triangles.length; i++) {
             mPath.reset();
             //移动到当前三角形的起始点位置上
-            mPath.moveTo(triangles[i].startX,triangles[i].startY);
+            mPath.moveTo(triangles[i].startX, triangles[i].startY);
             //连接目前的current1
-            mPath.lineTo(triangles[i].currentX1,triangles[i].currentY1);
+            mPath.lineTo(triangles[i].currentX1, triangles[i].currentY1);
             //连接目前的current2
-            mPath.lineTo(triangles[i].currentX2,triangles[i].currentY2);
+            mPath.lineTo(triangles[i].currentX2, triangles[i].currentY2);
             //三角形线段闭合
             mPath.close();
             //设置三角形颜色
             mPaint.setColor(Color.parseColor(triangles[i].color));
             //绘制三角形
-            canvas.drawPath(mPath,mPaint);
+            canvas.drawPath(mPath, mPaint);
             //当只绘制中间三角形时，其他三角形不需要进行绘制
-            if (currentStatus == STATUS.MID_LOADING){
+            if (currentStatus == STATUS.MID_LOADING) {
                 break;
             }
         }
-
     }
 }

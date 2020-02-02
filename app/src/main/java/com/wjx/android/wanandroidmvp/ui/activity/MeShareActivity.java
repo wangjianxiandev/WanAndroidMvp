@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.MeShareAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
@@ -40,7 +41,7 @@ import java.util.stream.Collectors;
 
 import butterknife.BindView;
 
-public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeSharePresenter> implements Contract.IMeShareView ,
+public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeSharePresenter> implements Contract.IMeShareView,
         com.scwang.smartrefresh.layout.listener.OnLoadMoreListener,
         com.scwang.smartrefresh.layout.listener.OnRefreshListener {
 
@@ -60,6 +61,9 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
 
     @BindView(R.id.meshare_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.loading_view)
+    LoadingView mLoadingView;
 
     @Override
     protected int getContentViewId() {
@@ -179,6 +183,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
 
     @Override
     public void onLoadShareArticle(List<Share> shareList) {
+        mLoadingView.setVisibility(View.GONE);
         mShareList.addAll(shareList);
         mMeShareAdapter.setShareList(mShareList);
     }
@@ -199,16 +204,12 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         Event event = new Event();
         event.target = Event.TARGET_SQUARE;
         event.type = Event.TYPE_DELETE_SHARE;
-        event.data = articleId+"";
+        event.data = articleId + "";
         EventBus.getDefault().post(event);
     }
 
     @Override
     public void onCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "收藏成功");
@@ -217,19 +218,15 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
             }
         }
 
-        // 取消收藏传递给square
+        // 收藏传递给square
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
-        squareEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        squareEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
         EventBus.getDefault().post(squareEvent);
     }
 
     @Override
     public void onUnCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(this, "取消收藏");
@@ -240,21 +237,20 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
         // 取消收藏传递给square
         Event squareEvent = new Event();
         squareEvent.target = Event.TARGET_SQUARE;
-        squareEvent.type = Event.TYPE_UNCOLLECT_REFRESH;
+        squareEvent.type = Event.TYPE_COLLECT_STATE_REFRESH;
+        squareEvent.data = articleId + "";
         EventBus.getDefault().post(squareEvent);
     }
 
     @Override
     public void onLoading() {
-
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.startTranglesAnimation();
     }
 
     @Override
     public void onLoadFailed() {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
+        mLoadingView.setVisibility(View.GONE);
         ToastUtils.showShort("加载失败");
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
@@ -286,28 +282,22 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
                 mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect = true;
                 mMeShareAdapter.notifyDataSetChanged();
                 mPresenter.collect(articleId);
-                Event e = new Event();
-                e.target = Event.TARGET_MAIN;
-                e.type = Event.TYPE_START_ANIMATION;
-                EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 int articleId = Integer.valueOf(event.data);
                 mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect = false;
                 mMeShareAdapter.notifyDataSetChanged();
                 mPresenter.unCollect(articleId);
-                Event e = new Event();
-                e.target = Event.TARGET_MAIN;
-                e.type = Event.TYPE_START_ANIMATION;
-                EventBus.getDefault().post(e);
             } else if (event.type == Event.TYPE_LOGIN) {
                 mShareList.clear();
                 mPresenter.refreshShareArticle(0);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mShareList.clear();
                 mPresenter.refreshShareArticle(0);
-            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
-                mShareList.clear();
-                mPresenter.refreshShareArticle(mCurrentPage);
+            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
+                int articleId = Integer.valueOf(event.data);
+                mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect =
+                        !mShareList.stream().filter(a -> a.articleId == articleId).findFirst().get().isCollect;
+                mMeShareAdapter.notifyDataSetChanged();
             }
         }
     }

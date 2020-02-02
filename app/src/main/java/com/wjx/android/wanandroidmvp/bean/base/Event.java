@@ -48,7 +48,7 @@ public class Event {
     /**
      * 取消收藏刷新列表
      */
-    public static final int TYPE_UNCOLLECT_REFRESH = 8;
+    public static final int TYPE_COLLECT_STATE_REFRESH = 8;
 
     /**
      * 更换主题颜色
@@ -103,52 +103,57 @@ public class Event {
     /**
      * 目标界面-收藏列表
      */
-    public static final int TARGET_COLLECT = 7;
+    public static final int TARGET_COLLECT = 8;
 
     /**
      * 目标界面-搜索结果
      */
-    public static final int TARGET_SEARCH_RESULT = 8;
+    public static final int TARGET_SEARCH_RESULT = 9;
 
     /**
      * 目标界面-积分排行
      */
-    public static final int TARGET_INTEGRAL_RANK = 9;
+    public static final int TARGET_INTEGRAL_RANK = 10;
 
     /**
      * 目标界面-设置界面
      */
-    public static final int TARGET_SETTING = 10;
+    public static final int TARGET_SETTING = 11;
 
     /**
      * 目标界面-主广场页
      */
-    public static final int TARGET_PARENT_SQUARE = 11;
+    public static final int TARGET_PARENT_SQUARE = 12;
 
     /**
      * 目标界面-闪屏页
      */
-    public static final int TARGET_SPLASH = 12;
+    public static final int TARGET_SPLASH = 13;
 
     /**
      * 目标界面-导航界面
      */
-    public static final int TARGET_NAVI = 13;
+    public static final int TARGET_NAVIGATION = 14;
 
     /**
      * 目标界面-分享页面
      */
-    public static final int TARGET_SQUARE_SHARE = 14;
+    public static final int TARGET_SQUARE_SHARE = 15;
 
     /**
      * 目标界面-分享列表页面
      */
-    public static final int TARGET_ME_SHARE = 15;
+    public static final int TARGET_ME_SHARE = 16;
 
     /**
      * 目标界面-搜索页面
      */
-    public static final int TARGET_SEARCH = 16;
+    public static final int TARGET_SEARCH = 17;
+
+    /**
+     * 目标页面-文章详情
+     */
+    public static final int TARGET_WEB_VIEW = 18;
 
 
     public int target;

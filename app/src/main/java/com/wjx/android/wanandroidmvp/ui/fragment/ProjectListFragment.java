@@ -107,6 +107,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onLoadProjectList(List<Article> projectList) {
+        stopLoadingView();
         mProjectArticleList.addAll(projectList);
         mProjectListAdapter.setProjectList(mProjectArticleList);
     }
@@ -120,10 +121,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "收藏成功");
@@ -135,10 +132,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onUnCollect(Collect collect, int articleId) {
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
                 Constant.showSnackMessage(getActivity(), "取消收藏");
@@ -166,19 +159,30 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     }
 
 
+    public void startLoadingView() {
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_START_ANIMATION;
+        EventBus.getDefault().post(e);
+    }
+
+    public void stopLoadingView() {
+        Event e = new Event();
+        e.target = Event.TARGET_MAIN;
+        e.type = Event.TYPE_STOP_ANIMATION;
+        EventBus.getDefault().post(e);
+    }
+
     @Override
     public void onLoading() {
-
+        startLoadingView();
     }
 
     @Override
     public void onLoadFailed() {
         LogUtils.e();
         ToastUtils.showShort("加载失败");
-        Event e = new Event();
-        e.target = Event.TARGET_MAIN;
-        e.type = Event.TYPE_STOP_ANIMATION;
-        EventBus.getDefault().post(e);
+        stopLoadingView();
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
@@ -199,10 +203,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
                     mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = true;
                     mProjectListAdapter.notifyDataSetChanged();
                     mPresenter.collect(articleId);
-                    Event e = new Event();
-                    e.target = Event.TARGET_MAIN;
-                    e.type = Event.TYPE_START_ANIMATION;
-                    EventBus.getDefault().post(e);
                 }
             } else if (event.type == Event.TYPE_UNCOLLECT) {
                 String[] data = event.data.split(";");
@@ -211,10 +211,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
                     mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect = false;
                     mProjectListAdapter.notifyDataSetChanged();
                     mPresenter.unCollect(articleId);
-                    Event e = new Event();
-                    e.target = Event.TARGET_MAIN;
-                    e.type = Event.TYPE_START_ANIMATION;
-                    EventBus.getDefault().post(e);
                 }
             } else if (event.type == Event.TYPE_LOGIN) {
                 mProjectArticleList.clear();
@@ -222,8 +218,12 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mProjectArticleList.clear();
                 mPresenter.refreshProjectList(0, mCid);
-            } else if (event.type == Event.TYPE_UNCOLLECT_REFRESH) {
-                mPresenter.refreshProjectList(mCurrentPage, mCid);
+            } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
+                int articleId = Integer.valueOf(event.data);
+                // 刷新的收藏状态一定是和之前的相反
+                mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect =
+                        !mProjectArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect;
+                mProjectListAdapter.notifyDataSetChanged();
             }
         }
     }
