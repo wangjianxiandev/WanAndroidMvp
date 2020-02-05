@@ -6,10 +6,11 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +25,6 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.SearchHistoryAdapter;
-import com.wjx.android.wanandroidmvp.adapter.SearchResultAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.KeyBoardUtils;
@@ -39,7 +39,6 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +62,9 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
 
     @BindView(R.id.search_text_top)
     TextView mTopSearchWord;
+
+    @BindView(R.id.search_text_history)
+    TextView mSearchHistory;
 
     @BindView(R.id.search_clear)
     TextView mSearchClear;
@@ -109,9 +111,11 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     }
 
     private void clearHistoryData() {
+        mSearchClear.setVisibility(View.GONE);
+        mSearchHistory.setVisibility(View.GONE);
         Constant.deleteAllSearchHistory(mContext);
         mSearchHistoryList.clear();
-        mSearchHistoryList = Constant.getSearchHistory(mContext);
+        mSearchHistoryList = Constant.getAllSearchHistory(mContext);
         mSearchHistoryAdapter.setSearchHistoryList(mSearchHistoryList);
     }
 
@@ -129,6 +133,10 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
         initSearchEdit();
         initCircleAnimation();
         initAdapter();
+        if (Constant.getAllSearchHistory(mContext).size() != 0) {
+            mSearchClear.setVisibility(View.VISIBLE);
+            mSearchHistory.setVisibility(View.VISIBLE);
+        }
         mPresenter.loadSearchWordData();
     }
 
@@ -178,19 +186,43 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                 AnimatedVectorDrawableCompat animatedVectorDrawableCompat = AnimatedVectorDrawableCompat.create(
                         SearchWordActivity.this, R.drawable.animated_vector_search);
                 mSearchAnimImage.setImageDrawable(animatedVectorDrawableCompat);
-                ((Animatable) mSearchAnimImage.getDrawable()).start();
+                if (TextUtils.isEmpty(mSearchEdit.getText())) {
+                    ((Animatable) mSearchAnimImage.getDrawable()).start();
+                }
             }
         });
+
+        // 将软键盘的回车搜索启用
+        mSearchEdit.setOnEditorActionListener((v, actionId, event) -> {
+            KeyBoardUtils.closeKeyboard(mContext, this);
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                handleSearchAction();
+            }
+            return false;
+        });
+
         mSearchAnimImage.setOnClickListener(v -> {
+            KeyBoardUtils.closeKeyboard(mContext, this);
+            handleSearchAction();
+        });
+
+    }
+
+    /**
+     * 添加历史记录并跳转到搜索结果页
+     */
+    private void handleSearchAction() {
+        if (!TextUtils.isEmpty(mSearchEdit.getText())) {
+            mSearchClear.setVisibility(View.VISIBLE);
+            mSearchHistory.setVisibility(View.VISIBLE);
             Constant.setSearchHistory(mSearchEdit.getText().toString(), mContext);
             mSearchHistoryList.add(mSearchEdit.getText().toString());
-            mSearchHistoryAdapter.setSearchHistoryList(Constant.getSearchHistory(mContext));
+            mSearchHistoryAdapter.setSearchHistoryList(Constant.getAllSearchHistory(mContext));
             Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
             intent.putExtra(Constant.KEY_KEYWORD, mSearchEdit.getText().toString());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        });
-
+        }
     }
 
     private void initCircleAnimation() {
@@ -198,7 +230,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mSearchHistoryList.addAll(Constant.getSearchHistory(mContext));
+        mSearchHistoryList.addAll(Constant.getAllSearchHistory(mContext));
         mSearchHistoryAdapter = new SearchHistoryAdapter(mContext, mSearchHistoryList);
         mRecyclerView.setAdapter(mSearchHistoryAdapter);
     }
@@ -225,7 +257,9 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                     tagText.setTextColor(getColor(R.color.white));
                     mTopSearchFlowLayout.setOnTagClickListener((view, position1, parent1) -> {
                         Constant.setSearchHistory(tabNames.get(position1), mContext);
-                        mSearchHistoryAdapter.setSearchHistoryList(Constant.getSearchHistory(mContext));
+                        mSearchClear.setVisibility(View.VISIBLE);
+                        mSearchHistory.setVisibility(View.VISIBLE);
+                        mSearchHistoryAdapter.setSearchHistoryList(Constant.getAllSearchHistory(mContext));
                         Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
                         intent.putExtra(Constant.KEY_KEYWORD, tabNames.get(position1));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -259,8 +293,12 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
             if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mSearchToolbar.setBackgroundColor(Constant.getColor(mContext));
             } else if (event.type == Event.TYPE_DELETE_SEARCH) {
+                if (Constant.getAllSearchHistory(mContext).size() == 0) {
+                    mSearchClear.setVisibility(View.GONE);
+                    mSearchHistory.setVisibility(View.GONE);
+                }
                 mSearchHistoryList.clear();
-                mSearchHistoryList.addAll(Constant.getSearchHistory(mContext));
+                mSearchHistoryList.addAll(Constant.getAllSearchHistory(mContext));
                 mSearchHistoryAdapter.setSearchHistoryList(mSearchHistoryList);
             }
         }

@@ -21,6 +21,7 @@
             android:background="@null"
             android:ellipsize="end"
             android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/solid_shape_cursor_line" />
 
@@ -76,6 +77,7 @@
                 android:text="搜索历史"
                 android:textColor="@color/textTipColor"
                 android:textSize="16dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_flowlayout" />
 
@@ -96,6 +98,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
                 android:text="清空"
+                android:visibility="gone"
                 android:textColor="@color/textTipColor"
                 app:layout_constraintBottom_toBottomOf="@+id/search_text_history"
                 app:layout_constraintEnd_toEndOf="parent"

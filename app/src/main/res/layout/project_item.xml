@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:background="@drawable/title_lable_shap"
+            android:background="@drawable/title_lable_red"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="项目"

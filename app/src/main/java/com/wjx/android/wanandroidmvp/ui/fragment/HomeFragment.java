@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
@@ -86,8 +91,15 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @BindView(R.id.nest_scroll)
     NestedScrollView mNestedScrollView;
+
     @BindView(R.id.home_toolbar)
     Toolbar mToolbar;
+
+    @BindView(R.id.second_header)
+    TwoLevelHeader mTwoLevelHeader;
+
+    @BindView(R.id.second_floor_content)
+    FrameLayout mSecondFloor;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -142,6 +154,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         initBanner();
         initToolbar();
         initStatusBar();
+        initSmartRefreshHeader();
         mPresenter.loadBanner();
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
@@ -150,28 +163,38 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         mRecyclerView.setHasFixedSize(true);
     }
 
+    private void initSmartRefreshHeader() {
+        mSmartRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+            @Override
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                if (oldState == RefreshState.TwoLevel) {
+                    mSecondFloor.animate().alpha(0).setDuration(100);
+                }
+            }
+        });
+        mTwoLevelHeader.setOnTwoLevelListener(refreshLayout -> {
+            mSecondFloor.animate().alpha(1).setDuration(1000);
+            return true;
+        });
+    }
+
     private void initToolbar() {
         int showOrHideToolbarHeight = Constant.dpToPx(mContext, 200)
                 - Constant.getStatusBarHeight(mContext)
                 - Constant.getActionBarHeight(mContext);
-        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY && scrollY - showOrHideToolbarHeight >= 0) {
-                    // 向上滑
-//                    Log.e("WJXSC", "上滑" + scrollY + " ;" + oldScrollY);
-                    ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                    mToolbar.setBackgroundColor(Constant.getColor(mContext));
-                    mToolbar.setPadding(0, Constant.getStatusBarHeight(mContext), 0, 0);
-                    mToolbar.setTitle(R.string.bottomname1);
-                    mToolbar.setVisibility(View.VISIBLE);
-                } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
-                    // 向下滑
-//                    Log.e("WJXSC", "下滑" + scrollY + " ;" + oldScrollY);
-                    ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                    mToolbar.setBackgroundColor(Color.TRANSPARENT);
-                    mToolbar.setVisibility(View.GONE);
-                }
+        mNestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > oldScrollY && scrollY - showOrHideToolbarHeight >= 0) {
+                // 向上滑
+                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                mToolbar.setBackgroundColor(Constant.getColor(mContext));
+                mToolbar.setPadding(0, Constant.getStatusBarHeight(mContext), 0, 0);
+                mToolbar.setTitle(R.string.bottomname1);
+                mToolbar.setVisibility(View.VISIBLE);
+            } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
+                // 向下滑
+                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                mToolbar.setBackgroundColor(Color.TRANSPARENT);
+                mToolbar.setVisibility(View.GONE);
             }
         });
     }

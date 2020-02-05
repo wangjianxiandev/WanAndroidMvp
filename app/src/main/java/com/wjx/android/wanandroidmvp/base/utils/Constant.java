@@ -514,12 +514,12 @@ public class Constant {
     }
 
     /**
-     * 获取搜索历史
+     * 获取所有搜索历史
      *
      * @param context
      * @return
      */
-    public static List<String> getSearchHistory(Context context) {
+    public static List<String> getAllSearchHistory(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         String longHistory = sp.getString(SEARCH_HISTORY, "");
         // split后长度为1有一个空串对象
