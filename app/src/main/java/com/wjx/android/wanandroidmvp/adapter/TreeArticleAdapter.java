@@ -109,7 +109,9 @@ public class TreeArticleAdapter extends RecyclerView.Adapter<TreeArticleAdapter.
                     mTreeArticleList.get(position).collect));
 
             holder.mCollectView.setOnClickListener(view -> {
-                Constant.Vibrate(mContext, 50);
+                if (!articleBean.collect) {
+                    Constant.Vibrate(mContext, 50);
+                }
                 if (!LoginUtils.isLogin()) {
                     Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, LoginActivity.class);

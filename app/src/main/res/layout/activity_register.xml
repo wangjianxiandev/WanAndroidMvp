@@ -10,7 +10,7 @@
         android:id="@+id/register_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:titleTextColor="@color/always_white_text"
+        app:titleTextColor="@color/always_white_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

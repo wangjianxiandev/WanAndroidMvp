@@ -170,7 +170,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                     mArticleList.get(realPosition).articleId,
                     mArticleList.get(realPosition).collect));
             holder.mCollectView.setOnClickListener(view -> {
-                Constant.Vibrate(mContext, 50);
+                if (!articleBean.collect) {
+                    Constant.Vibrate(mContext, 50);
+                }
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

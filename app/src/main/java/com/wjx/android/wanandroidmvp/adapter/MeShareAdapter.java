@@ -101,7 +101,9 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
             }
 
             holder.mCollectView.setOnClickListener(v -> {
-                Constant.Vibrate(mContext, 50);
+                if (!share.isCollect) {
+                    Constant.Vibrate(mContext, 50);
+                }
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

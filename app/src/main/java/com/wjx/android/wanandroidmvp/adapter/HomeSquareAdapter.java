@@ -99,7 +99,9 @@ public class HomeSquareAdapter extends RecyclerView.Adapter<HomeSquareAdapter.Ho
                 holder.mCollectView.setSelected(bean.collect);
             }
             holder.mCollectView.setOnClickListener(view -> {
-                Constant.Vibrate(mContext, 50);
+                if (!bean.collect) {
+                    Constant.Vibrate(mContext, 50);
+                }
                 if (!LoginUtils.isLogin()) {
                     Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, LoginActivity.class);

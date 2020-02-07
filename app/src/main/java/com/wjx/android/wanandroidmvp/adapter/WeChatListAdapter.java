@@ -101,7 +101,9 @@ public class WeChatListAdapter extends RecyclerView.Adapter<WeChatListAdapter.We
             }
 
             holder.mCollectView.setOnClickListener(view -> {
-                Constant.Vibrate(mContext, 50);
+                if (!bean.collect) {
+                    Constant.Vibrate(mContext, 50);
+                }
                 if (!LoginUtils.isLogin()) {
                     Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, LoginActivity.class);
