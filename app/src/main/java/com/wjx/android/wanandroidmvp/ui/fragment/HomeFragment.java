@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -193,7 +196,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
                 // 向下滑
                 ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                mToolbar.setBackgroundColor(Color.TRANSPARENT);
                 mToolbar.setVisibility(View.GONE);
             }
         });

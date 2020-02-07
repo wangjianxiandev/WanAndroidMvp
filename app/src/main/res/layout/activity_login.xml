@@ -59,15 +59,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login" />
 
-    <ImageView
-        android:id="@+id/loading"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/load"
+    <com.wjx.android.wanandroidmvp.Custom.loading.LoadingView
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

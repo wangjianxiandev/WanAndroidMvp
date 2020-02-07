@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.wjx.android.wanandroidmvp.Custom.CustomEditText;
+import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
@@ -49,8 +50,8 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
     @BindView(R.id.go_register)
     Button mRegister;
 
-    @BindView(R.id.loading)
-    ImageView mLoading;
+    @BindView(R.id.loading_view)
+    LoadingView mLoading;
 
     @BindView(R.id.login_toolbar)
     Toolbar mToolbar;
@@ -183,15 +184,11 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
 
     private void startAnim() {
         mLoading.setVisibility(View.VISIBLE);
-        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.loading);
-        LinearInterpolator linearInterpolator = new LinearInterpolator();
-        animation.setInterpolator(linearInterpolator);
-        mLoading.startAnimation(animation);
+        mLoading.startTranglesAnimation();
     }
 
     private void stopAnim() {
         mLoading.setVisibility(View.GONE);
-        mLoading.clearAnimation();
     }
 
     @Override

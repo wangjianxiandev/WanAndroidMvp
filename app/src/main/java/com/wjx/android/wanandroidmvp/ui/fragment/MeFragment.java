@@ -20,6 +20,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.wjx.android.wanandroidmvp.Custom.userimage.CustomUserAvatar;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
@@ -72,6 +73,9 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
     @BindView(R.id.me_article)
     ViewGroup mMeArticle;
 
+    @BindView(R.id.user_imageView)
+    CustomUserAvatar mCircleUserImageView;
+
     private int mCoinCount;
 
     private int mRank;
@@ -93,11 +97,20 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
         mContext = getActivity().getApplicationContext();
         mPresenter.loadIntegralData();
         if (!TextUtils.isEmpty(LoginUtils.getLoginUser())) {
-            meName.setText(LoginUtils.getLoginUser());
+            meName.setText(Constant.getDecodeName(LoginUtils.getLoginUser()));
         }
+        initUserImageView();
         initStatusBar();
         mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void initUserImageView() {
+        if (LoginUtils.isLogin()) {
+            mCircleUserImageView.setUserName(Constant.getDecodeName(LoginUtils.getLoginUser()));
+        } else {
+            mCircleUserImageView.setUserName("登录");
+        }
     }
 
     private void initStatusBar() {
@@ -116,16 +129,12 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
 
     @OnClick(R.id.me_name)
     public void MeName() {
-        if (!LoginUtils.isLogin()) {
-            meName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            });
+        if (LoginUtils.isLogin()) {
+            Toast.makeText(mContext,
+                    Constant.getDecodeName(LoginUtils.getLoginUser()), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(mContext, LoginUtils.getLoginUser(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -215,11 +224,14 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
             if (event.type == Event.TYPE_LOGIN) {
                 meName.setText(event.data);
                 mPresenter.loadIntegralData();
+                mCircleUserImageView.setUserName(Constant.getDecodeName(LoginUtils.getLoginUser()));
             } else if (event.type == Event.TYPE_LOGOUT) {
                 meName.setText("请先登录~");
                 mPresenter.refreshIntegralData();
+                mCircleUserImageView.setUserName("登录");
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
                 mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
+                mCircleUserImageView.invalidate();
             }
         }
     }

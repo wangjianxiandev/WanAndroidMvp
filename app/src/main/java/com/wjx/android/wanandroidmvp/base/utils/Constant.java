@@ -22,6 +22,7 @@ import com.wjx.android.wanandroidmvp.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -431,6 +432,19 @@ public class Constant {
         return new ColorStateList(states, colors);
     }
 
+    /**
+     * 给颜色添加透明度
+     * @param context
+     * @param alpha
+     * @return
+     */
+    public static int getColorWithAlpha(Context context, float alpha) {
+        int a = Math.min(255, Math.max(0, (int) (alpha * 255))) << 24;
+        int rgb = 0x00ffffff & getColor(context);
+        return a + rgb;
+    }
+
+
     private final static String PREFERENCE_NAME = "service_name";
     private final static String SEARCH_HISTORY = "search_history";
 
@@ -591,4 +605,18 @@ public class Constant {
         });
     }
 
+    /**
+     * 获取Decode的中文
+     * @param encodeName
+     * @return
+     */
+    public static String getDecodeName(String encodeName){
+        String decodeName = "";
+        try {
+            decodeName = java.net.URLDecoder.decode(encodeName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decodeName;
+    }
 }
