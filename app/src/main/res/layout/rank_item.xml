@@ -10,7 +10,6 @@
     android:layout_marginEnd="@dimen/safe_padding"
     android:layout_marginBottom="@dimen/safe_padding"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation">
 

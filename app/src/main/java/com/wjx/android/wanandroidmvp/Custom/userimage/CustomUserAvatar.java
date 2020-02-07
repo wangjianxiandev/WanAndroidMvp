@@ -4,13 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -37,8 +32,6 @@ public class CustomUserAvatar extends ImageView {
 
     private Paint mPaintBackground;
 
-    private Paint mPaintBound;
-
     private Rect mRect;
 
     private String mUserName;
@@ -62,7 +55,6 @@ public class CustomUserAvatar extends ImageView {
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintBound = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRect = new Rect();
     }
 
@@ -74,20 +66,28 @@ public class CustomUserAvatar extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        // 绘制发光效果
         int color = getColor(R.color.always_white_text);
         mPaintBackground.setColor(color);
         mPaintBackground.setStyle(Paint.Style.FILL);
         mPaintBackground.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.SOLID));
         canvas.drawCircle(getWidth() / 2, getWidth() / 2, (getWidth() - 20) / 2, mPaintBackground);
-
+        // 设置文本大小
         mPaintText.setTextSize(getWidth() / 3);
+        // 设置文本颜色跟随应用主题颜色
         mPaintText.setColor(Constant.getColor(getContext()));
+        // 设置画笔粗细
         mPaintText.setStrokeWidth(5);
+        // 设置阴影半径
         mPaintText.setShadowLayer(5, 5, 5, getColor(R.color.black));
         // 绘制文字的最小矩形
         mPaintText.getTextBounds(mUserName, 0, 1, mRect);
         Paint.FontMetricsInt fontMetricsInt = mPaintText.getFontMetricsInt();
-        int baseLine = (getMeasuredHeight() - fontMetricsInt.top - fontMetricsInt.bottom) / 2;
+        // baseLine上面是负值，下面是正值
+        // 所以getHeight()/2-fontMetricsInt.descent 将文本的bottom线抬高至控件的1/2处
+        // + (fontMetricsInt.bottom - fontMetricsInt.top) / 2：(fontMetricsInt.bottom - fontMetricsInt.top) 文本的辅助线（top+bottom)/2就是文本的中位线（我是这样理解的）恰好在控件中位线处
+        int baseLine = getHeight() / 2 - fontMetricsInt.descent + (fontMetricsInt.bottom - fontMetricsInt.top) / 2;
+        // 水平居中
         mPaintText.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(mUserName, getWidth() / 2, baseLine, mPaintText);
     }

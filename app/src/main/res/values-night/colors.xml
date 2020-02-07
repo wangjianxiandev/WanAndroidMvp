@@ -14,4 +14,5 @@
     <color name="item_text">#FFFFFF</color>
     <color name="button_bg">#06B3ED</color>
     <color name="button_border">#06B3ED</color>
+    <color name="me_item">#999999</color>
 </resources>

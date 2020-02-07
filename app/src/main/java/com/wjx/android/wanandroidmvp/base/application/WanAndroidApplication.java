@@ -31,8 +31,6 @@ public class WanAndroidApplication extends LitePalApplication {
     private void changeMode() {
         boolean isNightMode = SPUtils.getInstance(Constant.CONFIG_SETTINGS).getBoolean
                 (Constant.KEY_NIGHT_MODE, false);
-        int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        boolean isSystemNightMode = currentMode == Configuration.UI_MODE_NIGHT_YES;
         AppCompatDelegate.setDefaultNightMode(isNightMode ? AppCompatDelegate.MODE_NIGHT_YES :
                 AppCompatDelegate.MODE_NIGHT_NO);
     }
