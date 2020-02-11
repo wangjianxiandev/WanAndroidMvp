@@ -80,7 +80,7 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
             } else {
                 holder.mArticleAuthor.setText(
                         String.format(mContext.getResources().getString(R.string.article_author),
-                                getString(R.string.anonymous_user)));
+                                Constant.getDecodeName(LoginUtils.getLoginUser())));
             }
             holder.mArticleDate.setText(share.niceDate);
             String category = String.format(

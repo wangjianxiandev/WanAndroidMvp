@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -52,6 +52,9 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.project_list_recycler_view)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.layout_error)
+    ViewGroup mLayoutError;
 
     private ProjectListAdapter mProjectListAdapter;
     private int mCurrentPage = 1;
@@ -180,8 +183,8 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onLoadFailed() {
-        LogUtils.e();
-        ToastUtils.showShort("加载失败");
+        setNetWorkError(false);
+        ToastUtils.showShort("网络未连接请重试");
         stopLoadingView();
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
@@ -189,8 +192,25 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onLoadSuccess() {
+        setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @OnClick(R.id.layout_error)
+    public void onRetry() {
+        setNetWorkError(true);
+        mPresenter.loadProjectList(1, mCid);
+    }
+
+    private void setNetWorkError(boolean isSuccess) {
+        if (isSuccess) {
+            mSmartRefreshLayout.setVisibility(View.VISIBLE);
+            mLayoutError.setVisibility(View.GONE);
+        } else {
+            mSmartRefreshLayout.setVisibility(View.GONE);
+            mLayoutError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

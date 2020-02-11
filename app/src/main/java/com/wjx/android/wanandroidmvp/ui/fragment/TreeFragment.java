@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.TreeAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.adapter.TabAdapter;
 import q.rorbin.verticaltablayout.widget.ITabView;
@@ -55,6 +57,9 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
 
     @BindView(R.id.navigation_recyclerview)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.layout_error)
+    ViewGroup mLayoutError;
 
     private TreeAdapter mTreeAdapter;
 
@@ -182,11 +187,29 @@ public class TreeFragment extends BaseFragment<Contract.ITreeView, TreePresenter
 
     @Override
     public void onLoadFailed() {
+        setNetWorkError(false);
+        ToastUtils.showShort("网络未连接请重试");
     }
 
     @Override
     public void onLoadSuccess() {
+        setNetWorkError(true);
+    }
 
+    @OnClick(R.id.layout_error)
+    public void onReTry() {
+        setNetWorkError(true);
+        mPresenter.loadTree();
+    }
+
+    private void setNetWorkError(boolean isSuccess) {
+        if (isSuccess) {
+            mViewGroup.setVisibility(View.VISIBLE);
+            mLayoutError.setVisibility(View.GONE);
+        } else {
+            mViewGroup.setVisibility(View.GONE);
+            mLayoutError.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setChildViewVisibility(int visibility) {

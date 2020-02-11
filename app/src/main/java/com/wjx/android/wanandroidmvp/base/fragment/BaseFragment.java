@@ -9,6 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
+import com.wjx.android.wanandroidmvp.base.callback.ErrorCallback;
+import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -22,7 +27,7 @@ import butterknife.Unbinder;
  * @date: 2019/12/18
  * Time: 21:26
  */
-public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragment {
+public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragment{
 
     protected P mPresenter;
 
@@ -31,6 +36,8 @@ public abstract class BaseFragment<V, P extends BasePresenter<V>> extends Fragme
     protected abstract int getContentViewId();
 
     protected View mRootView;
+
+    protected LoadService mLoadService;
 
 
     /**

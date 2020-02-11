@@ -33,4 +33,10 @@
         android:src="@drawable/ic_add"
         app:fabSize="mini" />
 
+    <include
+        android:id="@+id/layout_error"
+        layout="@layout/network_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

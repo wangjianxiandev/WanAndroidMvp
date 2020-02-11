@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created with Android Studio.
@@ -68,6 +69,9 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @BindView(R.id.float_add)
     FloatingActionButton mFloatAdd;
+
+    @BindView(R.id.layout_error)
+    ViewGroup mLayoutError;
 
     @Nullable
     @Override
@@ -188,15 +192,33 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
     @Override
     public void onLoadFailed() {
         stopLoadingView();
-        ToastUtils.showShort("加载失败");
+        setNetWorkError(false);
+        ToastUtils.showShort("网络未连接请重试");
         mSmartRefreshLayout.finishRefresh(false);
         mSmartRefreshLayout.finishLoadMore(false);
     }
 
     @Override
     public void onLoadSuccess() {
+        setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @OnClick(R.id.layout_error)
+    public void onReTry() {
+        setNetWorkError(true);
+        mPresenter.loadHomeSquareData(0);
+    }
+
+    private void setNetWorkError(boolean isSuccess) {
+        if (isSuccess) {
+            mSmartRefreshLayout.setVisibility(View.VISIBLE);
+            mLayoutError.setVisibility(View.GONE);
+        } else {
+            mSmartRefreshLayout.setVisibility(View.GONE);
+            mLayoutError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

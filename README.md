@@ -1,17 +1,18 @@
 
 # WanAndroid 适合新手学习的项目
-根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，这个项目是自己实习后第一次有搭建架构的思路，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
+根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java/kotlin语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
 
 ## 项目地址
-[WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp)  **（欢迎star）**
+[WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp)  （**欢迎大佬们star**)
 
 ## 下载体验
 
 ## 当前版本（2.0.1）
 - 增加首页二楼入口
 - 增加自定义探照灯效果
+- 增加网络请求反馈页
 - 修复部分细节
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2020020723574097.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200211220705314.png)
 ## 版本2.0
 修复从收藏列表取消收藏后文章列表加载错乱bug
 加入每个页面的加载动画
@@ -29,13 +30,13 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112217575.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112540831.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020020111224049.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112311813.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200208000249798.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112320478.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112335243.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020020111234679.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112353237.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112402672.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112410117.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200208000307254.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ## 项目功能
 ### 首页
 - 首页文章列表
@@ -91,8 +92,12 @@
 - 收藏震动
 - 无闪动切换夜间模式
 - 自定义三角加载动画
+
+### 特别感谢
+- 感谢鸿洋大神的[WanAndroid网站提供开放Api](https://www.wanandroid.com/)
+- 感谢hegaojian大神开源自己的项目，在学习的过程中才能从中吸取到好的UI设计
 ### 开源
-- [参考hegaojian大神的自定义颜色展示的perference控件](https://github.com/wangjianxiandev/WanAndroid)
+- [参考hegaojian大神项目中的图标标签和控件](https://github.com/wangjianxiandev/WanAndroid)
 - [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
 - [网络请求的框架-Okhttp](https://github.com/square/okhttp)

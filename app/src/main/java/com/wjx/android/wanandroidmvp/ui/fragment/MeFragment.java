@@ -271,7 +271,7 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
 
     @Override
     public void onLoadFailed() {
-        ToastUtils.showShort("加载失败");
+        ToastUtils.showShort("网络未连接请重试");
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

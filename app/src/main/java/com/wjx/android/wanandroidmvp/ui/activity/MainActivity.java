@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.SparseArray;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,9 +23,7 @@ import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ParentSquareFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.ProjectFragment;
-
 import com.wjx.android.wanandroidmvp.ui.fragment.WeChatFragment;
-
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

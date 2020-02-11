@@ -2,11 +2,8 @@ package com.wjx.android.wanandroidmvp.ui.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.icu.util.ValueIterator;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,8 +22,6 @@ import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.ProjectClassify;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectClassifyData;
-import com.wjx.android.wanandroidmvp.bean.project.ProjectListData;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
 import com.wjx.android.wanandroidmvp.presenter.project.ProjectPresenter;
 
@@ -35,7 +29,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -186,17 +179,14 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadFailed() {
-
     }
 
     @Override
     public void onLoadSuccess() {
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

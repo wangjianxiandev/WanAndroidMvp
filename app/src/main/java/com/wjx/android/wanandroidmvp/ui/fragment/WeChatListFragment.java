@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created with Android Studio.
@@ -51,6 +52,9 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.wechat_list_recycler_view)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.layout_error)
+    ViewGroup mLayoutError;
 
     private WeChatListAdapter mWeChatListAdapter;
     private int mCurrentPage = 1;
@@ -116,7 +120,6 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
         mWeChatListAdapter.setWeChatList(mWechatArticleList);
     }
 
-
     public void startLoadingView() {
         Event e = new Event();
         e.target = Event.TARGET_MAIN;
@@ -138,8 +141,8 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
 
     @Override
     public void onLoadFailed() {
-        LogUtils.e();
-        ToastUtils.showShort("加载失败");
+        setNetWorkError(false);
+        ToastUtils.showShort("网络未连接请重试");
         stopLoadingView();
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
@@ -147,8 +150,25 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
 
     @Override
     public void onLoadSuccess() {
+        setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @OnClick(R.id.layout_error)
+    public void onReTry() {
+        setNetWorkError(true);
+        mPresenter.loadWeChatList(mCid, 1);
+    }
+
+    private void setNetWorkError(boolean isSuccess) {
+        if (isSuccess) {
+            mSmartRefreshLayout.setVisibility(View.VISIBLE);
+            mLayoutError.setVisibility(View.GONE);
+        } else if (mCurrentPage == 1){
+            mSmartRefreshLayout.setVisibility(View.GONE);
+            mLayoutError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

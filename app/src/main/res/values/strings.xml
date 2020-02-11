@@ -22,8 +22,7 @@
 
     <!-- 异常页面-->
     <string name="network_error">内容加载失败，请检查网络设置</string>
-    <string name="net_error_refresh">重新加载</string>
-
+    <string name="error_refresh">重新加载</string>
     <string name="complete_info">请完善信息</string>
     <string name="register">注册</string>
     <string name="password_not_match">两次输入的密码不一致</string>
@@ -63,5 +62,4 @@
     <string name="choose_theme_color_summary">设置App的主题颜色</string>
     <string name="author_link_empty">不能为空</string>
     <string name="share_article">分享文章</string>
-
 </resources>

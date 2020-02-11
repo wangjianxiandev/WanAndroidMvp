@@ -12,9 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -28,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
@@ -60,6 +56,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -103,6 +102,12 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @BindView(R.id.second_floor_content)
     FrameLayout mSecondFloor;
+
+    @BindView(R.id.layout_error)
+    ViewGroup mLayoutError;
+
+    @BindView(R.id.normal_view)
+    ViewGroup mNormalView;
 
     public static HomeFragment getInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -196,7 +201,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
                 // 向下滑
                 ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                mToolbar.setVisibility(View.GONE);
+                mToolbar.setVisibility(GONE);
             }
         });
     }
@@ -327,7 +332,15 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void onLoadFailed() {
         stopLoadingView();
-        ToastUtils.showShort("加载失败");
+        setNetWorkError(false);
+        ToastUtils.showShort("网络未连接请重试");
+        mSmartRefreshLayout.finishRefresh();
+        mSmartRefreshLayout.finishLoadMore();
+    }
+
+    @Override
+    public void onLoadSuccess() {
+        setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
     }
@@ -346,10 +359,22 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         EventBus.getDefault().post(e);
     }
 
-    @Override
-    public void onLoadSuccess() {
-        mSmartRefreshLayout.finishRefresh();
-        mSmartRefreshLayout.finishLoadMore();
+    @OnClick(R.id.layout_error)
+    public void onReTry() {
+        setNetWorkError(true);
+        mPresenter.loadBanner();
+        mPresenter.loadTopArticle();
+        mPresenter.loadArticle(0);
+    }
+
+    private void setNetWorkError(boolean isSuccess) {
+        if (isSuccess) {
+            mNormalView.setVisibility(View.VISIBLE);
+            mLayoutError.setVisibility(View.GONE);
+        } else {
+            mNormalView.setVisibility(View.GONE);
+            mLayoutError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -22,7 +22,6 @@ import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Author;
-import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.contract.wechat.Contract;
 import com.wjx.android.wanandroidmvp.presenter.wechat.WeChatPresenter;
 
@@ -178,17 +177,14 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadFailed() {
-
     }
 
     @Override
     public void onLoadSuccess() {
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

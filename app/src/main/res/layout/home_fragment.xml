@@ -3,53 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/home_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:titleTextColor="@color/always_white_text" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refresh_layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/normal_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.header.TwoLevelHeader
-            android:id="@+id/second_header"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <FrameLayout
-                android:id="@+id/second_floor_content"
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/home_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:titleTextColor="@color/always_white_text" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.TwoLevelHeader
+                android:id="@+id/second_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:id="@+id/second_floor_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0"
+                    android:background="@color/colorGray666" />
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp" />
+            </com.scwang.smartrefresh.layout.header.TwoLevelHeader>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nest_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0"
-                android:background="@color/colorGray666"/>
+                android:fillViewport="true">
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/article_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.core.widget.NestedScrollView>
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
-                android:layout_height="120dp" />
-        </com.scwang.smartrefresh.layout.header.TwoLevelHeader>
+                android:layout_height="wrap_content" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nest_scroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/article_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.core.widget.NestedScrollView>
-
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <include
+        android:id="@+id/layout_error"
+        layout="@layout/network_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

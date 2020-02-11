@@ -87,6 +87,8 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.kingja.loadsir:loadsir:1.3.6'
 }
 repositories {
     mavenCentral()

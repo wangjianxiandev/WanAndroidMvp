@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:gravity="center"
+    android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/network_error" />
 
     <TextView
-        android:id="@+id/net_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/net_error"
-        android:drawablePadding="10dp"
-        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/network_error"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:textColor="@color/textTipColor"
+        android:textSize="14dp" />
 
     <TextView
-        android:id="@+id/net_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_shap"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/net_error_refresh"
-        android:textColor="@color/primary_text"
-        android:textSize="18dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/net_error"/>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginBottom="12dp"
+        android:text="@string/error_refresh"
+        android:textColor="@color/textTipColor"
+        android:textSize="12dp" />
+</LinearLayout>
