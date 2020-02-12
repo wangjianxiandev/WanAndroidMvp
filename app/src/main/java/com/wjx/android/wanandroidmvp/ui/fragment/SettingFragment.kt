@@ -27,8 +27,8 @@ import org.greenrobot.eventbus.EventBus
 
 /**
  * Created with Android Studio.
- * Description: 设置界面
- *
+ * Description: 设置界面--使用的MaterialDialog好像只能用Kotlin版本所以使用
+*
  * @author: Wangjianxian
  * @date: 2020/01/15
  * Time: 21:59
@@ -118,7 +118,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             MaterialDialog(parentActivity).show {
                 title(R.string.title)
                 message(text = "确定退出登录吗？")
-                cornerRadius
+                cornerRadius(8.0f)
                 positiveButton(text = "退出") {
                     LoginUtils.clearLoginInfo()
                     val event = Event()
@@ -169,6 +169,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             MaterialDialog(parentActivity).show {
                 title(R.string.title)
                 message(text = "确定清除缓存吗？")
+                cornerRadius(8.0f)
                 positiveButton(text = "清除") {
                     DataCleanManager.clearAllCache(parentActivity)
                     ToastUtils.showShort(R.string.clear_success)
@@ -183,6 +184,7 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
         findPreference<Preference>("color")?.setOnPreferenceClickListener {
             MaterialDialog(parentActivity).show {
                 title(R.string.choose_theme_color)
+                cornerRadius(8.0f)
                 colorChooser(ColorUtil.ACCENT_COLORS, initialSelection = Constant.getColor(parentActivity), subColors = ColorUtil.PRIMARY_COLORS_SUB)
                 { dialog, color ->
                     Constant.setColor(parentActivity, color)
