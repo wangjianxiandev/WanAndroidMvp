@@ -112,6 +112,11 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        initStatusBar();
+    }
+
+    @Override
     protected ProjectPresenter createPresenter() {
         return new ProjectPresenter();
     }

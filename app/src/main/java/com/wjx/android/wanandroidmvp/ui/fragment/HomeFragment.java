@@ -236,6 +236,11 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        initStatusBar();
+    }
+
+    @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter();
     }

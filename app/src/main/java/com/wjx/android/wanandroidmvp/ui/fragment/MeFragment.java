@@ -198,6 +198,10 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
         startActivity(intent);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        initStatusBar();
+    }
 
     @Override
     protected MePresenter createPresenter() {

@@ -113,6 +113,11 @@ public class ParentSquareFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        initStatusBar();
+    }
+
     private void initViewPager() {
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @NonNull

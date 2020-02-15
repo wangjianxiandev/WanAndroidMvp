@@ -113,6 +113,11 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        initStatusBar();
+    }
+
+    @Override
     protected WeChatPresenter createPresenter() {
         return new WeChatPresenter();
     }
