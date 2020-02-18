@@ -92,6 +92,7 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
         mPresenter.loadWeChatClassify();
         setChildViewVisibility(View.VISIBLE);
         initTabColor();
+        mViewPager.setOffscreenPageLimit(2);
     }
 
     private void initTabColor() {

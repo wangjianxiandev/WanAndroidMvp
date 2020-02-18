@@ -3,6 +3,7 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -103,8 +104,11 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 mPresenter.deleteShareArticle(mShareList.get(position).articleId);
-                mShareList.remove(position);
-                mMeShareAdapter.notifyItemRemoved(position);
+                List<Share> tempList = mShareList.stream()
+                        .filter(share -> share.articleId != mShareList.get(position).articleId).collect(Collectors.toList());
+                mShareList.clear();
+                mShareList.addAll(tempList);
+                mMeShareAdapter.setShareList(mShareList);
             }
 
             // 设置高亮
@@ -112,7 +116,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
             public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
                 if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
                     // 滑动状态
-                    viewHolder.itemView.setBackgroundColor(Constant.getColor(mContext));
+                    viewHolder.itemView.getBackground().setColorFilter(Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
                 }
             }
 
@@ -120,7 +124,7 @@ public class MeShareActivity extends BaseActivity<Contract.IMeShareView, MeShare
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
-                viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                viewHolder.itemView.getBackground().setColorFilter(getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
             }
         });
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
