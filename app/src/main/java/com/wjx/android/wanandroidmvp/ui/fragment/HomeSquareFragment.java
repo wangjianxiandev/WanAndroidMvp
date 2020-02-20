@@ -43,7 +43,7 @@ import butterknife.OnClick;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 广场ViewPager
  *
  * @author: Wangjianxian
  * @date: 2020/01/09
@@ -133,7 +133,6 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void loadHomeSquareData(List<Article> homeSquareData) {
-        stopLoadingView();
         if (mCurrentPage == 0) {
             mHomeSquareList.clear();
         }
@@ -200,6 +199,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
 
     @Override
     public void onLoadSuccess() {
+        stopLoadingView();
         setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();

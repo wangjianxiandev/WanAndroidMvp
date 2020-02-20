@@ -110,7 +110,6 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onLoadProjectList(List<Article> projectList) {
-        stopLoadingView();
         mProjectArticleList.addAll(projectList);
         mProjectListAdapter.setProjectList(mProjectArticleList);
     }
@@ -192,6 +191,7 @@ public class ProjectListFragment extends BaseFragment<Contract.IProjectListView,
 
     @Override
     public void onLoadSuccess() {
+        stopLoadingView();
         setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();

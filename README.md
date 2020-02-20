@@ -3,16 +3,17 @@
 根据鸿神提供的[WanAndroid开放Api](https://www.wanandroid.com/)来制作的WanAndroidApp, 基本实现了所有的功能，使用Java/kotlin语言开发，基于Material Design+AndroidX + MVP + RxJava + Retrofit等优秀的开源框架，实现的一个尽可能体验较佳的App，不足之处请大家多多指教
 
 ## 项目地址
-[WanAndroid](https://github.com/wangjianxiandev/WanAndroidMvp)  （**欢迎大佬们star**)
-
+[WanAndroid(github)](https://github.com/wangjianxiandev/WanAndroidMvp)  （**欢迎大佬们star**)
+[WanAndroid(gitee)](https://gitee.com/wangjianxiandev/WanAndroidMvp)
 ## 下载体验
 
 ## 当前版本（2.0.1）
 - 增加首页二楼入口
 - 增加自定义探照灯效果
 - 增加网络请求反馈页
+- 增加首页列表加载动效
 - 修复部分体验细节
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200218121532431.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200220222430810.png)
 ## 版本2.0
 修复从收藏列表取消收藏后文章列表加载错乱bug
 加入每个页面的加载动画

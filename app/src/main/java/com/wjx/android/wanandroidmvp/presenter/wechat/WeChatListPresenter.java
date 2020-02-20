@@ -117,7 +117,6 @@ public class WeChatListPresenter extends BasePresenter<Contract.IWeChatListView>
                     public void onNext(Collect collect) {
                         if (isViewAttached()) {
                             getView().onCollect(collect, articleId);
-                            getView().onLoadSuccess();
                         }
                     }
 
@@ -151,7 +150,6 @@ public class WeChatListPresenter extends BasePresenter<Contract.IWeChatListView>
                     public void onNext(Collect collect) {
                         if (isViewAttached()) {
                             getView().onUnCollect(collect, articleId);
-                            getView().onLoadSuccess();
                         }
                     }
 

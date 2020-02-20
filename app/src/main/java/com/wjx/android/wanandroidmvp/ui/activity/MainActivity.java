@@ -66,12 +66,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        // recreate时保存当前页面位置
         outState.putInt("index", mLastIndex);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        // 恢复recreate前的页面
         mLastIndex = savedInstanceState.getInt("index");
         switchFragment(mLastIndex);
     }
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mBinder = ButterKnife.bind(this);
         initBottomNavigation();
+        // 判断当前是recreate还是新启动
         if (savedInstanceState == null) {
             switchFragment(INDEX_HOMEPAGE);
         }
@@ -128,8 +131,11 @@ public class MainActivity extends AppCompatActivity {
     private void switchFragment(int index) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // 将当前显示的fragment和上一个需要隐藏的fragment分别加上tag, 并获取出来
+        // 给fragment添加tag,这样可以通过findFragmentByTag找到存在的fragment，不会出现重复添加
         mCurrentFragment = fragmentManager.findFragmentByTag("fragment" + index);
         mLastFragment = fragmentManager.findFragmentByTag("fragment" + mLastIndex);
+        // 如果位置不同
         if (index != mLastIndex) {
             if (mLastFragment != null) {
                 transaction.hide(mLastFragment);
@@ -142,11 +148,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // 如果位置相同或者新启动的应用
         if (index == mLastIndex) {
             if (mCurrentFragment == null) {
                 mCurrentFragment = getFragment(index);
                 transaction.add(R.id.container, mCurrentFragment, "fragment" + index);
-            }//如果位置相同，且fragment存在，则不作任何操作
+            }
         }
         transaction.commit();
         mLastIndex = index;

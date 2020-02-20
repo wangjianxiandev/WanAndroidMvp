@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -45,7 +44,7 @@ import butterknife.OnClick;
  */
 public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, WeChatListPresenter> implements Contract.IWeChatListView,
         com.scwang.smartrefresh.layout.listener.OnLoadMoreListener,
-        com.scwang.smartrefresh.layout.listener.OnRefreshListener{
+        com.scwang.smartrefresh.layout.listener.OnRefreshListener {
 
 
     @BindView(R.id.normal_view)
@@ -108,7 +107,6 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
 
     @Override
     public void onLoadWeChatList(List<Article> weChatList) {
-        stopLoadingView();
         mWechatArticleList.addAll(weChatList);
         mWeChatListAdapter.setWeChatList(mWechatArticleList);
     }
@@ -150,6 +148,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
 
     @Override
     public void onLoadSuccess() {
+        stopLoadingView();
         setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
@@ -165,7 +164,7 @@ public class WeChatListFragment extends BaseFragment<Contract.IWeChatListView, W
         if (isSuccess) {
             mSmartRefreshLayout.setVisibility(View.VISIBLE);
             mLayoutError.setVisibility(View.GONE);
-        } else if (mCurrentPage == 1){
+        } else if (mCurrentPage == 1) {
             mSmartRefreshLayout.setVisibility(View.GONE);
             mLayoutError.setVisibility(View.VISIBLE);
         }

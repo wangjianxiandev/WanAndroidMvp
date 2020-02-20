@@ -47,7 +47,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
                     public void onNext(List<Banner> bannerList) {
                         if (isViewAttached()) {
                             getView().loadBanner(bannerList);
-                            getView().onLoadSuccess();
                         }
                     }
 
@@ -81,7 +80,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
                     public void onNext(List<Banner> bannerList) {
                         if (isViewAttached()) {
                             getView().refreshBanner(bannerList);
-                            getView().onLoadSuccess();
                         }
                     }
 
@@ -248,7 +246,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
                     public void onNext(Collect collect) {
                         if (isViewAttached()) {
                             getView().onCollect(collect, articleId);
-                            getView().onLoadSuccess();
                         }
                     }
 
@@ -282,7 +279,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
                     public void onNext(Collect collect) {
                         if (isViewAttached()) {
                             getView().onUnCollect(collect, articleId);
-                            getView().onLoadSuccess();
                         }
                     }
 

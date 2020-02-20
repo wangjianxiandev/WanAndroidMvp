@@ -115,7 +115,6 @@ public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView>
                     public void onNext(Collect collect) {
                         if (isViewAttached()) {
                             getView().onCollect(collect, articleId);
-                            getView().onLoadSuccess();
                         }
                     }
 
@@ -149,7 +148,6 @@ public class HomeSquarePresenter extends BasePresenter<Contract.IHomeSquareView>
                     public void onNext(Collect collect) {
                         if (isViewAttached()) {
                             getView().onUnCollect(collect, articleId);
-                            getView().onLoadSuccess();
                         }
                     }
 

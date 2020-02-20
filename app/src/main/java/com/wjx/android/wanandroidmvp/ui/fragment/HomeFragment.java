@@ -1,5 +1,7 @@
 package com.wjx.android.wanandroidmvp.ui.fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -29,6 +32,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.wjx.android.wanandroidmvp.Custom.interpolator.ElasticScaleInterpolator;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.ArticleAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
@@ -172,7 +176,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     private void initSmartRefreshHeader() {
-        mSmartRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+        mSmartRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                 if (oldState == RefreshState.TwoLevel) {
@@ -289,7 +293,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void loadArticle(List<Article> articleList) {
-        stopLoadingView();
         // 解决首页加载两次问题
         if (mCurrentPage == 0) {
             mArticleList.clear();
@@ -345,9 +348,11 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void onLoadSuccess() {
+        stopLoadingView();
         setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
+        startRecyclerViewAnim();
     }
 
     public void startLoadingView() {
@@ -380,6 +385,31 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
             mNormalView.setVisibility(View.GONE);
             mLayoutError.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * 开启recyclerview item加载动画
+     */
+    private void startRecyclerViewAnim() {
+        mRecyclerView.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+
+                    @Override
+                    public boolean onPreDraw() {
+                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        for (int i = 1; i < mRecyclerView.getChildCount(); i++) {
+                            ObjectAnimator animatorX = ObjectAnimator.ofFloat(mRecyclerView.getChildAt(i), "scaleX", 0.8f, 1.0f);
+                            ObjectAnimator animatorY = ObjectAnimator.ofFloat(mRecyclerView.getChildAt(i), "scaleY", 0.8f, 1.0f);
+                            AnimatorSet set = new AnimatorSet();
+                            set.setDuration(1000);
+                            set.setInterpolator(new ElasticScaleInterpolator(0.4f));
+                            set.playTogether(animatorX, animatorY);
+                            set.start();
+                        }
+
+                        return true;
+                    }
+                });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

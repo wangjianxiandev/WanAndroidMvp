@@ -36,7 +36,7 @@ import static com.blankj.utilcode.util.ColorUtils.getColor;
 
 /**
  * Created with Android Studio.
- * Description:
+ * Description: 广场Tab
  *
  * @author: Wangjianxian
  * @date: 2020/01/07
