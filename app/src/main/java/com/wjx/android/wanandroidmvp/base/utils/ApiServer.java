@@ -21,8 +21,14 @@ import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.wjx.android.wanandroidmvp.bean.square.SquareData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
 import com.wjx.android.wanandroidmvp.bean.square.TreeListArticle;
+import com.wjx.android.wanandroidmvp.bean.todo.DeleteTodo;
+import com.wjx.android.wanandroidmvp.bean.todo.FinishTodo;
+import com.wjx.android.wanandroidmvp.bean.todo.TodoData;
+import com.wjx.android.wanandroidmvp.bean.todo.UpdateTodo;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
+
+import org.litepal.util.Const;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -41,6 +47,7 @@ import retrofit2.http.Query;
 public interface ApiServer {
     /**
      * 获取首页Banner
+     *
      * @return
      */
     @GET(Constant.BANNER_URL)
@@ -48,6 +55,7 @@ public interface ApiServer {
 
     /**
      * 获取首页文章
+     *
      * @return
      */
     @GET(Constant.ARTICLE_URL)
@@ -55,6 +63,7 @@ public interface ApiServer {
 
     /**
      * 获取置顶文章
+     *
      * @return
      */
     @GET(Constant.TOP_ARTICLE_URL)
@@ -62,6 +71,7 @@ public interface ApiServer {
 
     /**
      * 获取项目种类
+     *
      * @return
      */
     @GET(Constant.PROJECT_CATEGORY_URL)
@@ -69,6 +79,7 @@ public interface ApiServer {
 
     /**
      * 获取项目列表
+     *
      * @return
      */
     @GET(Constant.PROJECT_LIST_URL)
@@ -77,6 +88,7 @@ public interface ApiServer {
 
     /**
      * 获取公众号Tab
+     *
      * @return
      */
     @GET(Constant.WE_CHAT_TAB_URL)
@@ -84,6 +96,7 @@ public interface ApiServer {
 
     /**
      * 获取某页公众号列表
+     *
      * @param id
      * @param pageNum
      * @return
@@ -93,6 +106,7 @@ public interface ApiServer {
 
     /**
      * 获取广场数据
+     *
      * @param pageNum
      * @return
      */
@@ -101,15 +115,17 @@ public interface ApiServer {
 
     /**
      * 添加分享文章
+     *
      * @param title
      * @param link
      * @return
      */
     @POST(Constant.SQUARE_SHARE_ARTICLE)
-    Observable<ArticleBean> addArticle(@Query("title") String title,  @Query("link") String link);
+    Observable<ArticleBean> addArticle(@Query("title") String title, @Query("link") String link);
 
     /**
      * 获取导航数据
+     *
      * @return
      */
     @GET(Constant.NAVI_URL)
@@ -117,6 +133,7 @@ public interface ApiServer {
 
     /**
      * 获取体系数据
+     *
      * @return
      */
     @GET(Constant.TREE_URL)
@@ -124,6 +141,7 @@ public interface ApiServer {
 
     /**
      * 获取体系文章列表
+     *
      * @param pageNum
      * @param cid
      * @return
@@ -133,6 +151,7 @@ public interface ApiServer {
 
     /**
      * 获取搜索热词
+     *
      * @return
      */
     @GET(Constant.HOT_SEARCH_URL)
@@ -140,6 +159,7 @@ public interface ApiServer {
 
     /**
      * 搜索结果数据
+     *
      * @param pageNum
      * @param keyWords
      * @return
@@ -150,6 +170,7 @@ public interface ApiServer {
 
     /**
      * 登陆数据
+     *
      * @param userName
      * @param passWord
      * @return
@@ -159,6 +180,7 @@ public interface ApiServer {
 
     /**
      * 注册数据
+     *
      * @param userName
      * @param password
      * @param repassword
@@ -169,6 +191,7 @@ public interface ApiServer {
 
     /**
      * 登出
+     *
      * @return
      */
     @GET(Constant.LOGINOUT_URL)
@@ -176,6 +199,7 @@ public interface ApiServer {
 
     /**
      * 点击收藏文章
+     *
      * @param id
      * @return
      */
@@ -184,6 +208,7 @@ public interface ApiServer {
 
     /**
      * 点击取消收藏文章
+     *
      * @param id
      * @return
      */
@@ -192,6 +217,7 @@ public interface ApiServer {
 
     /**
      * 我的收藏页面取消收藏文章包括自己录入的内容
+     *
      * @param id
      * @param originId
      * @return
@@ -221,6 +247,7 @@ public interface ApiServer {
 
     /**
      * 获取个人积分排行
+     *
      * @return
      */
     @GET(Constant.INTEGRAL_URL)
@@ -228,6 +255,7 @@ public interface ApiServer {
 
     /**
      * 获取积分排行列表
+     *
      * @return
      */
     @GET(Constant.RANK_URL)
@@ -235,6 +263,7 @@ public interface ApiServer {
 
     /**
      * 获取分享的文章的列表
+     *
      * @param pageNum
      * @return
      */
@@ -243,9 +272,71 @@ public interface ApiServer {
 
     /**
      * 删除分享的文章
+     *
      * @param id
      * @return
      */
     @POST(Constant.DELETE_SHARE_ARTICLE_URL)
     Observable<DeleteShare> deleteShareArticle(@Path("id") int id);
+
+    /**
+     * 获取Todo列表
+     *
+     * @param pageNum
+     * @return
+     */
+    @GET(Constant.TODO_LIST_URL)
+    Observable<TodoData> loadTodoData(@Path("pageNum") int pageNum);
+
+    /**
+     * 添加一个Todo
+     *
+     * @param title
+     * @param content
+     * @param date
+     * @param type
+     * @param priority
+     * @return
+     */
+    @POST(Constant.ADD_TODO_URL)
+    Observable<UpdateTodo> addTodo(@Query("title") String title,
+                                   @Query("content") String content,
+                                   @Query("date") String date,
+                                   @Query("type") int type,
+                                   @Query("priority") int priority);
+
+    /**
+     * 删除一个Todo
+     *
+     * @param id
+     * @return
+     */
+    @POST(Constant.DELETE_TODO_URL)
+    Observable<DeleteTodo> deleteTodo(@Path("id") int id);
+
+    /**
+     * 更新一个Todo
+     * @param title
+     * @param content
+     * @param date
+     * @param type
+     * @param priority
+     * @param id
+     * @return
+     */
+    @POST(Constant.UPDATE_TODO_URL)
+    Observable<UpdateTodo> updateTodo(@Query("title") String title,
+                                      @Query("content") String content,
+                                      @Query("date") String date,
+                                      @Query("type") int type,
+                                      @Query("priority") int priority,
+                                      @Path("id") int id);
+
+    /**
+     * 完成Todo
+     * @param id
+     * @return
+     */
+    @POST(Constant.FINISH_TODO_URL)
+    Observable<FinishTodo> finishTodo(@Path("id") int id, @Query("status") int status);
 }

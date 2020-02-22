@@ -180,6 +180,31 @@ public class Constant {
     public static final String INTEGRAL_HELP_URL = "https://www.wanandroid.com/blog/show/2653";
 
     /**
+     * Todo列表
+     */
+    public static final String TODO_LIST_URL = "/lg/todo/v2/list/{pageNum}/json";
+
+    /**
+     * 更新一个Todo
+     */
+    public static final String UPDATE_TODO_URL = "/lg/todo/update/{id}/json";
+
+    /**
+     * 完成一个Todo
+     */
+    public static final String FINISH_TODO_URL = "/lg/todo/done/{id}/json";
+
+    /**
+     * 添加一个Todo
+     */
+    public static final String ADD_TODO_URL = "/lg/todo/add/json";
+
+    /**
+     * 删除一个Todo
+     */
+    public static final String DELETE_TODO_URL = "/lg/todo/delete/{id}/json";
+
+    /**
      * 获取成功
      */
     public static final int SUCCESS = 0;
