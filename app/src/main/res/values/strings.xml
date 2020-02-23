@@ -34,11 +34,16 @@
     <string name="input_repassword">请确认密码</string>
     <string name="integral_rank">积分排行</string>
     <string name="help">帮助</string>
+    <string name="add">添加</string>
     <string name="integral_rule">积分规则</string>
     <string name="collect_page">我的收藏</string>
     <string name="search_result">搜索结果</string>
     <string name="me_share">我的分享</string>
     <string name="todo_page">待办清单</string>
+    <string name="add_todo">添加待办</string>
+    <string name="edit_todo">编辑待办</string>
+    <string name="todo_piority_important">重要</string>
+    <string name="todo_piority_normal">非紧急</string>
     <!--设置页面-->
     <string name="setting">设置</string>
     <string name="setting_about">关于</string>

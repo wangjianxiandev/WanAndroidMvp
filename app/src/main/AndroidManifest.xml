@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.TodoActivity"></activity>
+        <activity android:name=".ui.activity.EditTodoActivity"></activity>
+        <activity android:name=".ui.activity.TodoActivity" />
         <activity
             android:name=".ui.activity.SearchResultActivity"
             android:launchMode="singleTask"

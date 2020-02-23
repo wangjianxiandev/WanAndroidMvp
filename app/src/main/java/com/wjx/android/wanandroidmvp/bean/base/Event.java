@@ -66,6 +66,21 @@ public class Event {
     public static final int TYPE_DELETE_SEARCH = 11;
 
     /**
+     * 刷新Todo列表
+     */
+    public static final int TYPE_REFRESH_TODO = 12;
+
+    /**
+     * 删除Todo
+     */
+    public static final int TYPE_DELETE_TODO = 13;
+
+    /**
+     * 完成Todo
+     */
+    public static final int TYPE_FINISH_TODO = 14;
+
+    /**
      * 目标界面-MainActivity
      */
     public static final int TARGET_MAIN = 1;
@@ -154,6 +169,11 @@ public class Event {
      * 目标页面-文章详情
      */
     public static final int TARGET_WEB_VIEW = 18;
+
+    /**
+     * 目标页面-TODO页面
+     */
+    public static final int TARGET_TODO = 19;
 
 
     public int target;

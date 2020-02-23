@@ -42,6 +42,7 @@ public class TodoModel extends BaseModel implements Contract.ITodoModel {
                         todo.dateStr = datasBean.getDateStr();
                         todo.priority = datasBean.getPriority();
                         todo.status = datasBean.getStatus();
+                        todo.date = datasBean.getDate();
                         todo.completeDate = datasBean.getCompleteDate();
                         todoList.add(todo);
                     });
@@ -60,43 +61,7 @@ public class TodoModel extends BaseModel implements Contract.ITodoModel {
     }
 
     @Override
-    public Observable<Todo> addTodo(String title, String content, String date, int type, int priority) {
-        return mApiServer.addTodo(title, content, date, type, priority)
-                .filter(addTodo -> addTodo.getErrorCode() == Constant.SUCCESS)
-                .map(addTodo -> {
-                    Todo todo = new Todo();
-                    todo.id = addTodo.getData().getId();
-                    todo.completeDate = addTodo.getData().getId();
-                    todo.content = addTodo.getData().getContent();
-                    todo.title = addTodo.getData().getTitle();
-                    todo.priority = addTodo.getData().getPriority();
-                    todo.status = addTodo.getData().getStatus();
-                    todo.type = addTodo.getData().getType();
-                    todo.dateStr = addTodo.getData().getDateStr();
-                    return todo;
-                });
-    }
-
-    @Override
     public Observable<FinishTodo> finishTodo(int id, int status) {
         return mApiServer.finishTodo(id, status);
-    }
-
-    @Override
-    public Observable<Todo> updateTodo(String title, String content, String date, int type, int priority, int id) {
-        return mApiServer.updateTodo(title, content, date, type, priority, id)
-                .filter(updateTodo -> updateTodo.getErrorCode() == Constant.SUCCESS)
-                .map(updateTodo -> {
-                    Todo todo = new Todo();
-                    todo.id = updateTodo.getData().getId();
-                    todo.completeDate = updateTodo.getData().getId();
-                    todo.content = updateTodo.getData().getContent();
-                    todo.title = updateTodo.getData().getTitle();
-                    todo.priority = updateTodo.getData().getPriority();
-                    todo.status = updateTodo.getData().getStatus();
-                    todo.type = updateTodo.getData().getType();
-                    todo.dateStr = updateTodo.getData().getDateStr();
-                    return todo;
-                });
     }
 }

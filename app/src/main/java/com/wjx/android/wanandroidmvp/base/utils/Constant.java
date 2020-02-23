@@ -21,10 +21,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.wjx.android.wanandroidmvp.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -260,6 +264,61 @@ public class Constant {
     public static final String KEY_NIGHT_MODE = "night_mode";
 
     /**
+     * key-todo-handle-type
+     */
+    public static final String KEY_TODO_HANDLE_TYPE = "todo_handle";
+
+    /**
+     * 添加Todo
+     */
+    public static final String ADD_TODO = 1+"";
+
+    /**
+     * 编辑Todo
+     */
+    public static final String EDIT_TODO = 2+"";
+
+    /**
+     * 重要
+     */
+    public static final int TODO_IMPORTANT = 1;
+
+    /**
+     * 一般
+     */
+    public static final int TODO_NORMAL = 2;
+
+    /**
+     * tkey-todo-title
+     */
+    public static final String KEY_TODO_TITLE = "todo_title";
+
+    /**
+     * key-todo-content
+     */
+    public static final String KEY_TODO_CONTENT = "todo_content";
+
+    /**
+     * key-todo-date
+     */
+    public static final String KEY_TODO_DATE = "todo_date";
+
+    /**
+     * key-todo-priority
+     */
+    public static final String KEY_TODO_PRIORITY = "todo_priority";
+
+    /**
+     * key-todo-id
+     */
+    public static final String KEY_TODO_ID = "todo_id";
+
+    /**
+     * key-todo-type
+     */
+    public static final String KEY_TODO_TYPE = "todo_type";
+
+    /**
      * 设置文件的保存名称
      */
     public static final String CONFIG_SETTINGS = "settings";
@@ -303,6 +362,31 @@ public class Constant {
         int blue = random.nextInt(150);
         //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
         return Color.rgb(red, green, blue);
+    }
+
+    /**
+     * 计算渐变颜色值 ARGB
+     *
+     * @param fraction   变化比率 0~1
+     * @param startValue 初始色值
+     * @param endValue   结束色值
+     * @return
+     */
+    public static int evaluate(float fraction, Object startValue, Integer endValue) {
+        int startInt = (Integer) startValue;
+        int startA = (startInt >> 24) & 0xff;
+        int startR = (startInt >> 16) & 0xff;
+        int startG = (startInt >> 8) & 0xff;
+        int startB = startInt & 0xff;
+        int endInt = endValue;
+        int endA = (endInt >> 24) & 0xff;
+        int endR = (endInt >> 16) & 0xff;
+        int endG = (endInt >> 8) & 0xff;
+        int endB = endInt & 0xff;
+        return (startA + (int) (fraction * (endA - startA)) << 24)
+                | (startR + (int) (fraction * (endR - startR)) << 16)
+                | (startG + (int) (fraction * (endG - startG)) << 8)
+                | (startB + (int) (fraction * (endB - startB)));
     }
 
     /**
@@ -459,6 +543,7 @@ public class Constant {
 
     /**
      * 给颜色添加透明度
+     *
      * @param context
      * @param alpha
      * @return
@@ -595,6 +680,7 @@ public class Constant {
 
     /**
      * 设置震动
+     *
      * @param context
      * @param milliseconds
      */
@@ -605,14 +691,15 @@ public class Constant {
 
     /**
      * 显示SnackBar
+     *
      * @param activity
      * @param msg
      */
     public static void showSnackMessage(Activity activity, String msg) {
         final Snackbar snackbar = Snackbar.make(activity.getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT);
         View view = snackbar.getView();
-        ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(ContextCompat.getColor(activity,R.color.always_white_text));
-        snackbar.setActionTextColor(ContextCompat.getColor(activity,R.color.always_white_text));
+        ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(ContextCompat.getColor(activity, R.color.always_white_text));
+        snackbar.setActionTextColor(ContextCompat.getColor(activity, R.color.always_white_text));
         view.setBackgroundColor(getColor(activity));
         snackbar.setAction("知道了", v -> {
             snackbar.dismiss();
@@ -627,10 +714,11 @@ public class Constant {
 
     /**
      * 获取Decode的中文
+     *
      * @param encodeName
      * @return
      */
-    public static String getDecodeName(String encodeName){
+    public static String getDecodeName(String encodeName) {
         String decodeName = "";
         try {
             decodeName = java.net.URLDecoder.decode(encodeName, "UTF-8");
@@ -639,4 +727,40 @@ public class Constant {
         }
         return decodeName;
     }
+
+
+    /**
+     * 获取当前时刻
+     *
+     * @return
+     */
+    public static Date getNowTime() {
+        return formatDate("yyyy-MM-dd", new Date((new Date()).getTime()));
+    }
+
+    /**
+     * 日期格式化
+     * @param formatStyle
+     * @param date
+     * @return
+     */
+    public static Date formatDate(@NotNull String formatStyle, @Nullable Date date) {
+        Intrinsics.checkParameterIsNotNull(formatStyle, "formatStyle");
+        if (date != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat(formatStyle);
+            String formatDate = sdf.format(date);
+
+            try {
+                Date var10000 = sdf.parse(formatDate);
+                Intrinsics.checkExpressionValueIsNotNull(var10000, "sdf.parse(formatDate)");
+                return var10000;
+            } catch (ParseException var6) {
+                var6.printStackTrace();
+                return new Date();
+            }
+        } else {
+            return new Date();
+        }
+    }
+
 }

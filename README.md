@@ -6,14 +6,18 @@
 [WanAndroid(github)](https://github.com/wangjianxiandev/WanAndroidMvp)  （**欢迎大佬们star**)
 [WanAndroid(gitee)](https://gitee.com/wangjianxiandev/WanAndroidMvp)
 ## 下载体验
+## 当前版本（3.0）
+- 增加Todo待办
+- 加入弹性动画
+- 优化体验细节
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200223212047842.png)
 
-## 当前版本（2.0.1）
+## 版本（2.0.1）
 - 增加首页二楼入口
 - 增加自定义探照灯效果
 - 增加网络请求反馈页
 - 增加首页列表加载动效
 - 修复部分体验细节
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200220222430810.png)
 ## 版本2.0
 修复从收藏列表取消收藏后文章列表加载错乱bug
 加入每个页面的加载动画
@@ -26,18 +30,21 @@
 - 加入自定义加载动画（试水）
 - 使用**LitePal**数据库对数据进行本地化存储，但是会出现列表错乱，数据重复加载的问题（已摒弃）
 ## 项目展示
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200223212738162.gif)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112206926.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112516770.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112217575.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112540831.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020020111224049.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200208000249798.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200223212756909.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112320478.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112335243.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2020020111234679.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112353237.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201112402672.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200208000307254.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200223212811100.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NDI0MTQz,size_16,color_FFFFFF,t_70)
 ## 项目功能
 ### 首页
 - 首页文章列表
@@ -83,6 +90,12 @@
 - 获取个人积分
 - 获取个人积分获取列表
 
+### ToDo
+- 添加Todo
+- 完成Todo
+- 更新Todo
+- 删除Todo
+
 ### 设置
 - 夜间模式
 - 清除缓存
@@ -98,7 +111,8 @@
 - 感谢鸿洋大神的[WanAndroid网站提供开放Api](https://www.wanandroid.com/)
 - 感谢hegaojian大神开源自己的项目，在学习的过程中才能从中吸取到好的UI设计
 ### 开源
-- [参考hegaojian大神项目中的图标标签和控件](https://github.com/wangjianxiandev/WanAndroid)
+- [参考hegaojian大神项目中的图标](https://github.com/wangjianxiandev/WanAndroid)
+- [Iconfont](https://www.iconfont.cn/home/index?spm=a313x.7781069.1998910419.2)
 - [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
 - [网络请求的框架-Okhttp](https://github.com/square/okhttp)

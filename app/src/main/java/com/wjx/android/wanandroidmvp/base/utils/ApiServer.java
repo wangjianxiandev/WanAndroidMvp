@@ -28,8 +28,6 @@ import com.wjx.android.wanandroidmvp.bean.todo.UpdateTodo;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatClassifyData;
 import com.wjx.android.wanandroidmvp.bean.wechat.WeChatListData;
 
-import org.litepal.util.Const;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -316,6 +314,7 @@ public interface ApiServer {
 
     /**
      * 更新一个Todo
+     *
      * @param title
      * @param content
      * @param date
@@ -325,15 +324,17 @@ public interface ApiServer {
      * @return
      */
     @POST(Constant.UPDATE_TODO_URL)
-    Observable<UpdateTodo> updateTodo(@Query("title") String title,
-                                      @Query("content") String content,
-                                      @Query("date") String date,
-                                      @Query("type") int type,
-                                      @Query("priority") int priority,
-                                      @Path("id") int id);
+    Observable<UpdateTodo> updateTodo(
+            @Path("id") int id,
+            @Query("title") String title,
+            @Query("content") String content,
+            @Query("date") String date,
+            @Query("type") int type,
+            @Query("priority") int priority);
 
     /**
      * 完成Todo
+     *
      * @param id
      * @return
      */

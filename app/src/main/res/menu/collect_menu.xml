@@ -5,6 +5,6 @@
         android:id="@+id/add_collect"
         android:checked="false"
         android:icon="@drawable/ic_add"
-        android:title="@string/help"
+        android:title="@string/add"
         app:showAsAction="always"/>
 </menu>

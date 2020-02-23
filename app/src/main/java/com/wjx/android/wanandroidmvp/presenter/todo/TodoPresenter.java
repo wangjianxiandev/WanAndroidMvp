@@ -4,7 +4,6 @@ import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 import com.wjx.android.wanandroidmvp.bean.todo.DeleteTodo;
 import com.wjx.android.wanandroidmvp.bean.todo.FinishTodo;
 import com.wjx.android.wanandroidmvp.bean.todo.Todo;
-import com.wjx.android.wanandroidmvp.bean.todo.UpdateTodo;
 import com.wjx.android.wanandroidmvp.contract.todo.Contract;
 import com.wjx.android.wanandroidmvp.model.TodoModel;
 
@@ -133,39 +132,6 @@ public class TodoPresenter extends BasePresenter<Contract.ITodoView> implements 
     }
 
     @Override
-    public void addTodo(String title, String content, String date, int type, int priority) {
-        iTodoModel.addTodo(title, content, date, type, priority)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Todo>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(Todo todo) {
-                        if (isViewAttached()) {
-                            getView().onAddTodo(todo);
-                            getView().onLoadSuccess();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (isViewAttached()) {
-                            getView().onLoadFailed();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    @Override
     public void finishTodo(int id, int status) {
         iTodoModel.finishTodo(id, status)
                 .subscribeOn(Schedulers.io())
@@ -197,38 +163,5 @@ public class TodoPresenter extends BasePresenter<Contract.ITodoView> implements 
                     }
                 });
 
-    }
-
-    @Override
-    public void updateTodo(String title, String content, String date, int type, int priority, int id) {
-        iTodoModel.updateTodo(title, content, date, type, priority, id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Todo>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(Todo todo) {
-                        if (isViewAttached()) {
-                            getView().onUpdateTodo(todo);
-                            getView().onLoadSuccess();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (isViewAttached()) {
-                            getView().onLoadFailed();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
     }
 }

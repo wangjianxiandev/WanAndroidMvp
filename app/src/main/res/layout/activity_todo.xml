@@ -7,13 +7,15 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/todo_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/toolbar_radius"
             app:titleTextColor="@color/always_white_text" />
     </com.google.android.material.appbar.AppBarLayout>
 

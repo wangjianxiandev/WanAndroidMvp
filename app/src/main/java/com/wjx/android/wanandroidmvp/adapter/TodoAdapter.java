@@ -1,8 +1,15 @@
 package com.wjx.android.wanandroidmvp.adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +21,22 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.wjx.android.wanandroidmvp.Custom.CustomScaleInterpolator;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.todo.Todo;
+import com.wjx.android.wanandroidmvp.ui.activity.EditTodoActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 /**
  * Created with Android Studio.
@@ -71,20 +85,125 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
                     Html.fromHtml(todo.dateStr, Html.FROM_HTML_MODE_COMPACT));
             if (todo.status == 1) {
                 holder.mTodoStatus.setVisibility(View.VISIBLE);
-                holder.mTodoStatus.setImageResource(isNightMode? R.drawable.todo_done_night : R.drawable.todo_done);
+                holder.mTodoStatus.setImageResource(isNightMode ? R.drawable.todo_done_night : R.drawable.todo_done);
                 holder.mTodoCardView.setForeground(mContext.getDrawable(R.drawable.todo_foreground));
             } else {
-                holder.mTodoStatus.setVisibility(View.VISIBLE);
-                holder.mTodoStatus.setImageResource(isNightMode? R.drawable.todo_not_done_night : R.drawable.todo_not_done);
-                holder.mTodoCardView.setForeground(mContext.getDrawable(R.drawable.todo_foreground));
+                if (todo.date < Constant.getNowTime().getTime()) {
+                    holder.mTodoStatus.setVisibility(View.VISIBLE);
+                    holder.mTodoStatus.setImageResource(isNightMode ? R.drawable.todo_not_done_night : R.drawable.todo_not_done);
+                    holder.mTodoCardView.setForeground(mContext.getDrawable(R.drawable.todo_foreground));
+                } else {
+                    holder.mTodoStatus.setVisibility(View.GONE);
+                }
             }
-            holder.itemView.getBackground().setColorFilter(
-                    mContext.getColor(isNightMode ? R.color.primary_grey_dark : R.color.card_bg), PorterDuff.Mode.SRC_ATOP);
+            if (todo.priority == Constant.TODO_IMPORTANT) {
+                holder.mTodoPriority.setText(R.string.todo_piority_important);
+            } else {
+                holder.mTodoPriority.setText(R.string.todo_piority_normal);
+            }
+
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, EditTodoActivity.class);
+                intent.putExtra(Constant.KEY_TODO_HANDLE_TYPE, Constant.EDIT_TODO);
+                intent.putExtra(Constant.KEY_TODO_TITLE, todo.title);
+                intent.putExtra(Constant.KEY_TODO_CONTENT, todo.content);
+                intent.putExtra(Constant.KEY_TODO_DATE, todo.dateStr);
+                intent.putExtra(Constant.KEY_TODO_PRIORITY, todo.priority + "");
+                intent.putExtra(Constant.KEY_TODO_ID, todo.id + "");
+                intent.putExtra(Constant.KEY_TODO_TYPE, todo.type + "");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            });
+
+            holder.mTodoMore.setOnClickListener(v -> {
+                // 底部弹出对话框
+                Dialog bottomDialog = new Dialog(mContext, R.style.BottomDialog);
+                View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_handle_todo, null);
+                bottomDialog.setContentView(contentView);
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+                params.width = mContext.getResources().getDisplayMetrics().widthPixels - Constant.dpToPx(mContext, 16);
+                params.bottomMargin = Constant.dpToPx(mContext, 8);
+                contentView.setLayoutParams(params);
+                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+
+                if (todo.status == 0) {
+                    contentView.findViewById(R.id.done_todo).setVisibility(View.VISIBLE);
+                }
+                bottomDialog.show();
+                // 点击对话框中编辑
+                contentView.findViewById(R.id.edit_todo).setOnClickListener(v1 -> {
+                    bottomDialog.dismiss();
+                    Intent intent = new Intent(mContext, EditTodoActivity.class);
+                    intent.putExtra(Constant.KEY_TODO_HANDLE_TYPE, Constant.EDIT_TODO);
+                    intent.putExtra(Constant.KEY_TODO_TITLE, todo.title);
+                    intent.putExtra(Constant.KEY_TODO_CONTENT, todo.content);
+                    intent.putExtra(Constant.KEY_TODO_DATE, todo.dateStr);
+                    intent.putExtra(Constant.KEY_TODO_PRIORITY, todo.priority + "");
+                    intent.putExtra(Constant.KEY_TODO_ID, todo.id + "");
+                    intent.putExtra(Constant.KEY_TODO_TYPE, todo.type + "");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                });
+
+                // 点击对话框删除
+                contentView.findViewById(R.id.delete_todo).setOnClickListener(v1 -> {
+                    Event event = new Event();
+                    event.target = Event.TARGET_TODO;
+                    event.type = Event.TYPE_DELETE_TODO;
+                    event.data = todo.id + "";
+                    EventBus.getDefault().post(event);
+                    bottomDialog.dismiss();
+                });
+
+                // 点击完成该ToDo
+                contentView.findViewById(R.id.done_todo).setOnClickListener(v1 -> {
+                    Event event = new Event();
+                    event.target = Event.TARGET_TODO;
+                    event.type = Event.TYPE_FINISH_TODO;
+                    event.data = todo.id + "";
+                    EventBus.getDefault().post(event);
+                    bottomDialog.dismiss();
+                });
+            });
+
+            if (isNightMode) {
+                holder.mTodoCardView.getBackground().setColorFilter(
+                        mContext.getColor(R.color.primary_grey_dark), PorterDuff.Mode.SRC_ATOP);
+            } else {
+                GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BR_TL,
+                        new int[]{Constant.evaluate(0.5f, Constant.randomColor(), Color.WHITE), Color.WHITE});
+                holder.mViewGroup.setBackground(gradientDrawable);
+            }
             holder.mTodoDate.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
             holder.mTodoTitle.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
             holder.mTodoContent.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));
             holder.mTodoMore.setImageResource(isNightMode ? R.drawable.todo_more_night : R.drawable.todo_more);
         }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull TodoHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(holder.itemView, "scaleX", 0.0f, 1.0f);
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(holder.itemView, "scaleY", 0.0f, 1.0f);
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(1000);
+        set.setInterpolator(new CustomScaleInterpolator(0.4f));
+        set.playTogether(animatorX, animatorY);
+        set.start();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull TodoHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(holder.itemView, "scaleX", 1.0f, 0.0f);
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(holder.itemView, "scaleY", 1.0f, 0.0f);
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(1000);
+        set.setInterpolator(new CustomScaleInterpolator(0.4f));
+        set.playTogether(animatorX, animatorY);
+        set.start();
     }
 
     @Override
@@ -106,6 +225,10 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
         CardView mTodoCardView;
         @BindView(R.id.item_todo_more)
         ImageView mTodoMore;
+        @BindView(R.id.constraint_view_group)
+        ViewGroup mViewGroup;
+        @BindView(R.id.item_todo_priority)
+        TextView mTodoPriority;
 
         TodoHolder(@NonNull View itemView) {
             super(itemView);

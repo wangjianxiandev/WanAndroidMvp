@@ -4,7 +4,6 @@ import com.wjx.android.wanandroidmvp.base.interfaces.IBaseView;
 import com.wjx.android.wanandroidmvp.bean.todo.DeleteTodo;
 import com.wjx.android.wanandroidmvp.bean.todo.FinishTodo;
 import com.wjx.android.wanandroidmvp.bean.todo.Todo;
-import com.wjx.android.wanandroidmvp.bean.todo.UpdateTodo;
 
 import java.util.List;
 
@@ -44,17 +43,6 @@ public class Contract {
          */
         Observable<DeleteTodo> deleteTodo(int id);
 
-        /**
-         * 添加一个Todo
-         *
-         * @param title
-         * @param content
-         * @param date
-         * @param type
-         * @param priority
-         * @return
-         */
-        Observable<Todo> addTodo(String title, String content, String date, int type, int priority);
 
         /**
          * 完成一个Todo
@@ -64,18 +52,6 @@ public class Contract {
          */
         Observable<FinishTodo> finishTodo(int id, int status);
 
-        /**
-         * 更新一个Todo
-         *
-         * @param title
-         * @param content
-         * @param date
-         * @param type
-         * @param priority
-         * @param id
-         * @return
-         */
-        Observable<Todo> updateTodo(String title, String content, String date, int type, int priority, int id);
     }
 
     public interface ITodoView extends IBaseView {
@@ -85,11 +61,7 @@ public class Contract {
 
         void onDeleteTodo(DeleteTodo todo, int id);
 
-        void onAddTodo(Todo todo);
-
         void onFinishTodo(FinishTodo todo, int id);
-
-        void onUpdateTodo(Todo todo);
     }
 
     public interface ITodoPresenter {
@@ -99,10 +71,6 @@ public class Contract {
 
         void deleteTodo(int id);
 
-        void addTodo(String title, String content, String date, int type, int priority);
-
         void finishTodo(int id, int status);
-
-        void updateTodo(String title, String content, String date, int type, int priority, int id);
     }
 }
