@@ -3,20 +3,17 @@ package com.wjx.android.wanandroidmvp.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.wjx.android.wanandroidmvp.R;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.ui.fragment.SettingFragment;
 
@@ -50,9 +47,9 @@ public class SettingActivity extends AppCompatActivity {
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -63,7 +60,7 @@ public class SettingActivity extends AppCompatActivity {
 
     private void initToolbar() {
         mToolbar.setTitle(R.string.setting);
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -84,8 +81,8 @@ public class SettingActivity extends AppCompatActivity {
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_SETTING) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mToolbar.setBackgroundColor(Constant.getColor(mContext));
-                getWindow().setStatusBarColor(Constant.getColor(mContext));
+                mToolbar.setBackgroundColor(Utils.getColor(mContext));
+                getWindow().setStatusBarColor(Utils.getColor(mContext));
             }
         }
     }

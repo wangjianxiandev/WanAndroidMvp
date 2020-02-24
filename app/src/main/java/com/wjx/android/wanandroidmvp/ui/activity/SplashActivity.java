@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.wjx.android.wanandroidmvp.R;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        getWindow().setStatusBarColor(Constant.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(mContext));
         setContentView(R.layout.activity_splash);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         mSplashContainer = findViewById(R.id.splash_container);
@@ -54,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
      * 初始化进场动画
      */
     private void initView() {
-        mSplashContainer.setBackgroundColor(Constant.getColor(mContext));
+        mSplashContainer.setBackgroundColor(Utils.getColor(mContext));
         mLottieAnimationView = findViewById(R.id.splash_animation);
         mLottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -89,7 +89,7 @@ public class SplashActivity extends AppCompatActivity {
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_SPLASH) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mSplashContainer.setBackgroundColor(Constant.getColor(mContext));
+                mSplashContainer.setBackgroundColor(Utils.getColor(mContext));
             }
         }
     }

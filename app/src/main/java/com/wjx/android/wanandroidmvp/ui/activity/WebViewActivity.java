@@ -20,6 +20,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.contract.webview.Contract;
@@ -96,8 +97,8 @@ public class WebViewActivity extends BaseActivity<Contract.IWebView, WebViewPres
     }
 
     private void initToolbar(String title) {
-        getWindow().setStatusBarColor(Constant.getColor(mContext));
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);

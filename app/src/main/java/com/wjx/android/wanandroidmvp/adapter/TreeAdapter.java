@@ -15,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
-import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.square.TreeData;
-import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
 import com.wjx.android.wanandroidmvp.ui.activity.TreeListActivity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -74,7 +73,7 @@ public class TreeAdapter extends RecyclerView.Adapter<TreeAdapter.TreeHolder> {
                 public View getView(FlowLayout parent, int position, Object o) {
                     TextView tagView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.flow_layout, parent, false);
                     tagView.setText(childrenBeans.get(position).getName());
-                    tagView.setTextColor(Constant.randomColor());
+                    tagView.setTextColor(Utils.randomColor());
                     holder.mTagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                         @Override
                         public boolean onTagClick(View view, int position, FlowLayout parent) {

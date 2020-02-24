@@ -18,6 +18,7 @@ import com.wjx.android.wanandroidmvp.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.ui.fragment.HomeFragment;
 import com.wjx.android.wanandroidmvp.ui.fragment.MeFragment;
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             switchFragment(INDEX_HOMEPAGE);
         }
-        mBottomNavigationView.setItemIconTintList(Constant.getColorStateList(mContext));
-        mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
+        mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
+        mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
     }
 
     @Override
@@ -228,8 +229,8 @@ public class MainActivity extends AppCompatActivity {
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_MAIN) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mBottomNavigationView.setItemIconTintList(Constant.getColorStateList(mContext));
-                mBottomNavigationView.setItemTextColor(Constant.getColorStateList(mContext));
+                mBottomNavigationView.setItemIconTintList(Utils.getColorStateList(mContext));
+                mBottomNavigationView.setItemTextColor(Utils.getColorStateList(mContext));
             } else if (event.type == Event.TYPE_CHANGE_DAY_NIGHT_MODE) {
                 recreate();
             } else if (event.type == Event.TYPE_START_ANIMATION) {

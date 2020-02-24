@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wjx.android.wanandroidmvp.R;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class MeItemAdapter extends RecyclerView.Adapter<MeItemAdapter.MeItemHold
 
     @Override
     public void onBindViewHolder(@NonNull MeItemHolder holder, int position) {
-        holder.mCardView.setCardBackgroundColor(Constant.randomColor());
+        holder.mCardView.setCardBackgroundColor(Utils.randomColor());
         holder.mItemIcon.setImageResource(mItemIconMap.get(position));
         holder.mItemName.setTextColor(Color.BLACK);
         holder.mItemName.setText(mItemNameList.get(position));

@@ -24,6 +24,7 @@ import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.me.RegisterData;
 import com.wjx.android.wanandroidmvp.contract.register.Contract;
 import com.wjx.android.wanandroidmvp.presenter.register.RegisterPresenter;
@@ -72,12 +73,12 @@ public class RegisterActivity extends BaseActivity<Contract.IRegisterView, Regis
         mContext = getApplicationContext();
         initToolbar();
         mRegisterButton.getBackground().setColorFilter(
-                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
+                Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void initToolbar() {
-        getWindow().setStatusBarColor(Constant.getColor(mContext));
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitle(R.string.register);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);

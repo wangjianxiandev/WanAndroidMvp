@@ -18,6 +18,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.NavigationAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.wjx.android.wanandroidmvp.contract.square.Contract;
@@ -94,7 +95,7 @@ public class NavigationFragment extends BaseFragment<Contract.ISquareView, Squar
         mRecyclerView.setNestedScrollingEnabled(false);
         mPresenter.loadNavigation();
         setChildViewVisibility(View.VISIBLE);
-        mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
+        mVerticalTabLayout.setIndicatorColor(Utils.getColor(mContext));
     }
 
     private void initAdapter() {
@@ -139,7 +140,7 @@ public class NavigationFragment extends BaseFragment<Contract.ISquareView, Squar
                     return new TabView.TabTitle.Builder()
                             .setContent(tabNames.get(position))
                             .setTextColor(ContextCompat.getColor(mContext, R.color.always_white_text),
-                                    Constant.randomColor())
+                                    Utils.randomColor())
                             .build();
                 }
 
@@ -225,7 +226,7 @@ public class NavigationFragment extends BaseFragment<Contract.ISquareView, Squar
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_NAVIGATION) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mVerticalTabLayout.setIndicatorColor(Constant.getColor(mContext));
+                mVerticalTabLayout.setIndicatorColor(Utils.getColor(mContext));
             }
         }
     }

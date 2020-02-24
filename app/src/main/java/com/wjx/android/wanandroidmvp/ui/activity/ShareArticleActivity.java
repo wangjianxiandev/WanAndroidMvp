@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.contract.squaresharearticle.Contract;
@@ -61,11 +61,11 @@ public class ShareArticleActivity extends BaseActivity<Contract.IShareView, Squa
     }
 
     private void initColor() {
-        getWindow().setStatusBarColor(Constant.getColor(mContext));
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitleTextColor(getColor(R.color.white));
         mShareSubmit.getBackground().setColorFilter(
-                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
+                Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     @OnClick(R.id.share_submit)

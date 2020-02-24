@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.ui.activity.SearchResultActivity;
 
@@ -65,7 +66,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     public void onBindViewHolder(@NonNull SearchHistoryHolder holder, int position) {
         holder.mHistoryText.setText(mSearchHistoryList.get(position));
         holder.mHistoryDelete.setOnClickListener(v -> {
-            Constant.deleteSearchHistory(mSearchHistoryList.get(position), mContext);
+            Utils.deleteSearchHistory(mSearchHistoryList.get(position), mContext);
             Event event = new Event();
             event.target = Event.TARGET_SEARCH;
             event.type = Event.TYPE_DELETE_SEARCH;

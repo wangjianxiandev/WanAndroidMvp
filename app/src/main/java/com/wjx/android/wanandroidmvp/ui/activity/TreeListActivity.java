@@ -23,6 +23,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.TreeArticleAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
@@ -101,7 +102,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
     }
 
     private void initToolbar() {
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -132,9 +133,9 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -168,7 +169,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
     public void onCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(this, "收藏成功");
+                Utils.showSnackMessage(this, "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -179,7 +180,7 @@ public class TreeListActivity extends BaseActivity<Contract.ITreeListView, TreeL
     public void onUnCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(this, "取消收藏");
+                Utils.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }

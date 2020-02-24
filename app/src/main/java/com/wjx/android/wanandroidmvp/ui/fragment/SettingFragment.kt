@@ -15,10 +15,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.wjx.android.wanandroidmvp.Custom.IconPreference
 import com.wjx.android.wanandroidmvp.R
-import com.wjx.android.wanandroidmvp.base.utils.ColorUtil
-import com.wjx.android.wanandroidmvp.base.utils.Constant
-import com.wjx.android.wanandroidmvp.base.utils.DataCleanManager
-import com.wjx.android.wanandroidmvp.base.utils.LoginUtils
+import com.wjx.android.wanandroidmvp.base.utils.*
 import com.wjx.android.wanandroidmvp.bean.base.Event
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity
 import com.wjx.android.wanandroidmvp.ui.activity.SettingActivity
@@ -96,10 +93,10 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                         AppCompatDelegate.MODE_NIGHT_NO)
 
             if (nightMode) {
-                Constant.setLastColor(parentActivity, Constant.getColor(parentActivity))
-                Constant.setColor(parentActivity, getColor(R.color.colorGray666))
+                Utils.setLastColor(parentActivity, Utils.getColor(parentActivity))
+                Utils.setColor(parentActivity, getColor(R.color.colorGray666))
             } else {
-                Constant.setColor(parentActivity, Constant.getLastColor(parentActivity))
+                Utils.setColor(parentActivity, Utils.getLastColor(parentActivity))
             }
 
             //通知其他界面立马修改配置
@@ -185,9 +182,9 @@ class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             MaterialDialog(parentActivity).show {
                 title(R.string.choose_theme_color)
                 cornerRadius(8.0f)
-                colorChooser(ColorUtil.ACCENT_COLORS, initialSelection = Constant.getColor(parentActivity), subColors = ColorUtil.PRIMARY_COLORS_SUB)
+                colorChooser(ColorUtil.ACCENT_COLORS, initialSelection = Utils.getColor(parentActivity), subColors = ColorUtil.PRIMARY_COLORS_SUB)
                 { dialog, color ->
-                    Constant.setColor(parentActivity, color)
+                    Utils.setColor(parentActivity, color)
                     //通知其他界面立马修改配置
                     refreshColor()
                 }

@@ -19,7 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Author;
 import com.wjx.android.wanandroidmvp.contract.wechat.Contract;
@@ -96,8 +96,8 @@ public class WeChatFragment extends BaseFragment<Contract.IWeChatView, WeChatPre
     }
 
     private void initTabColor() {
-        mSlidingTabLayout.setDividerColor(Constant.getColor(mContext));
-        mSlidingTabLayout.setIndicatorColor(Constant.getColor(mContext));
+        mSlidingTabLayout.setDividerColor(Utils.getColor(mContext));
+        mSlidingTabLayout.setIndicatorColor(Utils.getColor(mContext));
     }
 
     private void initStatusBar() {

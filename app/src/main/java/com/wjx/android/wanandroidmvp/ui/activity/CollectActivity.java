@@ -25,6 +25,7 @@ import com.wjx.android.wanandroidmvp.adapter.CollectAdaper;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 
 import com.wjx.android.wanandroidmvp.bean.db.Collect;
@@ -124,7 +125,7 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
 
 
     private void initToolbar() {
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitle(R.string.collect_page);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -136,9 +137,9 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -218,7 +219,7 @@ public class CollectActivity extends BaseActivity<Contract.ICollectView, Collect
     public void onUnCollect(com.wjx.android.wanandroidmvp.bean.collect.Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(this, "取消收藏");
+                Utils.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }

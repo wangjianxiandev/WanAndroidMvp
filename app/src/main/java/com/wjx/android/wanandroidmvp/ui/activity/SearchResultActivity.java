@@ -27,6 +27,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.SearchResultAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
@@ -104,7 +105,7 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
     }
 
     private void initToolbar() {
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitle(R.string.search_result);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -124,9 +125,9 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -172,7 +173,7 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
     public void onCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(this, "收藏成功");
+                Utils.showSnackMessage(this, "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -183,7 +184,7 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
     public void onUnCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(this, "取消收藏");
+                Utils.showSnackMessage(this, "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -242,7 +243,7 @@ public class SearchResultActivity extends BaseActivity<Contract.ISearchResultVie
                 mSearchResultList.clear();
                 mPresenter.loadSearchResult(0, mKeyWords);
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mToolbar.setBackgroundColor(Constant.getColor(mContext));
+                mToolbar.setBackgroundColor(Utils.getColor(mContext));
             } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
                 int articleId = Integer.valueOf(event.data);
                 // 刷新的收藏状态一定是和之前的相反

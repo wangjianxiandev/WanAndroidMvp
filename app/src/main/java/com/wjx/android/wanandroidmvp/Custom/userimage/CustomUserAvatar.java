@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 
 import com.wjx.android.wanandroidmvp.R;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 
 import static com.blankj.utilcode.util.ColorUtils.getColor;
 
@@ -75,7 +75,7 @@ public class CustomUserAvatar extends ImageView {
         // 设置文本大小
         mPaintText.setTextSize(getWidth() / 3);
         // 设置文本颜色跟随应用主题颜色
-        mPaintText.setColor(Constant.getColor(getContext()));
+        mPaintText.setColor(Utils.getColor(getContext()));
         // 设置画笔粗细
         mPaintText.setStrokeWidth(5);
         // 设置阴影半径

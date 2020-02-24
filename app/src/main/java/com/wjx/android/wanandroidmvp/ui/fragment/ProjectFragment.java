@@ -20,6 +20,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.ProjectClassify;
 import com.wjx.android.wanandroidmvp.contract.project.Contract;
@@ -94,8 +95,8 @@ public class ProjectFragment extends BaseFragment<Contract.IProjectView, Project
     }
 
     private void initTabColor() {
-        mSlidingTabLayout.setDividerColor(Constant.getColor(mContext));
-        mSlidingTabLayout.setIndicatorColor(Constant.getColor(mContext));
+        mSlidingTabLayout.setDividerColor(Utils.getColor(mContext));
+        mSlidingTabLayout.setIndicatorColor(Utils.getColor(mContext));
     }
 
     private void initStatusBar() {

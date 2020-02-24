@@ -26,6 +26,7 @@ import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Rank;
 import com.wjx.android.wanandroidmvp.contract.rank.Contract;
@@ -116,9 +117,9 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
         initAdapter();
         initStatusBar();
         initToolbar();
-        mMeRank.setTextColor(Constant.getColor(mContext));
-        mMeName.setTextColor(Constant.getColor(mContext));
-        mMeCountCoin.setTextColor(Constant.getColor(mContext));
+        mMeRank.setTextColor(Utils.getColor(mContext));
+        mMeName.setTextColor(Utils.getColor(mContext));
+        mMeCountCoin.setTextColor(Utils.getColor(mContext));
         mSmartRefreshLayout.setOnLoadMoreListener(this);
         mSmartRefreshLayout.setOnRefreshListener(this);
         // 滑动流畅
@@ -142,9 +143,9 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -154,7 +155,7 @@ public class RankActivity extends BaseActivity<Contract.IRankView, RankPresenter
     }
 
     private void initToolbar() {
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitle(R.string.integral_rank);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);

@@ -21,6 +21,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -86,7 +87,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             if (matcher.find()) {
                 highLightTitle = highLightTitle.replace("<em class='highlight'>", "").replace("</em>", "");
                 setText(holder.mArticleContent, highLightTitle, matcher.group(1),
-                        isNightMode ? mContext.getColor(R.color.card_bg) : Constant.getColor(mContext));
+                        isNightMode ? mContext.getColor(R.color.card_bg) : Utils.getColor(mContext));
             }
             if (!article.author.equals("")) {
                 holder.mArticleAuthor.setText(
@@ -120,7 +121,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
             holder.mCollectView.setOnClickListener(v -> {
                 if (!article.collect) {
-                    Constant.Vibrate(mContext, 50);
+                    Utils.Vibrate(mContext, 50);
                 }
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);

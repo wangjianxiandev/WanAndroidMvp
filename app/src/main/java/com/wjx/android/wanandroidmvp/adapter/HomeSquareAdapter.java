@@ -19,6 +19,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -100,7 +101,7 @@ public class HomeSquareAdapter extends RecyclerView.Adapter<HomeSquareAdapter.Ho
             }
             holder.mCollectView.setOnClickListener(view -> {
                 if (!bean.collect) {
-                    Constant.Vibrate(mContext, 50);
+                    Utils.Vibrate(mContext, 50);
                 }
                 if (!LoginUtils.isLogin()) {
                     Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();

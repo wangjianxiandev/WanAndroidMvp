@@ -8,12 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +20,7 @@ import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.me.LoginData;
 import com.wjx.android.wanandroidmvp.contract.login.Contract;
@@ -80,12 +77,12 @@ public class LoginActivity extends BaseActivity<Contract.ILoginView, LoginPresen
         }
         initToolbar();
         mLoginButton.getBackground().setColorFilter(
-                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
+                Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void initToolbar() {
-        getWindow().setStatusBarColor(Constant.getColor(mContext));
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitle(R.string.login);
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);

@@ -22,6 +22,7 @@ import com.wjx.android.wanandroidmvp.Custom.loading.LoadingView;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.todo.Todo;
 import com.wjx.android.wanandroidmvp.contract.edittodo.Contract;
@@ -121,11 +122,11 @@ public class EditTodoActivity extends BaseActivity<Contract.IEditTodoView, EditT
     }
 
     private void initColor() {
-        getWindow().setStatusBarColor(Constant.getColor(mContext));
-        mToolbar.setBackgroundColor(Constant.getColor(mContext));
+        getWindow().setStatusBarColor(Utils.getColor(mContext));
+        mToolbar.setBackgroundColor(Utils.getColor(mContext));
         mToolbar.setTitleTextColor(getColor(R.color.white));
         mEditSubmit.getBackground().setColorFilter(
-                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
+                Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
     }
 
     @OnClick(R.id.edit_todo_date)
@@ -148,8 +149,8 @@ public class EditTodoActivity extends BaseActivity<Contract.IEditTodoView, EditT
         View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_circle, null);
         bottomDialog.setContentView(contentView);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
-        params.width = getResources().getDisplayMetrics().widthPixels - Constant.dpToPx(this, 16);
-        params.bottomMargin = Constant.dpToPx(this, 8);
+        params.width = getResources().getDisplayMetrics().widthPixels - Utils.dpToPx(this, 16);
+        params.bottomMargin = Utils.dpToPx(this, 8);
         contentView.setLayoutParams(params);
         bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);

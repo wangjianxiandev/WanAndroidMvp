@@ -19,6 +19,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -171,7 +172,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                     mArticleList.get(realPosition).collect));
             holder.mCollectView.setOnClickListener(view -> {
                 if (!articleBean.collect) {
-                    Constant.Vibrate(mContext, 50);
+                    Utils.Vibrate(mContext, 50);
                 }
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);

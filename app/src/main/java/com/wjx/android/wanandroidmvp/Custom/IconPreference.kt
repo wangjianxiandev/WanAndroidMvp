@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.wjx.android.wanandroidmvp.R
-import com.wjx.android.wanandroidmvp.base.utils.Constant
+import com.wjx.android.wanandroidmvp.base.utils.Utils
 
 /**
  * Created with Android Studio.
@@ -24,14 +24,14 @@ class IconPreference(context: Context, attrs: AttributeSet) : Preference(context
 
     override fun onBindViewHolder(holder: PreferenceViewHolder?) {
         super.onBindViewHolder(holder)
-        val color = Constant.getColor(context)
+        val color = Utils.getColor(context)
         circleImageView = holder?.itemView?.findViewById(R.id.iv_preview)
         circleImageView?.color = color
         circleImageView?.border = color
     }
 
     fun setView() {
-        val color = Constant.getColor(context)
+        val color = Utils.getColor(context)
         circleImageView?.color = color
         circleImageView?.border = color
     }

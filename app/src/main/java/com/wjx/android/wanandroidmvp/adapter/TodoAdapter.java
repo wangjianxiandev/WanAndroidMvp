@@ -24,6 +24,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.Custom.CustomScaleInterpolator;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.todo.Todo;
 import com.wjx.android.wanandroidmvp.ui.activity.EditTodoActivity;
@@ -88,7 +89,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
                 holder.mTodoStatus.setImageResource(isNightMode ? R.drawable.todo_done_night : R.drawable.todo_done);
                 holder.mTodoCardView.setForeground(mContext.getDrawable(R.drawable.todo_foreground));
             } else {
-                if (todo.date < Constant.getNowTime().getTime()) {
+                if (todo.date < Utils.getNowTime().getTime()) {
                     holder.mTodoStatus.setVisibility(View.VISIBLE);
                     holder.mTodoStatus.setImageResource(isNightMode ? R.drawable.todo_not_done_night : R.drawable.todo_not_done);
                     holder.mTodoCardView.setForeground(mContext.getDrawable(R.drawable.todo_foreground));
@@ -121,8 +122,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
                 View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_handle_todo, null);
                 bottomDialog.setContentView(contentView);
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
-                params.width = mContext.getResources().getDisplayMetrics().widthPixels - Constant.dpToPx(mContext, 16);
-                params.bottomMargin = Constant.dpToPx(mContext, 8);
+                params.width = mContext.getResources().getDisplayMetrics().widthPixels - Utils.dpToPx(mContext, 16);
+                params.bottomMargin = Utils.dpToPx(mContext, 8);
                 contentView.setLayoutParams(params);
                 bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
                 bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
@@ -172,7 +173,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
                         mContext.getColor(R.color.primary_grey_dark), PorterDuff.Mode.SRC_ATOP);
             } else {
                 GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BR_TL,
-                        new int[]{Constant.evaluate(0.5f, Constant.randomColor(), Color.WHITE), Color.WHITE});
+                        new int[]{Utils.evaluate(0.5f, Utils.randomColor(), Color.WHITE), Color.WHITE});
                 holder.mViewGroup.setBackground(gradientDrawable);
             }
             holder.mTodoDate.setTextColor(mContext.getColor(isNightMode ? R.color.card_bg : R.color.colorGray666));

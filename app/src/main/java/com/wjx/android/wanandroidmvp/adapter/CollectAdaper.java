@@ -18,6 +18,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Collect;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -102,7 +103,7 @@ public class CollectAdaper extends RecyclerView.Adapter<CollectAdaper.CollectHol
 
             collectHolder.mCollectView.setSelected(true);
             collectHolder.mCollectView.setOnClickListener(v -> {
-                Constant.Vibrate(mContext, 50);
+                Utils.Vibrate(mContext, 50);
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

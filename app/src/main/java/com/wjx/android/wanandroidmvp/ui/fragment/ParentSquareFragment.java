@@ -20,7 +20,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
-import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 
 import org.greenrobot.eventbus.EventBus;
@@ -96,8 +96,8 @@ public class ParentSquareFragment extends BaseFragment {
     }
 
     private void initTabColor() {
-        mSlidingTabLayout.setIndicatorColor(Constant.getColor(mContext));
-        mSlidingTabLayout.setDividerColor(Constant.getColor(mContext));
+        mSlidingTabLayout.setIndicatorColor(Utils.getColor(mContext));
+        mSlidingTabLayout.setDividerColor(Utils.getColor(mContext));
     }
 
     private void initStatusBar() {

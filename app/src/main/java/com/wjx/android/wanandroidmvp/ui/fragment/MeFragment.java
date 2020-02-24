@@ -26,6 +26,7 @@ import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 
 import com.wjx.android.wanandroidmvp.bean.me.IntegralData;
@@ -98,17 +99,17 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
         mContext = getActivity().getApplicationContext();
         mPresenter.loadIntegralData();
         if (!TextUtils.isEmpty(LoginUtils.getLoginUser())) {
-            meName.setText(Constant.getDecodeName(LoginUtils.getLoginUser()));
+            meName.setText(Utils.getDecodeName(LoginUtils.getLoginUser()));
         }
         initUserImageView();
         initStatusBar();
-        mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
+        mSwipeRefreshLayout.setBackgroundColor(Utils.getColor(mContext));
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void initUserImageView() {
         if (LoginUtils.isLogin()) {
-            mCircleUserImageView.setUserName(Constant.getDecodeName(LoginUtils.getLoginUser()));
+            mCircleUserImageView.setUserName(Utils.getDecodeName(LoginUtils.getLoginUser()));
         } else {
             mCircleUserImageView.setUserName("登录");
         }
@@ -132,7 +133,7 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
     public void MeName() {
         if (LoginUtils.isLogin()) {
             Toast.makeText(mContext,
-                    Constant.getDecodeName(LoginUtils.getLoginUser()), Toast.LENGTH_SHORT).show();
+                    Utils.getDecodeName(LoginUtils.getLoginUser()), Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
@@ -241,13 +242,13 @@ public class MeFragment extends BaseFragment<Contract.IMeView, MePresenter> impl
             if (event.type == Event.TYPE_LOGIN) {
                 meName.setText(event.data);
                 mPresenter.loadIntegralData();
-                mCircleUserImageView.setUserName(Constant.getDecodeName(LoginUtils.getLoginUser()));
+                mCircleUserImageView.setUserName(Utils.getDecodeName(LoginUtils.getLoginUser()));
             } else if (event.type == Event.TYPE_LOGOUT) {
                 meName.setText("请先登录~");
                 mPresenter.refreshIntegralData();
                 mCircleUserImageView.setUserName("登录");
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mSwipeRefreshLayout.setBackgroundColor(Constant.getColor(mContext));
+                mSwipeRefreshLayout.setBackgroundColor(Utils.getColor(mContext));
                 mCircleUserImageView.invalidate();
             }
         }

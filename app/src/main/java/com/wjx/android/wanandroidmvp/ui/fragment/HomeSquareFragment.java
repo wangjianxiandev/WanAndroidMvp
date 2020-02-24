@@ -21,6 +21,7 @@ import com.wjx.android.wanandroidmvp.adapter.HomeSquareAdapter;
 import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
@@ -117,7 +118,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
     }
 
     private void initFloatBtnColor() {
-        mFloatAdd.setBackgroundTintList(Constant.getOneColorStateList(mContext));
+        mFloatAdd.setBackgroundTintList(Utils.getOneColorStateList(mContext));
     }
 
     private void initAdapter() {
@@ -151,7 +152,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
     public void onCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(getActivity(), "收藏成功");
+                Utils.showSnackMessage(getActivity(), "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -162,7 +163,7 @@ public class HomeSquareFragment extends BaseFragment<Contract.IHomeSquareView, H
     public void onUnCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(getActivity(), "取消收藏");
+                Utils.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }

@@ -28,6 +28,7 @@ import com.wjx.android.wanandroidmvp.adapter.SearchHistoryAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.KeyBoardUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.searchwords.SearchWordData;
 import com.wjx.android.wanandroidmvp.contract.searchwords.Contract;
@@ -113,9 +114,9 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     private void clearHistoryData() {
         mSearchClear.setVisibility(View.GONE);
         mSearchHistory.setVisibility(View.GONE);
-        Constant.deleteAllSearchHistory(mContext);
+        Utils.deleteAllSearchHistory(mContext);
         mSearchHistoryList.clear();
-        mSearchHistoryList = Constant.getAllSearchHistory(mContext);
+        mSearchHistoryList = Utils.getAllSearchHistory(mContext);
         mSearchHistoryAdapter.setSearchHistoryList(mSearchHistoryList);
     }
 
@@ -133,7 +134,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
         initSearchEdit();
         initCircleAnimation();
         initAdapter();
-        if (Constant.getAllSearchHistory(mContext).size() != 0) {
+        if (Utils.getAllSearchHistory(mContext).size() != 0) {
             mSearchClear.setVisibility(View.VISIBLE);
             mSearchHistory.setVisibility(View.VISIBLE);
         }
@@ -141,7 +142,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     }
 
     private void initToolbar() {
-        mSearchToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mSearchToolbar.setBackgroundColor(Utils.getColor(mContext));
         setSupportActionBar(mSearchToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -159,14 +160,14 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     }
 
     private void initColor() {
-        mSearchToolbar.setBackgroundColor(Constant.getColor(mContext));
+        mSearchToolbar.setBackgroundColor(Utils.getColor(mContext));
     }
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -215,9 +216,9 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
         if (!TextUtils.isEmpty(mSearchEdit.getText())) {
             mSearchClear.setVisibility(View.VISIBLE);
             mSearchHistory.setVisibility(View.VISIBLE);
-            Constant.setSearchHistory(mSearchEdit.getText().toString(), mContext);
+            Utils.setSearchHistory(mSearchEdit.getText().toString(), mContext);
             mSearchHistoryList.add(mSearchEdit.getText().toString());
-            mSearchHistoryAdapter.setSearchHistoryList(Constant.getAllSearchHistory(mContext));
+            mSearchHistoryAdapter.setSearchHistoryList(Utils.getAllSearchHistory(mContext));
             Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
             intent.putExtra(Constant.KEY_KEYWORD, mSearchEdit.getText().toString());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -230,7 +231,7 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mSearchHistoryList.addAll(Constant.getAllSearchHistory(mContext));
+        mSearchHistoryList.addAll(Utils.getAllSearchHistory(mContext));
         mSearchHistoryAdapter = new SearchHistoryAdapter(mContext, mSearchHistoryList);
         mRecyclerView.setAdapter(mSearchHistoryAdapter);
     }
@@ -253,13 +254,13 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
                     TextView tagText = (TextView) LayoutInflater.from(SearchWordActivity.this).inflate(R.layout.flow_layout,
                             parent, false);
                     tagText.setText(tabNames.get(position));
-                    tagText.getBackground().setColorFilter(Constant.randomColor(), PorterDuff.Mode.SRC_ATOP);
+                    tagText.getBackground().setColorFilter(Utils.randomColor(), PorterDuff.Mode.SRC_ATOP);
                     tagText.setTextColor(getColor(R.color.white));
                     mTopSearchFlowLayout.setOnTagClickListener((view, position1, parent1) -> {
-                        Constant.setSearchHistory(tabNames.get(position1), mContext);
+                        Utils.setSearchHistory(tabNames.get(position1), mContext);
                         mSearchClear.setVisibility(View.VISIBLE);
                         mSearchHistory.setVisibility(View.VISIBLE);
-                        mSearchHistoryAdapter.setSearchHistoryList(Constant.getAllSearchHistory(mContext));
+                        mSearchHistoryAdapter.setSearchHistoryList(Utils.getAllSearchHistory(mContext));
                         Intent intent = new Intent(SearchWordActivity.this, SearchResultActivity.class);
                         intent.putExtra(Constant.KEY_KEYWORD, tabNames.get(position1));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -291,14 +292,14 @@ public class SearchWordActivity extends BaseActivity<Contract.ISearchView, Searc
     public void onEvent(Event event) {
         if (event.target == Event.TARGET_SEARCH) {
             if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mSearchToolbar.setBackgroundColor(Constant.getColor(mContext));
+                mSearchToolbar.setBackgroundColor(Utils.getColor(mContext));
             } else if (event.type == Event.TYPE_DELETE_SEARCH) {
-                if (Constant.getAllSearchHistory(mContext).size() == 0) {
+                if (Utils.getAllSearchHistory(mContext).size() == 0) {
                     mSearchClear.setVisibility(View.GONE);
                     mSearchHistory.setVisibility(View.GONE);
                 }
                 mSearchHistoryList.clear();
-                mSearchHistoryList.addAll(Constant.getAllSearchHistory(mContext));
+                mSearchHistoryList.addAll(Utils.getAllSearchHistory(mContext));
                 mSearchHistoryAdapter.setSearchHistoryList(mSearchHistoryList);
             }
         }

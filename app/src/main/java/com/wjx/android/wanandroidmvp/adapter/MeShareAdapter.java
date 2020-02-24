@@ -18,6 +18,7 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
 import com.wjx.android.wanandroidmvp.base.utils.LoginUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Share;
 import com.wjx.android.wanandroidmvp.ui.activity.LoginActivity;
@@ -29,8 +30,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.blankj.utilcode.util.StringUtils.getString;
 
 /**
  * Created with Android Studio.
@@ -80,7 +79,7 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
             } else {
                 holder.mArticleAuthor.setText(
                         String.format(mContext.getResources().getString(R.string.article_author),
-                                Constant.getDecodeName(LoginUtils.getLoginUser())));
+                                Utils.getDecodeName(LoginUtils.getLoginUser())));
             }
             holder.mArticleDate.setText(share.niceDate);
             String category = String.format(
@@ -102,7 +101,7 @@ public class MeShareAdapter extends RecyclerView.Adapter<MeShareAdapter.MeShareH
 
             holder.mCollectView.setOnClickListener(v -> {
                 if (!share.isCollect) {
-                    Constant.Vibrate(mContext, 50);
+                    Utils.Vibrate(mContext, 50);
                 }
                 if (!LoginUtils.isLogin()) {
                     Intent intent = new Intent(mContext, LoginActivity.class);

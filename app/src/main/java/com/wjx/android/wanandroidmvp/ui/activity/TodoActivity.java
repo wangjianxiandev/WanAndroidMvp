@@ -24,8 +24,8 @@ import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.adapter.TodoAdapter;
 import com.wjx.android.wanandroidmvp.base.activity.BaseActivity;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
-import com.wjx.android.wanandroidmvp.bean.db.Collect;
 import com.wjx.android.wanandroidmvp.bean.todo.DeleteTodo;
 import com.wjx.android.wanandroidmvp.bean.todo.FinishTodo;
 import com.wjx.android.wanandroidmvp.bean.todo.Todo;
@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class TodoActivity extends BaseActivity<Contract.ITodoView, TodoPresenter> implements Contract.ITodoView,
         com.scwang.smartrefresh.layout.listener.OnLoadMoreListener,
@@ -91,9 +90,9 @@ public class TodoActivity extends BaseActivity<Contract.ITodoView, TodoPresenter
 
     private void initStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setStatusBarColor(Constant.getColor(mContext));
+            getWindow().setStatusBarColor(Utils.getColor(mContext));
         }
-        if (ColorUtils.calculateLuminance(Constant.getColor(mContext)) >= 0.5) {
+        if (ColorUtils.calculateLuminance(Utils.getColor(mContext)) >= 0.5) {
             // 设置状态栏中字体的颜色为黑色
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
@@ -105,7 +104,7 @@ public class TodoActivity extends BaseActivity<Contract.ITodoView, TodoPresenter
     private void initToolbar() {
         mToolbar.setTitle(R.string.todo_page);
         mToolbar.getBackground().setColorFilter(
-                Constant.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
+                Utils.getColor(mContext), PorterDuff.Mode.SRC_ATOP);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);

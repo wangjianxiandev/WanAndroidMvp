@@ -39,6 +39,7 @@ import com.wjx.android.wanandroidmvp.base.fragment.BaseFragment;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.GlideImageLoader;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.base.Event;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
@@ -191,15 +192,15 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     }
 
     private void initToolbar() {
-        int showOrHideToolbarHeight = Constant.dpToPx(mContext, 200)
-                - Constant.getStatusBarHeight(mContext)
-                - Constant.getActionBarHeight(mContext);
+        int showOrHideToolbarHeight = Utils.dpToPx(mContext, 200)
+                - Utils.getStatusBarHeight(mContext)
+                - Utils.getActionBarHeight(mContext);
         mNestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY > oldScrollY && scrollY - showOrHideToolbarHeight >= 0) {
                 // 向上滑
                 ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-                mToolbar.setBackgroundColor(Constant.getColor(mContext));
-                mToolbar.setPadding(0, Constant.getStatusBarHeight(mContext), 0, 0);
+                mToolbar.setBackgroundColor(Utils.getColor(mContext));
+                mToolbar.setPadding(0, Utils.getStatusBarHeight(mContext), 0, 0);
                 mToolbar.setTitle(R.string.bottomname1);
                 mToolbar.setVisibility(View.VISIBLE);
             } else if (scrollY < oldScrollY && scrollY - showOrHideToolbarHeight <= 0) {
@@ -314,7 +315,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void onCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(getActivity(), "收藏成功");
+                Utils.showSnackMessage(getActivity(), "收藏成功");
             } else {
                 ToastUtils.showShort("收藏失败");
             }
@@ -325,7 +326,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void onUnCollect(Collect collect, int articleId) {
         if (collect != null) {
             if (collect.getErrorCode() == Constant.SUCCESS) {
-                Constant.showSnackMessage(getActivity(), "取消收藏");
+                Utils.showSnackMessage(getActivity(), "取消收藏");
             } else {
                 ToastUtils.showShort("取消收藏失败");
             }
@@ -440,7 +441,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                         !mArticleList.stream().filter(a -> a.articleId == articleId).findFirst().get().collect;
                 mArticleAdapter.notifyDataSetChanged();
             } else if (event.type == Event.TYPE_REFRESH_COLOR) {
-                mToolbar.setBackgroundColor(Constant.getColor(mContext));
+                mToolbar.setBackgroundColor(Utils.getColor(mContext));
             }
         }
     }

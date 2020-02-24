@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.wjx.android.wanandroidmvp.R;
 import com.wjx.android.wanandroidmvp.base.utils.Constant;
 import com.wjx.android.wanandroidmvp.base.utils.JumpWebUtils;
+import com.wjx.android.wanandroidmvp.base.utils.Utils;
 import com.wjx.android.wanandroidmvp.bean.square.NavigationData;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -72,7 +73,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
                 public View getView(FlowLayout parent, int position, Object o) {
                     TextView tagView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.flow_layout, parent, false);
                     tagView.setText(articlesBean.get(position).getTitle());
-                    tagView.setTextColor(Constant.randomColor());
+                    tagView.setTextColor(Utils.randomColor());
                     holder.mTagFlowLayout.setOnTagClickListener((view, position1, parent1) -> {
                         JumpWebUtils.startWebView(mContext,
                                 articlesBean.get(position1).getTitle(),
