@@ -95,6 +95,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
                     holder.mTodoCardView.setForeground(mContext.getDrawable(R.drawable.todo_foreground));
                 } else {
                     holder.mTodoStatus.setVisibility(View.GONE);
+                    holder.mTodoCardView.setForeground(null);
                 }
             }
             if (todo.priority == Constant.TODO_IMPORTANT) {
