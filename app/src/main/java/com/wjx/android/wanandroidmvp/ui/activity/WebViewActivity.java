@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,7 +75,7 @@ public class WebViewActivity extends BaseActivity<Contract.IWebView, WebViewPres
     protected void init(Bundle savedInstanceState) {
         mContext = getApplicationContext();
         getIntentInfo();
-        initToolbar(mTitle);
+        initToolbar(Html.fromHtml(mTitle, Html.FROM_HTML_MODE_COMPACT).toString());
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int mLastIndex = -1;
 
-    private long mExitTime;
+    private long mExitTime = 0;
 
     private Context mContext;
 

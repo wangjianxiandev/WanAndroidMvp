@@ -2,6 +2,8 @@ package com.wjx.android.wanandroidmvp.base.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+
 import com.wjx.android.wanandroidmvp.ui.activity.WebViewActivity;
 
 /**
