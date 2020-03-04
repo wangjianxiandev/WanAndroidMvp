@@ -103,6 +103,11 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
             } else {
                 holder.mTodoPriority.setText(R.string.todo_piority_normal);
             }
+            if (todo.type == Constant.TODO_STUDY) {
+                holder.mTodoType.setText(R.string.todo_study);
+            } else {
+                holder.mTodoType.setText(R.string.todo_work);
+            }
 
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(mContext, EditTodoActivity.class);
@@ -231,6 +236,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> {
         ViewGroup mViewGroup;
         @BindView(R.id.item_todo_priority)
         TextView mTodoPriority;
+        @BindView(R.id.item_todo_type)
+        TextView mTodoType;
 
         TodoHolder(@NonNull View itemView) {
             super(itemView);

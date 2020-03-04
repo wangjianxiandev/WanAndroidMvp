@@ -42,6 +42,8 @@
     <string name="todo_page">待办清单</string>
     <string name="add_todo">添加待办</string>
     <string name="edit_todo">编辑待办</string>
+    <string name="todo_work">工作</string>
+    <string name="todo_study">学习</string>
     <string name="todo_piority_important">重要</string>
     <string name="todo_piority_normal">非紧急</string>
     <!--设置页面-->

@@ -52,6 +52,9 @@ public class EditTodoActivity extends BaseActivity<Contract.IEditTodoView, EditT
     @BindView(R.id.edit_todo_priority)
     TextView mEditPriority;
 
+    @BindView(R.id.edit_todo_type)
+    TextView mEditType;
+
     @BindView(R.id.edit_todo_submit)
     Button mEditSubmit;
 
@@ -99,6 +102,7 @@ public class EditTodoActivity extends BaseActivity<Contract.IEditTodoView, EditT
             mEditTitle.setText(mTitle);
             mEditContent.setText(mContent);
             mEditDate.setText(mDateStr);
+            mEditType.setText(mTodoType == 1 ? R.string.todo_work : R.string.todo_study);
             mEditPriority.setText(mPriority == 1 ? R.string.todo_piority_important : R.string.todo_piority_normal);
         }
     }
@@ -164,6 +168,36 @@ public class EditTodoActivity extends BaseActivity<Contract.IEditTodoView, EditT
         contentView.findViewById(R.id.normal).setOnClickListener(v -> {
             mPriority = Constant.TODO_NORMAL;
             mEditPriority.setText(R.string.todo_piority_normal);
+            bottomDialog.dismiss();
+        });
+    }
+
+    @OnClick(R.id.edit_todo_type)
+    public void todoTypeChoose() {
+        // 底部弹出对话框
+        Dialog bottomDialog = new Dialog(this, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.dialog_content_circle, null);
+        bottomDialog.setContentView(contentView);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels - Utils.dpToPx(this, 16);
+        params.bottomMargin = Utils.dpToPx(this, 8);
+        contentView.setLayoutParams(params);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
+        TextView work = contentView.findViewById(R.id.important);
+        work.setText(R.string.todo_work);
+        TextView study = contentView.findViewById(R.id.normal);
+        study.setText(R.string.todo_study);
+        contentView.findViewById(R.id.normal).setOnClickListener(v -> {
+            mTodoType = Constant.TODO_STUDY;
+            mEditType.setText(R.string.todo_study);
+            bottomDialog.dismiss();
+        });
+
+        contentView.findViewById(R.id.important).setOnClickListener(v -> {
+            mTodoType = Constant.TODO_WORK;
+            mEditType.setText(R.string.todo_work);
             bottomDialog.dismiss();
         });
     }

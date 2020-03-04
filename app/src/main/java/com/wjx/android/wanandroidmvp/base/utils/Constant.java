@@ -237,12 +237,12 @@ public class Constant {
     /**
      * 添加Todo
      */
-    public static final String ADD_TODO = 1+"";
+    public static final String ADD_TODO = 1 + "";
 
     /**
      * 编辑Todo
      */
-    public static final String EDIT_TODO = 2+"";
+    public static final String EDIT_TODO = 2 + "";
 
     /**
      * 重要
@@ -253,6 +253,16 @@ public class Constant {
      * 一般
      */
     public static final int TODO_NORMAL = 2;
+
+    /**
+     * 工作
+     */
+    public static final int TODO_WORK = 1;
+
+    /**
+     * 学习
+     */
+    public static final int TODO_STUDY = 2;
 
     /**
      * tkey-todo-title

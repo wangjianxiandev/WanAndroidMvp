@@ -31,7 +31,7 @@ public class TodoPresenter extends BasePresenter<Contract.ITodoView> implements 
 
     @Override
     public void loadTodo(int pageNum) {
-        if (isViewAttached() && pageNum == 0) {
+        if (isViewAttached() && pageNum == 1) {
             getView().onLoading();
         }
         iTodoModel.loadTodo(pageNum)

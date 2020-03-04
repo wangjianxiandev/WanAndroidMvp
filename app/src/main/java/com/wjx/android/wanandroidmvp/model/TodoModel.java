@@ -43,6 +43,7 @@ public class TodoModel extends BaseModel implements Contract.ITodoModel {
                         todo.priority = datasBean.getPriority();
                         todo.status = datasBean.getStatus();
                         todo.date = datasBean.getDate();
+                        todo.type = datasBean.getType();
                         todo.completeDate = datasBean.getCompleteDate();
                         todoList.add(todo);
                     });

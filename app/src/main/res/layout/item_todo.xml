@@ -128,14 +128,31 @@
             android:text="重要"
             android:textColor="@color/holo_red_light"
             android:textSize="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/item_todo_date"/>
+            app:layout_constraintBottom_toBottomOf="@id/item_todo_date"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/item_todo_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/safe_padding"
+            android:layout_marginLeft="@dimen/safe_padding"
+            android:background="@drawable/title_lable_green"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="学习"
+            android:textColor="@color/holo_green_dark"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/item_todo_date"
+            app:layout_constraintStart_toEndOf="@+id/item_todo_priority"
+            app:layout_constraintTop_toTopOf="@+id/item_todo_priority" />
+
         <TextView
             android:id="@+id/item_todo_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/safe_padding"
             android:layout_marginTop="@dimen/safe_padding"
+            android:layout_marginRight="@dimen/safe_padding"
             android:layout_marginBottom="@dimen/safe_padding"
             android:text="2020-02-25"
             android:textColor="@color/item_text"
