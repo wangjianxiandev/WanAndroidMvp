@@ -102,7 +102,7 @@ public class EditTodoActivity extends BaseActivity<Contract.IEditTodoView, EditT
             mEditTitle.setText(mTitle);
             mEditContent.setText(mContent);
             mEditDate.setText(mDateStr);
-            mEditType.setText(mTodoType == 1 ? R.string.todo_work : R.string.todo_study);
+            mEditType.setText(mTodoType == 1 || mTodoType == 0 ? R.string.todo_work : R.string.todo_study);
             mEditPriority.setText(mPriority == 1 ? R.string.todo_piority_important : R.string.todo_piority_normal);
         }
     }
