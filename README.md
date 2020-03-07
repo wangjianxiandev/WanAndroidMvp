@@ -10,7 +10,7 @@
 - 增加Todo待办
 - 加入弹性动画
 - 优化体验细节
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200224172946266.png)
+[下载地址](https://github.com/wangjianxiandev/WanAndroidMvp/releases/download/v3.0/app-release.apk)
 
 ## 版本（2.0.1）
 - 增加首页二楼入口
