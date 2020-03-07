@@ -88,8 +88,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     private List<Article> mArticleList = new ArrayList<>();
 
-    private List<Article> mTopArticleList = new ArrayList<>();
-
     @BindView(R.id.article_recycler)
     RecyclerView mRecyclerView;
 
@@ -161,7 +159,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     protected void init() {
         mContext = getContext().getApplicationContext();
-        mPresenter.loadTopArticle();
         mPresenter.loadArticle(mCurrentPage);
         initAdapter();
         initBanner();
@@ -280,25 +277,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         loadBanner(bannerList);
     }
 
-    @Override
-    public void loadTopArticle(List<Article> topArticleList) {
-        mTopArticleList.clear();
-        mTopArticleList.addAll(0, topArticleList);
-    }
-
-    @Override
-    public void refreshTopArticle(List<Article> topArticleList) {
-        mTopArticleList.clear();
-        mTopArticleList.addAll(0, topArticleList);
-    }
 
     @Override
     public void loadArticle(List<Article> articleList) {
-        // 解决首页加载两次问题
-        if (mCurrentPage == 0) {
-            mArticleList.clear();
-            articleList.addAll(0, mTopArticleList);
-        }
         mArticleList.addAll(articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }
@@ -306,7 +287,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void refreshArticle(List<Article> articleList) {
         mArticleList.clear();
-        articleList.addAll(0, mTopArticleList);
         mArticleList.addAll(0, articleList);
         mArticleAdapter.setArticleList(mArticleList);
     }
@@ -374,7 +354,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     public void onReTry() {
         setNetWorkError(true);
         mPresenter.loadBanner();
-        mPresenter.loadTopArticle();
         mPresenter.loadArticle(0);
     }
 
@@ -394,7 +373,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     private void startRecyclerViewAnim() {
         mRecyclerView.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {
-
                     @Override
                     public boolean onPreDraw() {
                         mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
@@ -428,11 +406,9 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
                 mPresenter.unCollect(articleId);
             } else if (event.type == Event.TYPE_LOGIN) {
                 mArticleList.clear();
-                mPresenter.refreshTopArticle();
                 mPresenter.refreshArticle(0);
             } else if (event.type == Event.TYPE_LOGOUT) {
                 mArticleList.clear();
-                mPresenter.refreshTopArticle();
                 mPresenter.refreshArticle(0);
             } else if (event.type == Event.TYPE_COLLECT_STATE_REFRESH) {
                 int articleId = Integer.valueOf(event.data);
@@ -465,7 +441,6 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mPresenter.refreshBanner();
-        mPresenter.refreshTopArticle();
         mCurrentPage = 0;
         mPresenter.refreshArticle(mCurrentPage);
     }

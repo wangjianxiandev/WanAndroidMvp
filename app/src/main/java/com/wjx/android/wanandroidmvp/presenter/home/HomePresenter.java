@@ -4,11 +4,8 @@ import com.wjx.android.wanandroidmvp.base.presenter.BasePresenter;
 import com.wjx.android.wanandroidmvp.bean.db.Article;
 import com.wjx.android.wanandroidmvp.bean.db.Banner;
 import com.wjx.android.wanandroidmvp.bean.collect.Collect;
-import com.wjx.android.wanandroidmvp.bean.home.ArticleBean;
 import com.wjx.android.wanandroidmvp.contract.home.Contract;
 import com.wjx.android.wanandroidmvp.model.HomeModel;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -114,9 +111,40 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
                     @Override
                     public void onNext(List<Article> articleList) {
-                        if (isViewAttached()) {
-                            getView().loadArticle(articleList);
-                            getView().onLoadSuccess();
+                        if (pageNum == 0) {
+                            iHomeModel.loadTopArticle()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<List<Article>>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                            mCompositeDisposable.add(d);
+                                        }
+
+                                        @Override
+                                        public void onNext(List<Article> topArticleList) {
+                                            if (isViewAttached()) {
+                                                articleList.addAll(0, topArticleList);
+                                                getView().loadArticle(articleList);
+                                                getView().onLoadSuccess();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+
+                                        }
+                                    });
+                        } else {
+                            if (isViewAttached()) {
+                                getView().loadArticle(articleList);
+                                getView().onLoadSuccess();
+                            }
                         }
                     }
 
@@ -148,9 +176,40 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
                     @Override
                     public void onNext(List<Article> articleList) {
-                        if (isViewAttached()) {
-                            getView().refreshArticle(articleList);
-                            getView().onLoadSuccess();
+                        if (pageNum == 0) {
+                            iHomeModel.refreshTopArticle()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<List<Article>>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                            mCompositeDisposable.add(d);
+                                        }
+
+                                        @Override
+                                        public void onNext(List<Article> topArticleList) {
+                                            if (isViewAttached()) {
+                                                articleList.addAll(0, topArticleList);
+                                                getView().refreshArticle(articleList);
+                                                getView().onLoadSuccess();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+
+                                        }
+                                    });
+                        } else {
+                            if (isViewAttached()) {
+                                getView().refreshArticle(articleList);
+                                getView().onLoadSuccess();
+                            }
                         }
                     }
 
@@ -167,68 +226,6 @@ public class HomePresenter extends BasePresenter<Contract.IHomeView> implements 
 
                     }
                 });
-    }
-
-    @Override
-    public void loadTopArticle() {
-        iHomeModel.loadTopArticle()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Article>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(List<Article> articleList) {
-                        if (isViewAttached()) {
-                            getView().loadTopArticle(articleList);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-    }
-
-    @Override
-    public void refreshTopArticle() {
-        iHomeModel.refreshTopArticle()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Article>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(List<Article> articleList) {
-                        if (isViewAttached()) {
-                            getView().refreshTopArticle(articleList);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
     }
 
     @Override
