@@ -111,7 +111,7 @@
 - 感谢鸿洋大神的[WanAndroid网站提供开放Api](https://www.wanandroid.com/)
 - 感谢hegaojian大神开源自己的项目，在学习的过程中才能从中吸取到好的UI设计
 ### 开源
-- [参考hegaojian大神项目中的图标](https://github.com/wangjianxiandev/WanAndroid)
+- [参考hegaojian大神项目中的图标](https://github.com/hegaojian/WanAndroid)
 - [Iconfont](https://www.iconfont.cn/home/index?spm=a313x.7781069.1998910419.2)
 - [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
