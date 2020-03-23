@@ -4,13 +4,12 @@
 
 ## 项目地址
 [WanAndroid(github)](https://github.com/wangjianxiandev/WanAndroidMvp)  （**欢迎大佬们star**)
-[WanAndroid(gitee)](https://gitee.com/wangjianxiandev/WanAndroidMvp)
 ## 下载体验
 ## 当前版本（3.0）
 - 增加Todo待办
 - 加入弹性动画
 - 优化体验细节
-[下载地址](https://github.com/wangjianxiandev/WanAndroidMvp/releases/download/v3.0/app-release.apk)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200323101759450.png)
 
 ## 版本（2.0.1）
 - 增加首页二楼入口
@@ -111,7 +110,7 @@
 - 感谢鸿洋大神的[WanAndroid网站提供开放Api](https://www.wanandroid.com/)
 - 感谢hegaojian大神开源自己的项目，在学习的过程中才能从中吸取到好的UI设计
 ### 开源
-- [参考hegaojian大神项目中的图标](https://github.com/wangjianxiandev/WanAndroid)
+- [参考hegaojian大神项目中的图标](https://github.com/hegaojian/WanAndroid)
 - [Iconfont](https://www.iconfont.cn/home/index?spm=a313x.7781069.1998910419.2)
 - [WanAndroid-Mo](https://github.com/milovetingting/WanAndroid/)
 - [异步事件处理-RxJava2](https://github.com/ReactiveX/RxJava)
