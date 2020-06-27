@@ -320,6 +320,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
 
     @Override
     public void onLoadFailed() {
+        mLoadService.showSuccess();
         stopLoadingView();
         setNetWorkError(false);
         ToastUtils.showShort("网络未连接请重试");
@@ -333,7 +334,7 @@ public class HomeFragment extends BaseFragment<Contract.IHomeView, HomePresenter
         setNetWorkError(true);
         mSmartRefreshLayout.finishRefresh();
         mSmartRefreshLayout.finishLoadMore();
-        startRecyclerViewAnim();
+//        startRecyclerViewAnim();
     }
 
     public void startLoadingView() {
